@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 /**
@@ -29,7 +30,7 @@ public class PrimaryController implements Initializable {
     TextField txt_email;
 
     @FXML
-    TextField txt_senha;
+    PasswordField txt_senha;
 
 public void FazerLogin() throws IOException {
         try {

@@ -71,7 +71,7 @@
                               <Font name="Consolas Bold" size="16.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txt_senha" layoutX="104.0" layoutY="136.0" styleClass="txt-box" GridPane.rowIndex="3" />
+                        <javafx.scene.control.PasswordField fx:id="txt_senha" layoutX="104.0" layoutY="136.0" styleClass="txt-box" GridPane.rowIndex="3" />
                         <Button fx:id="btn_con_login" alignment="CENTER" contentDisplay="CENTER" layoutX="107.0" layoutY="304.0" mnemonicParsing="false" onAction="#FazerLogin" prefHeight="25.0" prefWidth="139.0" style="-fx-background-color: green;" styleClass="btn" text="Login" textFill="WHITE" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />

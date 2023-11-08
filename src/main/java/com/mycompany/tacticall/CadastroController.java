@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 /**
@@ -33,7 +34,7 @@ public class CadastroController implements Initializable {
     private TextField txt_email;
 
     @FXML
-    private TextField txt_senha;
+    private PasswordField txt_senha;
 
     @FXML
     private DatePicker dt_nasc;
@@ -53,7 +54,7 @@ public class CadastroController implements Initializable {
 
         String email = txt_email.getText();
 
-        if (!email.matches(".*@.*\\..*")) {
+        if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
             Alert alerta = new Alert(AlertType.ERROR, "Por favor, insira um email válido.");
             alerta.setTitle("Email inválido");
             alerta.setHeaderText("O email não segue a estrutura correta.");
@@ -72,10 +73,29 @@ public class CadastroController implements Initializable {
             alerta.showAndWait();
             return false;
         }
-
+        if(verificaUsuarioExistente(txt_email.getText())){
+            Alert alerta = new Alert(AlertType.ERROR, "Você deve informar um e-mail não cadastrado");
+            alerta.setTitle("Usuário Existente");
+            alerta.setHeaderText("Usuário Existente");
+            alerta.showAndWait();
+            return false;
+        }
         return true;
     }
-
+    private Boolean verificaUsuarioExistente(String email){
+        try{
+            UsuarioDAO u = new UsuarioDAO();
+            Usuario user = u.listarPorEmail(email);
+            return user.getEmail() != null ? true : false;
+        } catch(TacticAllException ex){
+                ex.printStackTrace();
+                Alert alerta = new Alert(AlertType.ERROR, "Erro ao concluir o cadastro: " + ex.getMessage());
+                alerta.setTitle("Erro ao concluir o cadastro");
+                alerta.setHeaderText("Erro de cadastro");
+                alerta.showAndWait();
+        }
+        return false;
+    }
     public void ConcluirCadastro() throws IOException {
         if (validarCampos()) {
             try {

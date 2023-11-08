@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 /**
@@ -34,7 +35,7 @@ public class PerfilController extends Header implements Initializable {
     @FXML
     private TextField txt_email;
     @FXML
-    private TextField txt_senha;
+    private PasswordField txt_senha;
     @FXML
     private DatePicker dt_nasc;
 
