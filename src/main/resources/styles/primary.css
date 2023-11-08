@@ -1,0 +1,25 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+
+#SplitPane .split-pane-divider {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.txt-box {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 0, 0);
+
+}
+
+.btn {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
