@@ -108,7 +108,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="169.0">
                <children>
-                  <Button fx:id="btn_ir_cadastro1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#LogOff" style="-fx-background-color: transparent;" text="Gerenciar Times" textFill="#111111" wrapText="true">
+                  <Button fx:id="btn_ger_times" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Gerenciar Times" textFill="#111111" wrapText="true">
                      <font>
                         <Font name="Consolas Bold" size="12.0" />
                      </font>
@@ -120,7 +120,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="169.0">
                <children>
-                  <Button fx:id="btn_ir_cadastro11" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#LogOff" prefHeight="99.0" prefWidth="159.0" style="-fx-background-color: transparent;" text="Gerenciar Esquemas Táticos" textFill="#111111" wrapText="true">
+                  <Button fx:id="btn_ger_esquemas" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="99.0" prefWidth="159.0" style="-fx-background-color: transparent;" text="Gerenciar Esquemas Táticos" textFill="#111111" wrapText="true">
                      <font>
                         <Font name="Consolas Bold" size="12.0" />
                      </font>

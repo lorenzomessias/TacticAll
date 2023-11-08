@@ -131,13 +131,13 @@ public class UsuarioDAO implements GenericoDAO<Usuario> {
         }
     }
     
-        public void desativar(Usuario usuario) throws TacticAllException {
+        public void alterar_estado(Usuario usuario, int estado) throws TacticAllException {
         String sql = "UPDATE Usuario SET Ativo = ? WHERE Id = ?";
         Connection connection = null;
         try {
             connection = Conexao.getInstance().getConnection();
             PreparedStatement pStatement = connection.prepareStatement(sql);
-            pStatement.setInt(1, 0);
+            pStatement.setInt(1, estado);
             pStatement.setInt(2, usuario.getId());
             pStatement.execute();
 
@@ -154,6 +154,16 @@ public class UsuarioDAO implements GenericoDAO<Usuario> {
                 Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public void ativar(Usuario usuario) throws TacticAllException
+    {
+        alterar_estado(usuario, 1);
+    }
+    
+        public void desativar(Usuario usuario) throws TacticAllException
+    {
+        alterar_estado(usuario, 0);
     }
         
     @Override

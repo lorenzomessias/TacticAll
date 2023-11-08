@@ -27,14 +27,11 @@ public class HomeController extends Header implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if(Sessao.getInstancia() == null)
-        {
-            try {
-                App.setRoot("primary");
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                }
+        try {
+            VerificaLogin();
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
     
 }
