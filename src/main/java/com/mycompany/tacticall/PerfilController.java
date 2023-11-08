@@ -70,6 +70,8 @@ public class PerfilController extends Header implements Initializable {
             usu.setSenha(txt_senha.getText());
             usu.setDataDeNascimento(dt_nasc.getValue());
             dao.alterar(usu);
+            Sessao.LimparSessao();
+            Sessao.setInstancia(usu.getEmail(), "login", usu.getNome());
             App.setRoot("home");
         } catch (TacticAllException ex) {
             Alert alerta = new Alert(AlertType.ERROR, "Erro ao editar o perfil: " + ex.getMessage());
@@ -84,6 +86,7 @@ public class PerfilController extends Header implements Initializable {
             UsuarioDAO dao = new UsuarioDAO();
             Usuario usu = dao.listarPorEmail(Sessao.getInstancia().getEmail());
             dao.desativar(usu);
+            Sessao.LimparSessao();
             App.setRoot("primary");
         } catch (TacticAllException ex) {
             Alert alerta = new Alert(AlertType.ERROR, "Erro ao desativar o perfil: " + ex.getMessage());
