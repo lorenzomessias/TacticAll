@@ -8,10 +8,9 @@ package com.mycompany.model;
  *
  * @author Everymind
  */
-import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
-public class Simulacao  implements Serializable{
+public class Simulacao {
     private int id;
     private int idEsquemaOfensivoMandante;
     private int idEsquemaOfensivoVisitante;
@@ -20,12 +19,12 @@ public class Simulacao  implements Serializable{
     private int idUsuario;
     private int golsTimeVisitante;
     private int golsTimeMandante;
-    private Date dataSimulacao;
+    private LocalDate dataSimulacao;
 
     public Simulacao(){}
         public Simulacao(int id, int idEsquemaOfensivoMandante, int idEsquemaOfensivoVisitante,
                      int idEsquemaDefensivoMandante, int idEsquemaDefensivoVisitante,
-                     int idUsuario, int golsTimeVisitante, int golsTimeMandante, Date dataSimulacao) {
+                     int idUsuario, int golsTimeVisitante, int golsTimeMandante, LocalDate dataSimulacao) {
         this.id = id;
         this.idEsquemaOfensivoMandante = idEsquemaOfensivoMandante;
         this.idEsquemaOfensivoVisitante = idEsquemaOfensivoVisitante;
@@ -38,7 +37,7 @@ public class Simulacao  implements Serializable{
     }
     public Simulacao(int idEsquemaOfensivoMandante, int idEsquemaOfensivoVisitante,
                      int idEsquemaDefensivoMandante, int idEsquemaDefensivoVisitante,
-                     int idUsuario, int golsTimeVisitante, int golsTimeMandante, Date dataSimulacao) {
+                     int idUsuario, int golsTimeVisitante, int golsTimeMandante, LocalDate dataSimulacao) {
         this.idEsquemaOfensivoMandante = idEsquemaOfensivoMandante;
         this.idEsquemaOfensivoVisitante = idEsquemaOfensivoVisitante;
         this.idEsquemaDefensivoMandante = idEsquemaDefensivoMandante;
@@ -81,7 +80,7 @@ public class Simulacao  implements Serializable{
         return golsTimeMandante;
     }
 
-    public Date getDataSimulacao() {
+    public LocalDate getDataSimulacao() {
         return dataSimulacao;
     }
 
@@ -113,7 +112,7 @@ public class Simulacao  implements Serializable{
         this.golsTimeMandante = golsTimeMandante;
     }
 
-    public void setDataSimulacao(Date dataSimulacao) {
+    public void setDataSimulacao(LocalDate dataSimulacao) {
         this.dataSimulacao = dataSimulacao;
     }
 }
