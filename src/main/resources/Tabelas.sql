@@ -14,3 +14,84 @@ INSERT INTO Usuario (Nome, Email, DataDeNascimento, Senha, Ativo)
 VALUES ('Maria da Silva', 'maria.silva@email.com', '1985-12-10', 'senha456', 1);
 
 SELECT * FROM Usuario
+
+
+CREATE TABLE Profissional (
+    Id INT PRIMARY KEY,
+    Nome VARCHAR(255) NOT NULL,
+    DataDeNascimento DATE ,
+    Nacionalidade VARCHAR(50),
+    NotaGeral DOUBLE
+);
+CREATE TABLE Jogador (
+    Id INT PRIMARY KEY,
+    Habilidade INT ,
+    Posicao VARCHAR(50),
+    Velocidade INT,
+    Resistencia INT,
+    Tecnica INT,
+    Chute INT,
+    Passe INT,
+    IdProfissional INT,
+    FOREIGN KEY (IdProfissional) REFERENCES Profissional(Id)
+);
+CREATE TABLE TREINADOR (
+    Id INT PRIMARY KEY,
+    IdProfissional INT,
+    FOREIGN KEY (IdProfissional) REFERENCES Profissional(Id),
+    Especialidade VARCHAR(50),
+    QtdTitulos INT,
+    QtdClubes INT
+)
+
+CREATE TABLE Time (
+    Id INT PRIMARY KEY,
+    Nome VARCHAR(255) NOT NULL,
+    Sigla VARCHAR(10),
+    Pais VARCHAR(50),
+    Liga VARCHAR(50),
+    IdUsuario INT,
+    CorUniforme VARCHAR(20),
+    FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
+
+);
+
+CREATE TABLE RelacionamentoTimeProfissional(
+   Id INT PRIMARY KEY,
+   IdProfissional INT,
+   IdTime INT,
+   FOREIGN KEY (IdProfissional) REFERENCES Profissional(Id),
+   FOREIGN KEY (IdTime) REFERENCES Time(Id)
+)
+
+CREATE TABLE EsquemaTatico (
+    Id INT PRIMARY KEY,
+    IdTime INT,
+    Tipo VARCHAR(20), 
+    Nome VARCHAR(255),
+    Formacao VARCHAR(20),
+    TaticaEspecifica VARCHAR(50),
+    FOREIGN KEY (IdTime) REFERENCES Time(Id)
+);
+
+CREATE TABLE Simulacao (
+    Id INT PRIMARY KEY,
+    IdEsquemaOfensivoMandante INT,
+    IdEsquemaOfensivoVisitante INT,
+    IdEsquemaDefensivoMandante INT,
+    IdEsquemaDefensivoVisitante INT,
+    IdUsuario INT,
+    GolsTimeVisitante INT,
+    GolsTimeMandante INT,
+    DataSimulacao DATE,
+    FOREIGN KEY (IDEsquemaOfensivoMandante) REFERENCES EsquemaTatico(Id),
+    FOREIGN KEY (IDEsquemaOfensivoVisitante) REFERENCES EsquemaTatico(Id),
+    FOREIGN KEY (IDEsquemaDefensivoMandante) REFERENCES EsquemaTatico(Id),
+    FOREIGN KEY (IDEsquemaDefensivoVisitante) REFERENCES EsquemaTatico(Id),
+    FOREIGN KEY (IDUsuario) REFERENCES Usuario(Id)
+);
+
+
+
+
+
