@@ -4,11 +4,13 @@
  */
 package com.mycompany.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author CS
  */
-public class Jogador {
+public class Jogador extends Profissional implements Serializable{
 
     private int id;
     private int habilidade;
