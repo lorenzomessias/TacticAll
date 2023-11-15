@@ -17,14 +17,14 @@ SELECT * FROM Usuario
 
 
 CREATE TABLE Profissional (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     Nome VARCHAR(255) NOT NULL,
     DataDeNascimento DATE ,
     Nacionalidade VARCHAR(50),
     NotaGeral DOUBLE
 );
 CREATE TABLE Jogador (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     Habilidade INT ,
     Posicao VARCHAR(50),
     Velocidade INT,
@@ -36,16 +36,16 @@ CREATE TABLE Jogador (
     FOREIGN KEY (IdProfissional) REFERENCES Profissional(Id)
 );
 CREATE TABLE TREINADOR (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     IdProfissional INT,
     FOREIGN KEY (IdProfissional) REFERENCES Profissional(Id),
     Especialidade VARCHAR(50),
     QtdTitulos INT,
     QtdClubes INT
-)
+);
 
 CREATE TABLE Time (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     Nome VARCHAR(255) NOT NULL,
     Sigla VARCHAR(10),
     Pais VARCHAR(50),
@@ -57,15 +57,15 @@ CREATE TABLE Time (
 );
 
 CREATE TABLE RelacionamentoTimeProfissional(
-   Id INT PRIMARY KEY,
+   Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
    IdProfissional INT,
    IdTime INT,
    FOREIGN KEY (IdProfissional) REFERENCES Profissional(Id),
    FOREIGN KEY (IdTime) REFERENCES Time(Id)
-)
+);
 
 CREATE TABLE EsquemaTatico (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     IdTime INT,
     Tipo VARCHAR(20), 
     Nome VARCHAR(255),
@@ -75,7 +75,7 @@ CREATE TABLE EsquemaTatico (
 );
 
 CREATE TABLE Simulacao (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     IdEsquemaOfensivoMandante INT,
     IdEsquemaOfensivoVisitante INT,
     IdEsquemaDefensivoMandante INT,
