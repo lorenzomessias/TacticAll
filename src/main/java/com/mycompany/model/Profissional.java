@@ -8,23 +8,24 @@ package com.mycompany.model;
  *
  * @author Everymind
  */
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Profissional {
     private int id;
     private String nome;
-    private Date dataDeNascimento;
+    private LocalDate dataDeNascimento;
     private String nacionalidade;
     private double notaGeral;
     public Profissional(){}
-    public Profissional(int id, String nome, Date dataDeNascimento, String nacionalidade, double notaGeral) {
+    public Profissional(int id, String nome, LocalDate dataDeNascimento, String nacionalidade, double notaGeral) {
         this.id = id;
         this.nome = nome;
         this.dataDeNascimento = dataDeNascimento;
         this.nacionalidade = nacionalidade;
         this.notaGeral = notaGeral;
     }
-    public Profissional( String nome, Date dataDeNascimento, String nacionalidade, double notaGeral) {
+    public Profissional( String nome, LocalDate dataDeNascimento, String nacionalidade, double notaGeral) {
         this.nome = nome;
         this.dataDeNascimento = dataDeNascimento;
         this.nacionalidade = nacionalidade;
@@ -38,7 +39,7 @@ public class Profissional {
         return nome;
     }
 
-    public Date getDataDeNascimento() {
+    public LocalDate getDataDeNascimento() {
         return dataDeNascimento;
     }
 
@@ -55,7 +56,7 @@ public class Profissional {
         this.nome = nome;
     }
 
-    public void setDataDeNascimento(Date dataDeNascimento) {
+    public void setDataDeNascimento(LocalDate dataDeNascimento) {
         this.dataDeNascimento = dataDeNascimento;
     }
 

@@ -4,11 +4,13 @@
  */
 package com.mycompany.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Everymind
  */
-public class Time {
+public class Time implements Serializable{
     private int id;
     private String nome;
     private String sigla;

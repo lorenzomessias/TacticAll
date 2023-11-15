@@ -4,11 +4,13 @@
  */
 package com.mycompany.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author CS
  */
-public class EsquemaTatico {
+public class EsquemaTatico implements Serializable {
 
     private int id;
     private int idTime;

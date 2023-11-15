@@ -8,9 +8,10 @@ package com.mycompany.model;
  *
  * @author Everymind
  */
+import java.io.Serializable;
 import java.util.Date;
 
-public class Simulacao {
+public class Simulacao  implements Serializable{
     private int id;
     private int idEsquemaOfensivoMandante;
     private int idEsquemaOfensivoVisitante;
