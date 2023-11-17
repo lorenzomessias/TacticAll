@@ -1,0 +1,67 @@
+/* styles.css */
+
+@font-face {
+    font-family: 'Open Sans Regular';
+    src: url('file:./fonts/OpenSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Open Sans Bold';
+    src: url('file:./fonts/OpenSans-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Open Sans Semibold';
+    src: url('file:./fonts/OpenSans-SemiBold.ttf');
+}
+
+@font-face {
+    font-family: 'Open Sans Regular Italic';
+    src: url('file:./fonts/OpenSans-Italic.ttf');
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Open Sans Bold Italic';
+    src: url('file:./fonts/OpenSans-BoldItalic.ttf');
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Open Sans Semibold Italic';
+    src: url('file:./fonts/OpenSans-SemiBoldItalic.ttf');
+    font-style: italic;
+}
+
+.regular-text {
+    -fx-font-family: 'Open Sans Regular';
+}
+
+.bold-text {
+    -fx-font-family: 'Open Sans Bold';
+}
+
+.semibold-text {
+    -fx-font-family: 'Open Sans Semibold';
+}
+
+.italic-regular-text {
+    -fx-font-family: 'Open Sans Regular Italic';
+}
+
+.italic-bold-text {
+    -fx-font-family: 'Open Sans Bold Italic';
+}
+
+.italic-semibold-text {
+    -fx-font-family: 'Open Sans Semibold Italic';
+}
+
+.sidebar {
+    -fx-background-radius: 15;
+    -fx-background-color: #174a25;
+}
+
+.sidebar-button {
+    -fx-letter-spacing: 0.4em;
+}

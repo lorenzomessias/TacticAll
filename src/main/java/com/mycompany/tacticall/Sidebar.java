@@ -6,11 +6,41 @@ package com.mycompany.tacticall;
 
 import java.io.IOException;
 import java.util.Optional;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 
-public abstract class Header {
+public abstract class Sidebar {
+
+    @FXML
+    private Button btn_ger_times;
+
+    @FXML
+    private Button btn_ger_esquemas;
+
+    @FXML
+    private Button btn_simulacao;
+
+    @FXML
+    private Button btn_historico;
+
+    @FXML
+    private Button btn_editar_perfil;
+
+    private void setLetterSpacing(Button button) {
+        // Add a custom style to the button
+        button.setStyle("-fx-letter-spacing: 0.4em;"); // Adjust the letter spacing as needed
+    }
     
+    public void Espacamento_Botoes()
+    {
+        setLetterSpacing(btn_ger_times);
+        setLetterSpacing(btn_ger_esquemas);
+        setLetterSpacing(btn_simulacao);
+        setLetterSpacing(btn_historico);
+        setLetterSpacing(btn_editar_perfil);  
+    }
     public void EditarPerfil() throws IOException {
         if (Sessao.getInstancia() == null) {
             App.setRoot("primary");
@@ -23,8 +53,8 @@ public abstract class Header {
         Sessao.LimparSessao();
         App.setRoot("primary");
     }
-    
-        public void VerificaLogin() throws IOException {
+
+    public void VerificaLogin() throws IOException {
         if (Sessao.getInstancia() == null) {
             Alert alerta = new Alert(Alert.AlertType.WARNING);
             alerta.setTitle("Acesso Restrito");
@@ -45,4 +75,3 @@ public abstract class Header {
         }
     }
 }
-
