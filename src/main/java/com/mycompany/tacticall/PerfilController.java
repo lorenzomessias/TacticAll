@@ -25,7 +25,7 @@ import javafx.scene.control.TextField;
  *
  * @author moond
  */
-public class PerfilController extends Header implements Initializable {
+public class PerfilController extends Sidebar implements Initializable {
 
     /**
      * Initializes the controller class.

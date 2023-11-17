@@ -18,6 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        System.setProperty("prism.allowhidpi", "true");
         scene = new Scene(loadFXML("primary"), 640, 480);
         Image icone = new Image(getClass().getResource("/com/mycompany/tacticall/Imagens/icone.png").toExternalForm());
         stage.getIcons().add(icone);

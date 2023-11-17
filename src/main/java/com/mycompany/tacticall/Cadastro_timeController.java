@@ -4,9 +4,6 @@
  */
 package com.mycompany.tacticall;
 
-import com.mycompany.dao.UsuarioDAO;
-import com.mycompany.exception.TacticAllException;
-import com.mycompany.model.Usuario;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,19 +16,19 @@ import javafx.fxml.Initializable;
  *
  * @author moond
  */
-public class HomeController extends Sidebar implements Initializable {
-
+public class Cadastro_timeController extends Sidebar implements Initializable {
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Espacamento_Botoes();
         try {
             VerificaLogin();
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
+    }      
     
 }
