@@ -32,15 +32,15 @@ public abstract class Sidebar {
         // Add a custom style to the button
         button.setStyle("-fx-letter-spacing: 0.4em;"); // Adjust the letter spacing as needed
     }
-    
-    public void Espacamento_Botoes()
-    {
+
+    public void Espacamento_Botoes() {
         setLetterSpacing(btn_ger_times);
         setLetterSpacing(btn_ger_esquemas);
         setLetterSpacing(btn_simulacao);
         setLetterSpacing(btn_historico);
-        setLetterSpacing(btn_editar_perfil);  
+        setLetterSpacing(btn_editar_perfil);
     }
+
     public void EditarPerfil() throws IOException {
         if (Sessao.getInstancia() == null) {
             App.setRoot("primary");
@@ -73,5 +73,21 @@ public abstract class Sidebar {
                 App.setRoot("cadastro");
             }
         }
+    }
+
+    public void Ir_Times() throws IOException {
+        App.setRoot("times");
+    }
+
+    public void Ir_Esquemas_Taticos() throws IOException {
+        App.setRoot("esquemas_taticos");
+    }
+
+    public void Ir_Simulacao() throws IOException {
+        App.setRoot("simulacao");
+    }
+
+    public void Ir_Historico() throws IOException {
+        App.setRoot("historico");
     }
 }

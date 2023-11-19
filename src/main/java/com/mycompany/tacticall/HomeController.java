@@ -12,7 +12,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -21,6 +24,8 @@ import javafx.fxml.Initializable;
  */
 public class HomeController extends Sidebar implements Initializable {
 
+    @FXML
+    Label txt_user;
 
     /**
      * Initializes the controller class.
@@ -32,6 +37,7 @@ public class HomeController extends Sidebar implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
-    
+        txt_user.setText(Sessao.getInstancia().getNome());
+    }
+
 }

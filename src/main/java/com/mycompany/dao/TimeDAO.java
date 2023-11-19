@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.dao;
+
 import com.mycompany.exception.TacticAllException;
 import com.mycompany.model.Time;
 import java.sql.Connection;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author CS
@@ -158,5 +160,31 @@ public class TimeDAO implements GenericoDAO<Time> {
         }
         return time;
     }
-    
+
+    public int IdMaisRecente() throws TacticAllException {
+        int id = -1;
+        Connection connection = null;
+        String sql = "SELECT Id FROM Time ORDER BY Id DESC FETCH FIRST 1 ROW ONLY;";
+
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                id = result.getInt("id");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return id;
+    }
+
 }

@@ -25,7 +25,7 @@
                         <Insets />
                      </HBox.margin>
                   </Label>
-                  <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Usuário!" textFill="#006511">
+                  <Label fx:id="txt_user" styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Usuário!" textFill="#006511">
                      <font>
                         <Font size="30.0" />
                      </font>
@@ -204,7 +204,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_ger_times" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" styleClass="bold-text" text="Times" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_ger_times" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Times" style="-fx-background-color: transparent;" styleClass="bold-text" text="Times" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas" size="14.0" />
                            </font>
@@ -216,7 +216,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_ger_esquemas" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" styleClass="bold-text" text="Esquemas Táticos" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_ger_esquemas" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Esquemas_Taticos" style="-fx-background-color: transparent;" styleClass="bold-text" text="Esquemas Táticos" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
@@ -228,7 +228,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_ger_esquemas1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" styleClass="bold-text" text="Simulação de Partida" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_simulacao" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Simulacao" style="-fx-background-color: transparent;" styleClass="bold-text" text="Simulação de Partida" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
@@ -240,7 +240,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_ger_esquemas11" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" styleClass="bold-text" text="Histórico e Analytics" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_historico" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Historico" style="-fx-background-color: transparent;" styleClass="bold-text" text="Histórico e Analytics" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>

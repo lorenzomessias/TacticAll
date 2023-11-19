@@ -25,7 +25,7 @@
          <children>
             <HBox alignment="TOP_CENTER">
                <children>
-                  <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Criar um Novo Esquema Tático">
+                  <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Criar Esquema Tático">
                      <font>
                         <Font size="30.0" />
                      </font>
@@ -57,7 +57,7 @@
                                                 <Font size="22.0" />
                                              </font>
                                           </Label>
-                                          <TextField>
+                                          <TextField fx:id="txt_nome_es">
                                              <stylesheets>
                                                 <URL value="@../../../styles/cadastro.css" />
                                                 <URL value="@../../../styles/primary.css" />
@@ -80,7 +80,7 @@
                                                 <Font size="22.0" />
                                              </font>
                                           </Label>
-                                          <ComboBox maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
+                                          <ComboBox fx:id="cb_time_es" maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
                                              <VBox.margin>
                                                 <Insets top="10.0" />
                                              </VBox.margin>
@@ -104,7 +104,7 @@
                                                 <Font size="22.0" />
                                              </font>
                                           </Label>
-                                          <ComboBox maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
+                                          <ComboBox fx:id="cb_categ_es" maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
                                              <VBox.margin>
                                                 <Insets top="10.0" />
                                              </VBox.margin>
@@ -118,7 +118,7 @@
                                                 <Font size="22.0" />
                                              </font>
                                           </Label>
-                                          <ComboBox maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
+                                          <ComboBox fx:id="cb_tatica_es" maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
                                              <VBox.margin>
                                                 <Insets top="10.0" />
                                              </VBox.margin>
@@ -157,7 +157,7 @@
                               </HBox>
                               <HBox>
                                  <children>
-                                    <TextField HBox.hgrow="ALWAYS">
+                                    <TextField fx:id="txt_pesquisa_jogadores" HBox.hgrow="ALWAYS">
                                        <stylesheets>
                                           <URL value="@../../../styles/cadastro.css" />
                                           <URL value="@../../../styles/primary.css" />
@@ -168,6 +168,14 @@
                                           <String fx:value="regular-text" />
                                        </styleClass>
                                     </TextField>
+                                    <ImageView fx:id="btn_pesquisa" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Pesquisar_Jogadores_Time" pickOnBounds="true" preserveRatio="true" smooth="true">
+                                       <image>
+                                          <Image url="@Imagens/search_icon.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </ImageView>
                                  </children>
                                  <VBox.margin>
                                     <Insets top="10.0" />
@@ -210,7 +218,7 @@
                                                                   <Font size="22.0" />
                                                                </font>
                                                             </Label>
-                                                            <ComboBox maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
+                                                            <ComboBox fx:id="cb_posicao_jogador" maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
                                                                <VBox.margin>
                                                                   <Insets top="10.0" />
                                                                </VBox.margin>
@@ -219,7 +227,7 @@
                                                       </VBox>
                                                       <HBox alignment="CENTER">
                                                          <children>
-                                                            <ImageView fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
+                                                            <ImageView fx:id="btn_add_jogador_es" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Escalar_Jogador" pickOnBounds="true" preserveRatio="true" smooth="true">
                                                                <image>
                                                                   <Image url="@Imagens/plus_icon.png" />
                                                                </image>
@@ -254,7 +262,7 @@
                   </VBox>
                   <VBox prefHeight="568.0" prefWidth="342.0" style="-fx-background-color: #222222; -fx-background-radius: 20;">
                      <children>
-                        <HBox>
+                        <HBox alignment="BOTTOM_LEFT">
                            <children>
                               <VBox HBox.hgrow="ALWAYS">
                                  <children>
@@ -263,7 +271,7 @@
                                           <Font size="22.0" />
                                        </font>
                                     </Label>
-                                    <TextField>
+                                    <TextField fx:id="txt_pesquisa_jogdores_escaldos">
                                        <stylesheets>
                                           <URL value="@../../../styles/cadastro.css" />
                                           <URL value="@../../../styles/primary.css" />
@@ -286,16 +294,27 @@
                                           <Font size="22.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
+                                    <HBox>
                                        <VBox.margin>
                                           <Insets top="10.0" />
                                        </VBox.margin>
-                                    </ComboBox>
+                                       <children>
+                                          <ComboBox fx:id="cb_posicao_jogadores_escalados" maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css" />
+                                       </children>
+                                    </HBox>
                                  </children>
                                  <HBox.margin>
                                     <Insets left="15.0" />
                                  </HBox.margin>
                               </VBox>
+                              <ImageView fx:id="btn_pesquisa_jogadores_escalados" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Pesquisar_Jogadores_Escalados" pickOnBounds="true" preserveRatio="true" smooth="true">
+                                 <image>
+                                    <Image url="@Imagens/search_icon.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets top="40.0" />
+                                 </HBox.margin>
+                              </ImageView>
                            </children>
                            <padding>
                               <Insets top="10.0" />
@@ -359,7 +378,7 @@
                                                    <children>
                                                       <HBox alignment="CENTER">
                                                          <children>
-                                                            <ImageView fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
+                                                            <ImageView fx:id="btn_remover_jogador_escalado" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Remover_Jogador_Escalado" pickOnBounds="true" preserveRatio="true" smooth="true">
                                                                <image>
                                                                   <Image url="@Imagens/x_icon.png" />
                                                                </image>
@@ -627,7 +646,7 @@
                   </VBox>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" style="-fx-background-radius: 30;" stylesheets="@../../../styles/styles.css" text="Salvar Esquema Tático" textFill="#d3d3d3">
+            <Button fx:id="btn_salvar_esquema" mnemonicParsing="false" onMouseClicked="#Salvar_Esquema_Tatico" style="-fx-background-radius: 30;" stylesheets="@../../../styles/styles.css" text="Salvar Esquema Tático" textFill="#d3d3d3">
                <font>
                   <Font size="18.0" />
                </font>
