@@ -16,13 +16,13 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tacticall.Cadastro_timeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tacticall.Editar_timeController">
    <center>
       <VBox alignment="TOP_CENTER">
          <children>
             <HBox alignment="TOP_CENTER">
                <children>
-                  <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Criar um Novo Time">
+                  <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Editar Time">
                      <font>
                         <Font size="30.0" />
                      </font>
@@ -70,14 +70,14 @@
                                           </TextField>
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="txt_sigla_t">
+                                    <VBox>
                                        <children>
                                           <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Sigla do Time" textFill="LIGHTGRAY">
                                              <font>
                                                 <Font size="22.0" />
                                              </font>
                                           </Label>
-                                          <TextField>
+                                          <TextField fx:id="txt_sigla_t">
                                              <stylesheets>
                                                 <URL value="@../../../styles/cadastro.css" />
                                                 <URL value="@../../../styles/primary.css" />
@@ -232,7 +232,7 @@
                               </HBox>
                               <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
                                  <content>
-                                    <VBox fx:id="vbox_list_jogadores" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #e3e3e3;">
+                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #e3e3e3;">
                                        <children>
                                           <HBox fx:id="h_time_01" alignment="CENTER_LEFT" style="-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;">
                                              <children>
@@ -407,7 +407,7 @@
                </font>
                <styleClass>
                   <String fx:value="sidebar" />
-                  <String fx:value="bold-text" />
+                  <String fx:value="semibold-text" />
                </styleClass>
                <VBox.margin>
                   <Insets />

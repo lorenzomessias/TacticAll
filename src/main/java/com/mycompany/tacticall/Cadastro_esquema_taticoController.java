@@ -4,40 +4,31 @@
  */
 package com.mycompany.tacticall;
 
-import com.mycompany.dao.UsuarioDAO;
-import com.mycompany.exception.TacticAllException;
-import com.mycompany.model.Usuario;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
  *
  * @author moond
  */
-public class HomeController extends Sidebar implements Initializable {
-
-    @FXML
-    Label txt_user;
+public class Cadastro_esquema_taticoController extends Sidebar implements Initializable {
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Espacamento_Botoes();
         try {
             VerificaLogin();
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Cadastro_esquema_taticoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        txt_user.setText(Sessao.getInstancia().getNome());
-    }
-
+    }     
+    
 }
