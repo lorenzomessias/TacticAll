@@ -15,6 +15,31 @@ import java.util.logging.Logger;
 
 
 public class ProfissionalDAO implements GenericoDAO<Profissional> {
+    public int IdMaisRecente() throws TacticAllException {
+        int id = -1;
+        Connection connection = null;
+        String sql = "SELECT Id FROM Profissional ORDER BY Id DESC FETCH FIRST 1 ROW ONLY;";
+
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                id = result.getInt("Id");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return id;
+    }
 
     @Override
     public List<Profissional> listar() throws TacticAllException {
