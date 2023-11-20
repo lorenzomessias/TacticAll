@@ -24,8 +24,7 @@ public class TreinadorDAO implements GenericoDAO<Treinador> {
             ResultSet result = pStatement.executeQuery();
             while (result.next()) {
                 Treinador treinador = new Treinador(result.getInt("Id"), result.getInt("IdProfissional"),
-                        result.getString("Especialidade"), result.getInt("QtdTitulos"),
-                        result.getInt("QtdClubes"));
+                        result.getString("Especialidade"));
                 treinadores.add(treinador);
             }
         } catch (ClassNotFoundException ex) {
@@ -44,15 +43,13 @@ public class TreinadorDAO implements GenericoDAO<Treinador> {
 
     @Override
     public void inserir(Treinador treinador) throws TacticAllException {
-        String sql = "INSERT INTO Treinador (IdProfissional, Especialidade, QtdTitulos, QtdClubes) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Treinador (IdProfissional, Especialidade) VALUES (?, ?)";
         Connection connection = null;
         try {
             connection = Conexao.getInstance().getConnection();
             PreparedStatement pStatement = connection.prepareStatement(sql);
             pStatement.setInt(1, treinador.getIdProfissional());
             pStatement.setString(2, treinador.getEspecialidade());
-            pStatement.setInt(3, treinador.getQtdTitulos());
-            pStatement.setInt(4, treinador.getQtdClubes());
             pStatement.execute();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TreinadorDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,16 +68,14 @@ public class TreinadorDAO implements GenericoDAO<Treinador> {
 
     @Override
     public void alterar(Treinador treinador) throws TacticAllException {
-        String sql = "UPDATE Treinador SET IdProfissional = ?, Especialidade = ?, QtdTitulos = ?, QtdClubes = ? WHERE Id = ?";
+        String sql = "UPDATE Treinador SET IdProfissional = ?, Especialidade = ? WHERE Id = ?";
         Connection connection = null;
         try {
             connection = Conexao.getInstance().getConnection();
             PreparedStatement pStatement = connection.prepareStatement(sql);
             pStatement.setInt(1, treinador.getIdProfissional());
             pStatement.setString(2, treinador.getEspecialidade());
-            pStatement.setInt(3, treinador.getQtdTitulos());
-            pStatement.setInt(4, treinador.getQtdClubes());
-            pStatement.setInt(5, treinador.getId());
+            pStatement.setInt(3, treinador.getId());
             pStatement.execute();
 
         } catch (ClassNotFoundException ex) {
@@ -137,8 +132,7 @@ public class TreinadorDAO implements GenericoDAO<Treinador> {
             ResultSet result = pStatement.executeQuery();
             while (result.next()) {
                 treinador = new Treinador(result.getInt("Id"), result.getInt("IdProfissional"),
-                        result.getString("Especialidade"), result.getInt("QtdTitulos"),
-                        result.getInt("QtdClubes"));
+                        result.getString("Especialidade"));
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TreinadorDAO.class.getName()).log(Level.SEVERE, null, ex);

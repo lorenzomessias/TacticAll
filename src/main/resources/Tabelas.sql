@@ -21,18 +21,13 @@ CREATE TABLE Profissional (
     Nome VARCHAR(255) NOT NULL,
     DataDeNascimento DATE ,
     Nacionalidade VARCHAR(50),
-    NotaGeral DOUBLE
+    NotaGeral DOUBLE,
+    Imagem VARCHAR(255)
 );
 SELECT Id FROM Profissional ORDER BY Id DESC FETCH FIRST 1 ROW ONLY;
 CREATE TABLE Jogador (
     Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-    Habilidade INT ,
     Posicao VARCHAR(50),
-    Velocidade INT,
-    Resistencia INT,
-    Tecnica INT,
-    Chute INT,
-    Passe INT,
     IdProfissional INT,
     FOREIGN KEY (IdProfissional) REFERENCES Profissional(Id)
 );
@@ -40,9 +35,7 @@ CREATE TABLE TREINADOR (
     Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     IdProfissional INT,
     FOREIGN KEY (IdProfissional) REFERENCES Profissional(Id),
-    Especialidade VARCHAR(50),
-    QtdTitulos INT,
-    QtdClubes INT
+    Especialidade VARCHAR(50)
 );
 
 CREATE TABLE Time (

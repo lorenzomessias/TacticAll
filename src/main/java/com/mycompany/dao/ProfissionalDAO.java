@@ -53,7 +53,7 @@ public class ProfissionalDAO implements GenericoDAO<Profissional> {
             while (result.next()) {
                 profissionais.add(new Profissional(result.getInt("Id"), result.getString("Nome"),
                         result.getDate("DataDeNascimento").toLocalDate(), result.getString("Nacionalidade"),
-                        result.getDouble("NotaGeral")));
+                        result.getDouble("NotaGeral"), result.getString("Imagem")));
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,7 +71,7 @@ public class ProfissionalDAO implements GenericoDAO<Profissional> {
 
     @Override
     public void inserir(Profissional profissional) throws TacticAllException {
-        String sql = "INSERT INTO Profissional (Nome, DataDeNascimento, Nacionalidade, NotaGeral) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Profissional (Nome, DataDeNascimento, Nacionalidade, NotaGeral,Imagem) VALUES (?, ?, ?, ?,?)";
         Connection connection = null;
         try {
             connection = Conexao.getInstance().getConnection();
@@ -80,6 +80,7 @@ public class ProfissionalDAO implements GenericoDAO<Profissional> {
             pStatement.setDate(2, Date.valueOf(profissional.getDataDeNascimento()));
             pStatement.setString(3, profissional.getNacionalidade());
             pStatement.setDouble(4, profissional.getNotaGeral());
+            pStatement.setString(5, profissional.getImagem());
             pStatement.execute();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,7 +99,7 @@ public class ProfissionalDAO implements GenericoDAO<Profissional> {
 
     @Override
     public void alterar(Profissional profissional) throws TacticAllException {
-        String sql = "UPDATE Profissional SET Nome = ?, DataDeNascimento = ?, Nacionalidade = ?, NotaGeral = ? WHERE Id = ?";
+        String sql = "UPDATE Profissional SET Nome = ?, DataDeNascimento = ?, Nacionalidade = ?, NotaGeral = ?, Imagem = ? WHERE Id = ?";
         Connection connection = null;
         try {
             connection = Conexao.getInstance().getConnection();
@@ -107,7 +108,9 @@ public class ProfissionalDAO implements GenericoDAO<Profissional> {
             pStatement.setDate(2, Date.valueOf(profissional.getDataDeNascimento()));
             pStatement.setString(3, profissional.getNacionalidade());
             pStatement.setDouble(4, profissional.getNotaGeral());
-            pStatement.setInt(5, profissional.getId());
+           pStatement.setString(5, profissional.getImagem());
+            pStatement.setInt(6, profissional.getId());
+
             pStatement.execute();
 
         } catch (ClassNotFoundException ex) {
@@ -165,7 +168,7 @@ public class ProfissionalDAO implements GenericoDAO<Profissional> {
             while (result.next()) {
                 profissional = new Profissional(result.getInt("Id"), result.getString("Nome"),
                         result.getDate("DataDeNascimento").toLocalDate(), result.getString("Nacionalidade"),
-                        result.getDouble("NotaGeral"));
+                        result.getDouble("NotaGeral"), result.getString("Imagem"));
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
