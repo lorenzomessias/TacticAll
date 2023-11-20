@@ -18,7 +18,7 @@ public class ProfissionalDAO implements GenericoDAO<Profissional> {
     public int IdMaisRecente() throws TacticAllException {
         int id = -1;
         Connection connection = null;
-        String sql = "SELECT Id FROM Profissional ORDER BY Id DESC FETCH FIRST 1 ROW ONLY;";
+        String sql = "SELECT Id FROM Profissional ORDER BY Id DESC FETCH FIRST 1 ROW ONLY";
 
         try {
             connection = Conexao.getInstance().getConnection();
