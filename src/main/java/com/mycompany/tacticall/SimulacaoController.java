@@ -4,6 +4,7 @@
  */
 package com.mycompany.tacticall;
 
+import com.mycompany.dao.EsquemaTaticoDAO;
 import com.mycompany.dao.RelacionamentoJogadorEsquemaDAO;
 import com.mycompany.dao.RelacionamentoTimeProfissionalDAO;
 import com.mycompany.dao.SimulacaoDAO;
@@ -95,6 +96,11 @@ public class SimulacaoController {
     public boolean golComProbabilidade(double probabilidade) {
         double numeroAleatorio = new Random().nextDouble();
         return numeroAleatorio <= probabilidade;
+    }
+    
+    public List<EsquemaTatico> retornaEsquemasPorTime(int idTime) throws TacticAllException{
+        EsquemaTaticoDAO esquemaDao = new EsquemaTaticoDAO();
+        return esquemaDao.listarEsquemasPorTime(idTime);
     }
 
     private boolean posicaoCoincide(Jogador jogador, List<Jogador> ofensivo, List<Jogador> defensivo) {
