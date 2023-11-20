@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  * @author CS
  */
 public class SimulacaoDAO implements GenericoDAO<Simulacao> {
+    public SimulacaoDAO(){}
 
     @Override
     public List<Simulacao> listar() throws TacticAllException {
