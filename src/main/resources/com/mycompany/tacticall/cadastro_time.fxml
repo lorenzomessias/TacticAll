@@ -43,13 +43,13 @@
                <children>
                   <VBox alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
                      <children>
-                        <VBox style="-fx-background-color: #222222; -fx-background-radius: 20;">
+                        <VBox style="-fx-background-color: #e3e3e3; -fx-background-radius: 20;">
                            <children>
                               <HBox>
                                  <children>
                                     <VBox HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Nome do Time" textFill="LIGHTGRAY">
+                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Nome do Time" textFill="#5b5b5b">
                                              <font>
                                                 <Font size="22.0" />
                                              </font>
@@ -72,7 +72,7 @@
                                     </VBox>
                                     <VBox>
                                        <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Sigla do Time" textFill="LIGHTGRAY">
+                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Sigla do Time" textFill="#5b5b5b">
                                              <font>
                                                 <Font size="22.0" />
                                              </font>
@@ -105,7 +105,7 @@
                                  <children>
                                     <VBox HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="País" textFill="LIGHTGRAY">
+                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="País" textFill="#5b5b5b">
                                              <font>
                                                 <Font size="22.0" />
                                              </font>
@@ -126,9 +126,9 @@
                                           </TextField>
                                        </children>
                                     </VBox>
-                                    <VBox>
+                                    <VBox HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Liga" textFill="LIGHTGRAY">
+                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Liga" textFill="#5b5b5b">
                                              <font>
                                                 <Font size="22.0" />
                                              </font>
@@ -154,12 +154,12 @@
                                     </VBox>
                                     <VBox>
                                        <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Cor do Uniforme" textFill="LIGHTGRAY">
+                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Cor do Uniforme" textFill="#5b5b5b">
                                              <font>
                                                 <Font size="22.0" />
                                              </font>
                                           </Label>
-                                          <ColorPicker fx:id="cor_t">
+                                          <ColorPicker fx:id="cor_t" VBox.vgrow="ALWAYS">
                                              <VBox.margin>
                                                 <Insets top="10.0" />
                                              </VBox.margin>
@@ -236,18 +236,18 @@
                                        <children>
                                           <HBox fx:id="h_time_01" alignment="CENTER_LEFT" style="-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;">
                                              <children>
-                                                <Circle fill="#c6c6c6" radius="48.0" stroke="#ebebeb" strokeType="INSIDE" strokeWidth="3.0" />
+                                                <Circle fill="#c6c6c6" radius="40.0" stroke="#ebebeb" strokeType="INSIDE" strokeWidth="3.0" />
                                                 <VBox>
                                                    <HBox.margin>
                                                       <Insets left="20.0" top="10.0" />
                                                    </HBox.margin>
                                                    <children>
-                                                      <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Jogador" textFill="#5b5b5b">
+                                                      <Label fx:id="lb_jogador_nome" styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Jogador" textFill="#5b5b5b">
                                                          <font>
                                                             <Font size="22.0" />
                                                          </font>
                                                       </Label>
-                                                      <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Dados do jogador" textFill="#808080" wrapText="true">
+                                                      <Label fx:id="lb_jogador_dados" styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Dados do jogador" textFill="#808080" wrapText="true">
                                                          <font>
                                                             <Font size="18.0" />
                                                          </font>
@@ -275,6 +275,9 @@
                                                          </HBox.margin>
                                                       </HBox>
                                                    </children>
+                                                   <HBox.margin>
+                                                      <Insets right="5.0" />
+                                                   </HBox.margin>
                                                 </HBox>
                                              </children>
                                              <padding>
@@ -295,69 +298,264 @@
                               <Insets top="40.0" />
                            </VBox.margin>
                         </VBox>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="568.0" prefWidth="342.0" style="-fx-background-color: #222222; -fx-background-radius: 20;">
-                     <children>
-                        <HBox>
+                        <VBox style="-fx-background-color: #e3e3e3; -fx-background-radius: 20;">
                            <children>
-                              <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Jogadores Selecionados" textFill="#d3d3d3" HBox.hgrow="ALWAYS">
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
+                              <HBox>
+                                 <children>
+                                    <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Selecionar Técnico" textFill="#5b5b5b" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets top="10.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <TextField fx:id="txt_pesquisa_tecnico" HBox.hgrow="ALWAYS">
+                                       <stylesheets>
+                                          <URL value="@../../../styles/cadastro.css" />
+                                          <URL value="@../../../styles/primary.css" />
+                                          <URL value="@../../../styles/styles.css" />
+                                       </stylesheets>
+                                       <styleClass>
+                                          <String fx:value="txt-box" />
+                                          <String fx:value="regular-text" />
+                                       </styleClass>
+                                    </TextField>
+                                    <ImageView fx:id="btn_pesquisa_tecnico" fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
+                                       <image>
+                                          <Image url="@Imagens/search_icon.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <VBox fx:id="vbox_list_tecnicos" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #e3e3e3;">
+                                       <children>
+                                          <HBox fx:id="h_time_012" alignment="CENTER_LEFT" style="-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;">
+                                             <children>
+                                                <Circle fill="#c6c6c6" radius="40.0" stroke="#ebebeb" strokeType="INSIDE" strokeWidth="3.0" />
+                                                <VBox>
+                                                   <HBox.margin>
+                                                      <Insets left="20.0" top="10.0" />
+                                                   </HBox.margin>
+                                                   <children>
+                                                      <Label fx:id="lb_tecnico_nome" styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Técnico" textFill="#5b5b5b">
+                                                         <font>
+                                                            <Font size="22.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="lb_tecnico_dados" styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Dados do técnico" textFill="GREY" wrapText="true">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                         <VBox.margin>
+                                                            <Insets top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                                <HBox prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                                                <HBox>
+                                                   <children>
+                                                      <HBox alignment="CENTER">
+                                                         <children>
+                                                            <ImageView fx:id="btn_add_tecnico" fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
+                                                               <image>
+                                                                  <Image url="@Imagens/plus_icon.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </children>
+                                                         <HBox.margin>
+                                                            <Insets right="5.0" />
+                                                         </HBox.margin>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER">
+                                                         <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                         </HBox.margin>
+                                                      </HBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="8.0" />
+                                             </padding>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </ScrollPane>
                            </children>
                            <padding>
-                              <Insets top="10.0" />
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                            </padding>
-                        </HBox>
-                        <HBox>
-                           <children>
-                              <TextField fx:id="txt_pesquisa_jogador_e" HBox.hgrow="ALWAYS">
-                                 <stylesheets>
-                                    <URL value="@../../../styles/cadastro.css" />
-                                    <URL value="@../../../styles/primary.css" />
-                                    <URL value="@../../../styles/styles.css" />
-                                 </stylesheets>
-                                 <styleClass>
-                                    <String fx:value="txt-box" />
-                                    <String fx:value="regular-text" />
-                                 </styleClass>
-                              </TextField>
-                              <ImageView fx:id="btn_pesquisa_e" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Pesquisar_Jogadores_E" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                 <image>
-                                    <Image url="@Imagens/search_icon.png" />
-                                 </image>
-                                 <HBox.margin>
-                                    <Insets left="15.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                           </children>
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets top="40.0" />
                            </VBox.margin>
-                        </HBox>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
-                           <content>
-                              <VBox fx:id="vbox_jogadores_e" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #222222;">
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="614.0" prefWidth="442.0">
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                     <children>
+                        <VBox prefHeight="568.0" prefWidth="342.0" style="-fx-background-color: #222222; -fx-background-radius: 20;">
+                           <children>
+                              <HBox>
                                  <children>
-                                    <HBox fx:id="h_time_011" alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="212.0" style="-fx-border-width: 0 0 3 0; -fx-border-color: #404040;">
+                                    <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Jogadores Selecionados" textFill="#d3d3d3" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets top="10.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <TextField fx:id="txt_pesquisa_jogador_e" HBox.hgrow="ALWAYS">
+                                       <stylesheets>
+                                          <URL value="@../../../styles/cadastro.css" />
+                                          <URL value="@../../../styles/primary.css" />
+                                          <URL value="@../../../styles/styles.css" />
+                                       </stylesheets>
+                                       <styleClass>
+                                          <String fx:value="txt-box" />
+                                          <String fx:value="regular-text" />
+                                       </styleClass>
+                                    </TextField>
+                                    <ImageView fx:id="btn_pesquisa_e" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Pesquisar_Jogadores_E" pickOnBounds="true" preserveRatio="true" smooth="true">
+                                       <image>
+                                          <Image url="@Imagens/search_icon.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <VBox fx:id="vbox_jogadores_e" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #222222;">
                                        <children>
-                                          <Circle fill="#7c7c7c" radius="34.0" stroke="#575757" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <HBox fx:id="h_time_011" alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="212.0" style="-fx-border-width: 0 0 3 0; -fx-border-color: #404040;">
+                                             <children>
+                                                <Circle fill="#c6c6c6" radius="34.0" stroke="#ebebeb" strokeType="INSIDE" strokeWidth="2.0" />
+                                                <VBox HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets left="20.0" top="10.0" />
+                                                   </HBox.margin>
+                                                   <children>
+                                                      <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Jogador" textFill="#d3d3d3">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Dados do jogador" textFill="#c7c7c7" wrapText="true">
+                                                         <VBox.margin>
+                                                            <Insets top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                                <HBox>
+                                                   <children>
+                                                      <HBox alignment="CENTER">
+                                                         <children>
+                                                            <ImageView fx:id="btn_remover_jogador" fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
+                                                               <image>
+                                                                  <Image url="@Imagens/x_icon.png" />
+                                                               </image>
+                                                               <HBox.margin>
+                                                                  <Insets />
+                                                               </HBox.margin>
+                                                            </ImageView>
+                                                         </children>
+                                                         <HBox.margin>
+                                                            <Insets left="5.0" right="5.0" />
+                                                         </HBox.margin>
+                                                      </HBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" />
+                                             </padding>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </ScrollPane>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox fx:id="vbox_t" style="-fx-background-color: #222222; -fx-background-radius: 20;">
+                           <children>
+                              <HBox>
+                                 <children>
+                                    <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Técnico Selecionado" textFill="LIGHTGRAY" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets top="10.0" />
+                                 </padding>
+                              </HBox>
+                              <VBox fx:id="vbox_tecnicoSelecionado">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <HBox fx:id="h_tecnicoSelecionado" alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="212.0">
+                                       <children>
+                                          <Circle fill="#c6c6c6" radius="34.0" stroke="#ebebeb" strokeType="INSIDE" strokeWidth="2.0" />
                                           <VBox HBox.hgrow="ALWAYS">
                                              <HBox.margin>
-                                                <Insets left="20.0" top="10.0" />
+                                                <Insets left="20.0" />
                                              </HBox.margin>
                                              <children>
-                                                <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Jogador" textFill="#d3d3d3">
+                                                <Label fx:id="lbl_nome_tecnico_sel" styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Técnico" textFill="LIGHTGRAY">
                                                    <font>
                                                       <Font size="16.0" />
                                                    </font>
                                                 </Label>
-                                                <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Dados do jogador" textFill="#c7c7c7" wrapText="true">
+                                                <Label fx:id="lbl_dados_tecnico_sel" styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Dados do jogador" textFill="#c7c7c7" wrapText="true">
                                                    <VBox.margin>
                                                       <Insets top="5.0" />
                                                    </VBox.margin>
@@ -368,36 +566,34 @@
                                              <children>
                                                 <HBox alignment="CENTER">
                                                    <children>
-                                                      <ImageView fx:id="btn_remover_jogador" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#RemoverJogador" pickOnBounds="true" preserveRatio="true" smooth="true">
+                                                      <ImageView fx:id="btn_remover_tecnico" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#removerTecnico" pickOnBounds="true" preserveRatio="true" smooth="true">
                                                          <image>
                                                             <Image url="@Imagens/x_icon.png" />
                                                          </image>
                                                       </ImageView>
                                                    </children>
                                                    <HBox.margin>
-                                                      <Insets left="5.0" />
+                                                      <Insets right="5.0" />
                                                    </HBox.margin>
                                                 </HBox>
                                              </children>
                                           </HBox>
                                        </children>
                                        <padding>
-                                          <Insets bottom="4.0" />
+                                          <Insets bottom="8.0" />
                                        </padding>
                                     </HBox>
-                                 </children></VBox>
-                           </content>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                           </padding>
                            <VBox.margin>
-                              <Insets top="20.0" />
+                              <Insets top="40.0" />
                            </VBox.margin>
-                        </ScrollPane>
+                        </VBox>
                      </children>
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets left="50.0" />
-                     </HBox.margin>
                   </VBox>
                </children>
             </HBox>
@@ -407,7 +603,7 @@
                </font>
                <styleClass>
                   <String fx:value="sidebar" />
-                  <String fx:value="bold-text" />
+                  <String fx:value="semibold-text" />
                </styleClass>
                <VBox.margin>
                   <Insets />

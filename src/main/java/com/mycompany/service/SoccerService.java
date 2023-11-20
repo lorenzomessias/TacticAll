@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 public class SoccerService {
 
     public static void main(String[] args) throws Exception {
-        //iniciaServico();
+        iniciaServico();
     }
 
     public static void iniciaServico() {

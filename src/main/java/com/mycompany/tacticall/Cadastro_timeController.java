@@ -7,11 +7,13 @@ package com.mycompany.tacticall;
 import com.mycompany.dao.JogadorDAO;
 import com.mycompany.dao.RelacionamentoTimeProfissionalDAO;
 import com.mycompany.dao.TimeDAO;
+import com.mycompany.dao.TreinadorDAO;
 import com.mycompany.dao.UsuarioDAO;
 import com.mycompany.exception.TacticAllException;
 import com.mycompany.model.Jogador;
 import com.mycompany.model.RelacionamentoTimeProfissional;
 import com.mycompany.model.Time;
+import com.mycompany.model.Treinador;
 import com.mycompany.model.Usuario;
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +37,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 /**
  * FXML Controller class
@@ -45,8 +48,17 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
 
     List<Jogador> jogadores = new ArrayList<>();
     List<Jogador> jogadores_escalados = new ArrayList<>();
+    List<Treinador> tecnicos = new ArrayList<>();
+    Treinador tecnicoSelecionado = null;
+
     @FXML
     VBox vbox_list_jogadores;
+    @FXML
+    VBox vbox_list_tecnicos;
+    @FXML
+    VBox vbox_tecnicoSelecionado;
+    @FXML
+    VBox vbox_jogadores_e;
     @FXML
     TextField txt_nome_t;
     @FXML
@@ -61,6 +73,8 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
     TextField txt_pesquisa_jogador;
     @FXML
     TextField txt_pesquisa_jogador_e;
+    @FXML
+    TextField txt_pesquisa_tecnico;
 
     /**
      * Initializes the controller class.
@@ -70,7 +84,11 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         Espacamento_Botoes();
         try {
             VerificaLogin();
+            Pesquisar_Jogadores();
+            pesquisarTecnico();
         } catch (IOException ex) {
+            Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TacticAllException ex) {
             Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -103,7 +121,59 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         ImageView btnAddJogador = new ImageView(new Image(getClass().getResource("/Imagens/plus_icon.png").toExternalForm()));
         btnAddJogador.setFitHeight(32.0);
         btnAddJogador.setFitWidth(184.0);
-        btnAddJogador.setOnMouseClicked(event -> Adicionar_Jogador(jogador));
+        btnAddJogador.setOnMouseClicked(event -> {
+            try {
+                Adicionar_Jogador(jogador);
+            } catch (TacticAllException ex) {
+                Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+        hBox.getChildren().addAll(avatarCircle, playerDetailsVBox, btnAddJogador);
+
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.setStyle("-fx-border-width: 0 0 3 0; -fx-border-color: #a4a4a4;"); // Add the appropriate style
+
+        hBox.setPadding(new Insets(0, 0, 8.0, 0)); // Adjust padding as needed
+
+        return hBox;
+    }
+
+    private HBox hBoxTecnico(Treinador treinador) {
+        HBox hBox = new HBox();
+        hBox.getStyleClass().add("h_time_01");
+
+        Circle avatarCircle = new Circle(48.0);
+        avatarCircle.setFill(Color.web("#c6c6c6"));
+        avatarCircle.setStroke(Color.web("#ebebeb"));
+        avatarCircle.setStrokeWidth(3.0);
+
+        VBox playerDetailsVBox = new VBox();
+        playerDetailsVBox.setSpacing(5.0);
+
+        Label playerNameLabel = new Label(treinador.getNome());
+        playerNameLabel.getStyleClass().add("regular-text");
+        playerNameLabel.setTextFill(Color.web("#5b5b5b"));
+        playerNameLabel.setFont(new Font(22.0));
+
+        Label playerDataLabel = new Label("Dados do treinador");
+        playerDataLabel.getStyleClass().add("regular-text");
+        playerDataLabel.setTextFill(Color.web("#808080"));
+        playerDataLabel.setFont(new Font(18.0));
+        playerDataLabel.setWrapText(true);
+
+        playerDetailsVBox.getChildren().addAll(playerNameLabel, playerDataLabel);
+
+        ImageView btnAddJogador = new ImageView(new Image(getClass().getResource("/Imagens/plus_icon.png").toExternalForm()));
+        btnAddJogador.setFitHeight(32.0);
+        btnAddJogador.setFitWidth(184.0);
+        btnAddJogador.setOnMouseClicked(event -> {
+            try {
+                adicionarTecnico(treinador);
+            } catch (TacticAllException ex) {
+                Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
         hBox.getChildren().addAll(avatarCircle, playerDetailsVBox, btnAddJogador);
 
@@ -126,6 +196,17 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         }
     }
 
+    private void criarHBoxesTecnicos() {
+        vbox_list_tecnicos.getChildren().clear();
+
+        for (Treinador tecnico : tecnicos) {
+            if (tecnico != tecnicoSelecionado) {
+                HBox tecnicoBox = hBoxTecnico(tecnico);
+                vbox_list_tecnicos.getChildren().add(tecnicoBox);
+            }
+        }
+    }
+
     private boolean jogadorEscalado(Jogador j) {
         for (Jogador x : jogadores_escalados) {
             if (x.getId() == j.getId()) {
@@ -135,62 +216,15 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         return false;
     }
 
-    public void Adicionar_Jogador(Jogador jogador) {
-        jogadores_escalados.add(jogador);
-    }
-
-    public void SalvarTime() throws TacticAllException, IOException {
-        UsuarioDAO user_dao = new UsuarioDAO();
-        Usuario user = user_dao.listarPorEmail(Sessao.getInstancia().getEmail());
-        Time novotime = new Time(txt_nome_t.getText(), txt_sigla_t.getText(), txt_pais_t.getText(), txt_liga_t.getText(),
-                user.getId(), cor_t.getValue().toString());
-        TimeDAO time_dao = new TimeDAO();
-        time_dao.inserir(novotime);
-
-        int id_time = time_dao.IdMaisRecente();
-
-        RelacionamentoTimeProfissionalDAO rel_dao = new RelacionamentoTimeProfissionalDAO();
-        for (Jogador j : jogadores_escalados) {
-            RelacionamentoTimeProfissional rel = new RelacionamentoTimeProfissional(j.getId(), id_time);
-            rel_dao.inserir(rel);
-        }
-        App.setRoot("times");
-    }
-
-    public void Pesquisar_Jogadores() throws TacticAllException {
-        JogadorDAO j = new JogadorDAO();
-        jogadores = j.listarPorNome(txt_pesquisa_jogador.getText());
-        criarHBoxes();
-    }
-
-    public void Pesquisar_Jogadores_E() throws TacticAllException {
-        pesquisaEscalados(txt_pesquisa_jogador_e.getText());
-    }
-
-    public void RemoverJogador(Jogador j) {
-
-    }
-
-    private void pesquisaEscalados(String pesquisa) {
-        if (!pesquisa.isBlank()) {
-            List<Jogador> j = new ArrayList<Jogador>();
-            for (Jogador x : jogadores_escalados) {
-                if (x.getNome().contains(pesquisa)) {
-                    j.add(x);
-                }
-            }
-            criarHBoxEscalados(j);
-        } else {
-            criarHBoxEscalados(jogadores_escalados);
-        }
-
-    }
-
     private void criarHBoxEscalados(List<Jogador> j) {
-
+        vbox_jogadores_e.getChildren().clear();
+        for (Jogador x : j) {
+            HBox playerBox = hBoxJogadorEscalado(x);
+            vbox_jogadores_e.getChildren().add(playerBox);
+        }
     }
-    
-    private HBox HBoxJogadorEscalado(Jogador jogador) {
+
+    private HBox hBoxJogadorEscalado(Jogador jogador) {
         HBox hBox = new HBox();
 
         // Configuração da HBox
@@ -226,7 +260,13 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("@Imagens/x_icon.png")));
         imageView.setFitHeight(32.0);
         imageView.setFitWidth(184.0);
-        imageView.setOnMouseClicked(event -> RemoverJogador(jogador));
+        imageView.setOnMouseClicked(event -> {
+            try {
+                remover_Jogador(jogador);
+            } catch (TacticAllException ex) {
+                Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
         // Adicionando elementos à HBox
         hBox.getChildren().addAll(circle, vboxInterna, imageView);
@@ -235,5 +275,131 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         HBox.setMargin(hBox, new Insets(0, 0, 4.0, 0));
 
         return hBox;
+    }
+
+    public void Adicionar_Jogador(Jogador jogador) throws TacticAllException {
+        jogadores_escalados.add(jogador);
+        Pesquisar_Jogadores();
+    }
+
+    public void adicionarTecnico(Treinador tecnico) throws TacticAllException {
+        tecnicoSelecionado = tecnico;
+        pesquisarTecnico();
+        preencherTecnicoSelecionado();
+    }
+
+    public void SalvarTime() throws TacticAllException, IOException {
+        UsuarioDAO user_dao = new UsuarioDAO();
+        Usuario user = user_dao.listarPorEmail(Sessao.getInstancia().getEmail());
+        Time novotime = new Time(txt_nome_t.getText(), txt_sigla_t.getText(), txt_pais_t.getText(), txt_liga_t.getText(),
+                user.getId(), cor_t.getValue().toString());
+        TimeDAO time_dao = new TimeDAO();
+        time_dao.inserir(novotime);
+
+        int id_time = time_dao.IdMaisRecente();
+
+        RelacionamentoTimeProfissionalDAO rel_dao = new RelacionamentoTimeProfissionalDAO();
+        for (Jogador j : jogadores_escalados) {
+            RelacionamentoTimeProfissional rel = new RelacionamentoTimeProfissional(j.getId(), id_time);
+            rel_dao.inserir(rel);
+        }
+        App.setRoot("times");
+    }
+
+    public void Pesquisar_Jogadores() throws TacticAllException {
+        JogadorDAO j = new JogadorDAO();
+        jogadores = j.listarPorNome(txt_pesquisa_jogador.getText());
+        criarHBoxes();
+    }
+
+    public void Pesquisar_Jogadores_E() throws TacticAllException {
+        pesquisaEscalados(txt_pesquisa_jogador_e.getText());
+    }
+
+    public void remover_Jogador(Jogador j) throws TacticAllException {
+        jogadores_escalados.remove(j);
+        Pesquisar_Jogadores_E();
+    }
+
+    private void pesquisaEscalados(String pesquisa) {
+        if (!pesquisa.isBlank()) {
+            List<Jogador> j = new ArrayList<Jogador>();
+            for (Jogador x : jogadores_escalados) {
+                if (x.getNome().contains(pesquisa)) {
+                    j.add(x);
+                }
+            }
+            criarHBoxEscalados(j);
+        } else {
+            criarHBoxEscalados(jogadores_escalados);
+        }
+
+    }
+
+    public void removerTecnico() throws TacticAllException {
+        tecnicoSelecionado = null;
+        preencherTecnicoSelecionado();
+        pesquisarTecnico();
+    }
+
+    private void pesquisarTecnico() throws TacticAllException {
+        TreinadorDAO t = new TreinadorDAO();
+        tecnicos = t.listarPorNome(txt_pesquisa_tecnico.getText());
+        criarHBoxesTecnicos();
+    }
+
+    private HBox hBoxTecnicoSelecionado() {
+        HBox hBox = new HBox();
+        if (tecnicoSelecionado != null) {
+            // Configuração da HBox
+            hBox.setPrefHeight(98.0);
+            hBox.setPrefWidth(212.0);
+
+            // Adicionando o círculo
+            Circle circle = new Circle(34.0);
+            circle.setFill(Color.web("#c6c6c6"));
+            circle.setStroke(Color.web("#ebebeb"));
+            circle.setStrokeWidth(2.0);
+
+            VBox vboxInterna = new VBox();
+            HBox.setHgrow(vboxInterna, javafx.scene.layout.Priority.ALWAYS);
+            vboxInterna.setSpacing(5);
+
+            // Adicionando labels na VBox interna
+            Label labelNome = new Label(tecnicoSelecionado.getNome());
+            labelNome.getStyleClass().add("regular-text");
+            labelNome.setTextFill(Color.LIGHTGRAY);
+            labelNome.setFont(Font.font("Arial", FontWeight.BOLD, 16.0));
+
+            Label labelDados = new Label("Especialidade: " + tecnicoSelecionado.getEspecialidade()
+                    + "\nData de Nascimento: " + tecnicoSelecionado.getDataDeNascimento()
+                    + "\nNacionalidade: " + tecnicoSelecionado.getNacionalidade()
+                    + "\nNota Geral: " + tecnicoSelecionado.getNotaGeral());
+            labelDados.getStyleClass().add("regular-text");
+            labelDados.setTextFill(Color.web("#c7c7c7"));
+            labelDados.setWrapText(true);
+
+            vboxInterna.getChildren().addAll(labelNome, labelDados);
+
+            // Adicionando a ImageView para remover o treinador
+            ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("@Imagens/x_icon.png")));
+            imageView.setFitHeight(32.0);
+            imageView.setFitWidth(32.0);
+
+            // Adicionando elementos à HBox
+            hBox.getChildren().addAll(circle, vboxInterna, imageView);
+
+            // Configuração do padding e margens da HBox
+            HBox.setMargin(vboxInterna, new Insets(0, 0, 0, 20));
+            HBox.setMargin(imageView, new Insets(0, 0, 0, 20));
+            HBox.setMargin(hBox, new Insets(20.0, 0, 0, 0));
+        }
+        return hBox;
+    }
+    
+    public void preencherTecnicoSelecionado()
+    {
+        vbox_tecnicoSelecionado.getChildren().clear();
+        vbox_tecnicoSelecionado.getChildren().add(hBoxTecnicoSelecionado());
     }
 }
