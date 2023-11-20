@@ -154,7 +154,7 @@
                                     </VBox>
                                     <VBox>
                                        <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Cor" textFill="LIGHTGRAY">
+                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Cor do Uniforme" textFill="LIGHTGRAY">
                                              <font>
                                                 <Font size="22.0" />
                                              </font>
@@ -262,7 +262,7 @@
                                                    <children>
                                                       <HBox alignment="CENTER">
                                                          <children>
-                                                            <ImageView fx:id="btn_add_jogador" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Adicionar_Jogador" pickOnBounds="true" preserveRatio="true" smooth="true">
+                                                            <ImageView fx:id="btn_add_jogador" fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
                                                                <image>
                                                                   <Image url="@Imagens/plus_icon.png" />
                                                                </image>

@@ -31,4 +31,19 @@ public class TimesController extends Sidebar implements Initializable {
         }
     }    
     
+    public void Ir_Criar_Time() throws IOException {
+        App.setRoot("cadastro_time");
+    }
+    
+    public void Pesquisar_Times() {
+        
+    }
+    
+    public void Editar_Time() {
+        
+    }
+    
+    public void Remover_Time() {
+        
+    }
 }
