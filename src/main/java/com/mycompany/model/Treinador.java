@@ -14,22 +14,18 @@ public class Treinador extends Profissional implements Serializable {
     private int id;
     private int idProfissional;
     private String especialidade;
-    private int qtdTitulos;
-    private int qtdClubes;
 
     public Treinador(){}
-    public Treinador(int id, int idProfissional, String especialidade, int qtdTitulos, int qtdClubes) {
+    public Treinador(int id, int idProfissional, String especialidade) {
         this.id = id;
         this.idProfissional = idProfissional;
         this.especialidade = especialidade;
-        this.qtdTitulos = qtdTitulos;
-        this.qtdClubes = qtdClubes;
+
     }
-     public Treinador( int idProfissional, String especialidade, int qtdTitulos, int qtdClubes) {
+     public Treinador( int idProfissional, String especialidade) {
         this.idProfissional = idProfissional;
         this.especialidade = especialidade;
-        this.qtdTitulos = qtdTitulos;
-        this.qtdClubes = qtdClubes;
+
     }
 
     public int getId() {
@@ -44,13 +40,6 @@ public class Treinador extends Profissional implements Serializable {
         return especialidade;
     }
 
-    public int getQtdTitulos() {
-        return qtdTitulos;
-    }
-
-    public int getQtdClubes() {
-        return qtdClubes;
-    }
 
     public void setIdProfissional(int idProfissional) {
         this.idProfissional = idProfissional;
@@ -60,12 +49,5 @@ public class Treinador extends Profissional implements Serializable {
         this.especialidade = especialidade;
     }
 
-    public void setQtdTitulos(int qtdTitulos) {
-        this.qtdTitulos = qtdTitulos;
-    }
-
-    public void setQtdClubes(int qtdClubes) {
-        this.qtdClubes = qtdClubes;
-    }
 }
 

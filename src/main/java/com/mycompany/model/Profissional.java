@@ -17,19 +17,30 @@ public class Profissional {
     private LocalDate dataDeNascimento;
     private String nacionalidade;
     private double notaGeral;
+    private String imagem;
     public Profissional(){}
-    public Profissional(int id, String nome, LocalDate dataDeNascimento, String nacionalidade, double notaGeral) {
+    public Profissional(int id, String nome, LocalDate dataDeNascimento, String nacionalidade, double notaGeral, String imagem) {
         this.id = id;
         this.nome = nome;
         this.dataDeNascimento = dataDeNascimento;
         this.nacionalidade = nacionalidade;
         this.notaGeral = notaGeral;
+        this.imagem = imagem;
     }
-    public Profissional( String nome, LocalDate dataDeNascimento, String nacionalidade, double notaGeral) {
+    public Profissional( String nome, LocalDate dataDeNascimento, String nacionalidade, double notaGeral,String imagem) {
         this.nome = nome;
         this.dataDeNascimento = dataDeNascimento;
         this.nacionalidade = nacionalidade;
         this.notaGeral = notaGeral;
+        this.imagem = imagem;
+
+    }
+     public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
     public int getId() {
         return id;

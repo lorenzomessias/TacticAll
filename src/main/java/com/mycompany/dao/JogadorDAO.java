@@ -22,10 +22,8 @@ public class JogadorDAO implements GenericoDAO<Jogador> {
             PreparedStatement pStatement = connection.prepareStatement(sql);
             ResultSet result = pStatement.executeQuery();
             while (result.next()) {
-                Jogador jogador = new Jogador(result.getInt("Id"), result.getInt("Habilidade"),
-                        result.getString("Posicao"), result.getInt("Velocidade"),
-                        result.getInt("Resistencia"), result.getInt("Tecnica"),
-                        result.getInt("Chute"), result.getInt("Passe"),
+                Jogador jogador = new Jogador(result.getInt("Id"), 
+                        result.getString("Posicao"),
                         result.getInt("IdProfissional"));
                 jogadores.add(jogador);
             }
@@ -45,19 +43,13 @@ public class JogadorDAO implements GenericoDAO<Jogador> {
 
     @Override
     public void inserir(Jogador jogador) throws TacticAllException {
-        String sql = "INSERT INTO Jogador (Habilidade, Posicao, Velocidade, Resistencia, Tecnica, Chute, Passe, IdProfissional) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Jogador ( Posicao,IdProfissional) VALUES (?, ?)";
         Connection connection = null;
         try {
             connection = Conexao.getInstance().getConnection();
             PreparedStatement pStatement = connection.prepareStatement(sql);
-            pStatement.setInt(1, jogador.getHabilidade());
-            pStatement.setString(2, jogador.getPosicao());
-            pStatement.setInt(3, jogador.getVelocidade());
-            pStatement.setInt(4, jogador.getResistencia());
-            pStatement.setInt(5, jogador.getTecnica());
-            pStatement.setInt(6, jogador.getChute());
-            pStatement.setInt(7, jogador.getPasse());
-            pStatement.setInt(8, jogador.getIdProfissional());
+            pStatement.setString(1, jogador.getPosicao());
+            pStatement.setInt(2, jogador.getIdProfissional());
             pStatement.execute();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JogadorDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,20 +68,14 @@ public class JogadorDAO implements GenericoDAO<Jogador> {
 
     @Override
     public void alterar(Jogador jogador) throws TacticAllException {
-        String sql = "UPDATE Jogador SET Habilidade = ?, Posicao = ?, Velocidade = ?, Resistencia = ?, Tecnica = ?, Chute = ?, Passe = ?, IdProfissional = ? WHERE Id = ?";
+        String sql = "UPDATE Jogador SET  Posicao = ?, IdProfissional = ? WHERE Id = ?";
         Connection connection = null;
         try {
             connection = Conexao.getInstance().getConnection();
             PreparedStatement pStatement = connection.prepareStatement(sql);
-            pStatement.setInt(1, jogador.getHabilidade());
-            pStatement.setString(2, jogador.getPosicao());
-            pStatement.setInt(3, jogador.getVelocidade());
-            pStatement.setInt(4, jogador.getResistencia());
-            pStatement.setInt(5, jogador.getTecnica());
-            pStatement.setInt(6, jogador.getChute());
-            pStatement.setInt(7, jogador.getPasse());
-            pStatement.setInt(8, jogador.getIdProfissional());
-            pStatement.setInt(9, jogador.getId());
+            pStatement.setString(1, jogador.getPosicao());
+            pStatement.setInt(2, jogador.getIdProfissional());
+            pStatement.setInt(3, jogador.getId());
             pStatement.execute();
 
         } catch (ClassNotFoundException ex) {
@@ -145,10 +131,8 @@ public class JogadorDAO implements GenericoDAO<Jogador> {
             pStatement.setInt(1, ID);
             ResultSet result = pStatement.executeQuery();
             while (result.next()) {
-                jogador = new Jogador(result.getInt("Id"), result.getInt("Habilidade"),
-                        result.getString("Posicao"), result.getInt("Velocidade"),
-                        result.getInt("Resistencia"), result.getInt("Tecnica"),
-                        result.getInt("Chute"), result.getInt("Passe"),
+                jogador = new Jogador(result.getInt("Id"),
+                        result.getString("Posicao"),
                         result.getInt("IdProfissional"));
             }
         } catch (ClassNotFoundException ex) {

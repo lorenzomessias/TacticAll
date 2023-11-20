@@ -64,6 +64,7 @@ public class SoccerService {
                 jogador.setDataDeNascimento(LocalDate.parse(footballPlayer.getBirthday(), formatter));
                 jogador.setNacionalidade(footballPlayer.getCountry());
                 jogador.setNotaGeral(footballPlayer.calcularNota());
+                jogador.setImagem(footballPlayer.getImgURL());
                 ProfissionalDAO daoProf = new ProfissionalDAO();
                 daoProf.inserir(jogador);
                 jogador.setPosicao(footballPlayer.getPosition());
@@ -140,6 +141,7 @@ public class SoccerService {
                 treinador.setNacionalidade(coach.getData().getCountry().getName());
                 treinador.setEspecialidade(coach.getData().getEspecialidade());
                 treinador.setNotaGeral(coach.calcularNota());
+                treinador.setImagem(coach.getData().getImg());
                 ProfissionalDAO profDao = new ProfissionalDAO();
                 profDao.inserir(treinador);
                 treinador.setIdProfissional(profDao.IdMaisRecente());
