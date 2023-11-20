@@ -164,4 +164,35 @@ public class JogadorDAO implements GenericoDAO<Jogador> {
         }
         return jogador;
     }
+        public List<Jogador> listarPorNome(String pesquisa) throws TacticAllException {
+        List<Jogador> jogadores = new ArrayList<>();
+        String sql = "SELECT * FROM Jogador WHERE Nome LIKE %?%";
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1, pesquisa);
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                Jogador jogador = new Jogador(result.getInt("Id"), result.getInt("Habilidade"),
+                        result.getString("Posicao"), result.getInt("Velocidade"),
+                        result.getInt("Resistencia"), result.getInt("Tecnica"),
+                        result.getInt("Chute"), result.getInt("Passe"),
+                        result.getInt("IdProfissional"));
+                jogadores.add(jogador);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JogadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JogadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(JogadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return jogadores;
+    }
 }
+
