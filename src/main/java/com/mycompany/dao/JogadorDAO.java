@@ -158,10 +158,8 @@ public class JogadorDAO implements GenericoDAO<Jogador> {
             pStatement.setString(1, pesquisa);
             ResultSet result = pStatement.executeQuery();
             while (result.next()) {
-                Jogador jogador = new Jogador(result.getInt("Id"), result.getInt("Habilidade"),
-                        result.getString("Posicao"), result.getInt("Velocidade"),
-                        result.getInt("Resistencia"), result.getInt("Tecnica"),
-                        result.getInt("Chute"), result.getInt("Passe"),
+                Jogador jogador = new Jogador(result.getInt("Id"),
+                        result.getString("Posicao"),
                         result.getInt("IdProfissional"));
                 jogadores.add(jogador);
             }
