@@ -85,13 +85,33 @@ public class SimulacaoController extends Sidebar implements Initializable {
         List<String> listaMandanteDefensivo = new ArrayList<String>();
 
         for(EsquemaTatico esquema : mandanteOfensivo){
-            listaMandanteOfensivo.add(esquema.getFormacao());
+            listaMandanteOfensivo.add(esquema.getNome());
         }
         for(EsquemaTatico esquema : mandanteDefensivo){
-            listaMandanteDefensivo.add(esquema.getFormacao());
+            listaMandanteDefensivo.add(esquema.getNome());
         }
         EsquemaOfensivoMandante.getItems().addAll(listaMandanteOfensivo);
         EsquemaDefensivoMandante.getItems().addAll(listaMandanteDefensivo);
+        EsquemaOfensivoMandante.getSelectionModel().selectFirst();
+        EsquemaDefensivoMandante.getSelectionModel().selectFirst();
+    }
+    private void mudarTimeVisitante() throws TacticAllException{
+        Time time = getTimePorNome((String) NomeTimeVisitante.getValue());
+        visitanteOfensivo = retornaEsquemasPorTime(time.getId(), "Ofensivo");
+        visitanteDefensivo = retornaEsquemasPorTime(time.getId(), "Defensivo");
+        List<String> listaVisitanteOfensivo = new ArrayList<String>();
+        List<String> listaVisitanteDefensivo = new ArrayList<String>();
+
+        for(EsquemaTatico esquema : visitanteOfensivo){
+            listaVisitanteOfensivo.add(esquema.getNome());
+        }
+        for(EsquemaTatico esquema : visitanteDefensivo){
+            listaVisitanteDefensivo.add(esquema.getNome());
+        }
+        EsquemaOfensivoVisitante.getItems().addAll(listaVisitanteOfensivo);
+        EsquemaDefensivoVisitante.getItems().addAll(listaVisitanteDefensivo);
+        EsquemaOfensivoVisitante.getSelectionModel().selectFirst();
+        EsquemaDefensivoVisitante.getSelectionModel().selectFirst();
     }
     public Time getTimePorNome(String nomeProcurado) {
         for (Time time : times) {
@@ -101,7 +121,21 @@ public class SimulacaoController extends Sidebar implements Initializable {
         }
         return null;
     }
-    public Simulacao realizaSimulacao(Time timeA, Time timeB, EsquemaTatico ofensivoA, EsquemaTatico defensivoB, EsquemaTatico ofensivoB, EsquemaTatico defensivoA) throws TacticAllException {
+    public EsquemaTatico getEsquemaPorNome(String nomeProcurado, List<EsquemaTatico> esquemas) {
+        for (EsquemaTatico esquema : esquemas) {
+            if (esquema.getNome().equals(nomeProcurado)) {
+                return esquema;
+            }
+        }
+        return null;
+    }
+    public Simulacao realizaSimulacao() throws TacticAllException {
+        Time timeA = getTimePorNome((String) NomeTimeMandante.getValue());
+        Time timeB = getTimePorNome((String) NomeTimeVisitante.getValue());
+        EsquemaTatico ofensivoA = getEsquemaPorNome((String) EsquemaOfensivoMandante.getValue(),mandanteOfensivo);
+        EsquemaTatico defensivoA = getEsquemaPorNome((String) EsquemaDefensivoMandante.getValue(),mandanteDefensivo);
+        EsquemaTatico ofensivoB = getEsquemaPorNome((String) EsquemaOfensivoVisitante.getValue(),visitanteOfensivo);
+        EsquemaTatico defensivoB = getEsquemaPorNome((String) EsquemaOfensivoVisitante.getValue(),visitanteDefensivo);
         RelacionamentoTimeProfissionalDAO relDao = new RelacionamentoTimeProfissionalDAO();
         RelacionamentoJogadorEsquemaDAO relJEDao = new RelacionamentoJogadorEsquemaDAO();
         List<Jogador> jogadoresTimeA = relDao.listarJogadoresDoTime(timeA.getId());
