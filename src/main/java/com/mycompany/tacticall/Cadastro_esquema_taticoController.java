@@ -23,7 +23,6 @@ public class Cadastro_esquema_taticoController extends Sidebar implements Initia
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Espacamento_Botoes();
         try {
             VerificaLogin();
         } catch (IOException ex) {
