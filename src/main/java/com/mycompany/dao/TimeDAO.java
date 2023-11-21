@@ -218,5 +218,32 @@ public class TimeDAO implements GenericoDAO<Time> {
         }
         return id;
     }
-
+    
+        public List<Time> listarPorNome(String pesquisa) throws TacticAllException {
+        List<Time> times = new ArrayList<Time>();
+        String sql = "SELECT * FROM Time WHERE Nome LIKE ?";
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1, "%" + pesquisa + "%");
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                times.add(new Time(result.getInt("id"), result.getString("nome"), result.getString("sigla"), result.getString("pais"), result.getString("liga"), result.getInt("idUsuario"), result.getString("corUniforme")));
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return times;
+    }
+        
+    
 }

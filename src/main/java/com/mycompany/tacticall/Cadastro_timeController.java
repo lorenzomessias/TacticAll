@@ -26,7 +26,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -37,7 +37,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -88,9 +87,7 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
             VerificaLogin();
             Pesquisar_Jogadores();
             pesquisarTecnico();
-        } catch (IOException ex) {
-            Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TacticAllException ex) {
+        } catch (IOException | TacticAllException ex) {
             Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -224,7 +221,7 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         btnAddTecnico.setFitHeight(32.0);
         btnAddTecnico.setFitWidth(32.0);
         hboxImagem.getChildren().add(btnAddTecnico);
-        
+
         hBox.getChildren().addAll(vBox, hboxVazia, hboxImagem);
 
         hBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
@@ -253,7 +250,7 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
             vbox_list_tecnicos.getChildren().clear();
 
             for (Treinador tecnico : tecnicos) {
-                if (tecnico != tecnicoSelecionado) {
+                if (tecnicoSelecionado == null || tecnico.getId() != tecnicoSelecionado.getId()) {
                     HBox tecnicoBox = hBoxTecnico(tecnico);
                     vbox_list_tecnicos.getChildren().add(tecnicoBox);
                 }
@@ -296,13 +293,13 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         circle.setStroke(javafx.scene.paint.Color.web("#575757"));
         circle.setStrokeType(StrokeType.INSIDE);
         circle.setStrokeWidth(2.0);
-        
-                if (!jogador.getImagem().equals("null")) {
+
+        if (!jogador.getImagem().equals("null")) {
             String imageUrl = jogador.getImagem(); // Substitua pelo URL real
             Image image = new Image(imageUrl);
             circle.setFill(new ImagePattern(image));
         }
-                
+
         VBox vboxInterna = new VBox();
         vboxInterna.setPadding(new Insets(10.0, 0, 0, 20.0));
         vboxInterna.setAlignment(javafx.geometry.Pos.TOP_LEFT);
@@ -323,11 +320,11 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         labelDados.setPadding(new Insets(5.0, 0, 0, 0));
         labelDados.setMaxWidth(Double.MAX_VALUE);
         vboxInterna.getChildren().addAll(labelNome, labelDados);
-        
-                // Criar e configurar a HBox vazia
+
+        // Criar e configurar a HBox vazia
         HBox hboxVazia = new HBox();
         hboxVazia.setPrefHeight(100.0);
-        hboxVazia.setPrefWidth(5.0);
+        hboxVazia.setPrefWidth(1.0);
         HBox.setHgrow(hboxVazia, javafx.scene.layout.Priority.ALWAYS);
 
         // Criar e configurar a HBox com a imagem
@@ -348,7 +345,6 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         imageView.setFitWidth(32.0);
 
         hboxImagem.getChildren().add(imageView);
-        
 
         // Adicionando elementos à HBox
         hBox.getChildren().addAll(circle, vboxInterna, hboxVazia, hboxImagem);
@@ -369,24 +365,26 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
     }
 
     public void SalvarTime() throws TacticAllException, IOException {
-        UsuarioDAO user_dao = new UsuarioDAO();
-        Usuario user = user_dao.listarPorEmail(Sessao.getInstancia().getEmail());
-        Time novotime = new Time(txt_nome_t.getText(), txt_sigla_t.getText(), txt_pais_t.getText(), txt_liga_t.getText(),
-                user.getId(), cor_t.getValue().toString());
-        TimeDAO time_dao = new TimeDAO();
-        time_dao.inserir(novotime);
+        if (validarCampos()) {
+            UsuarioDAO user_dao = new UsuarioDAO();
+            Usuario user = user_dao.listarPorEmail(Sessao.getInstancia().getEmail());
+            Time novotime = new Time(txt_nome_t.getText(), txt_sigla_t.getText(), txt_pais_t.getText(), txt_liga_t.getText(),
+                    user.getId(), cor_t.getValue().toString());
+            TimeDAO time_dao = new TimeDAO();
+            time_dao.inserir(novotime);
 
-        int id_time = time_dao.IdMaisRecente();
+            int id_time = time_dao.IdMaisRecente();
 
-        RelacionamentoTimeProfissionalDAO rel_dao = new RelacionamentoTimeProfissionalDAO();
-        for (Jogador j : jogadores_escalados) {
-            RelacionamentoTimeProfissional rel = new RelacionamentoTimeProfissional(j.getId(), id_time);
-            rel_dao.inserir(rel);
+            RelacionamentoTimeProfissionalDAO rel_dao = new RelacionamentoTimeProfissionalDAO();
+            for (Jogador j : jogadores_escalados) {
+                RelacionamentoTimeProfissional rel = new RelacionamentoTimeProfissional(j.getIdProfissional(), id_time);
+                rel_dao.inserir(rel);
+            }
+            RelacionamentoTimeProfissional rel_tecnico = new RelacionamentoTimeProfissional(tecnicoSelecionado.getIdProfissional(), id_time);
+            rel_dao.inserir(rel_tecnico);
+
+            App.setRoot("times");
         }
-        RelacionamentoTimeProfissional rel_tecnico = new RelacionamentoTimeProfissional(tecnicoSelecionado.getId(), id_time);
-        rel_dao.inserir(rel_tecnico);
-
-        App.setRoot("times");
     }
 
     public void Pesquisar_Jogadores() throws TacticAllException {
@@ -462,12 +460,12 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
             imageView.setFitHeight(32.0);
             imageView.setFitWidth(32.0);
             imageView.setOnMouseClicked(event -> {
-            try {
-                removerTecnico();
-            } catch (TacticAllException ex) {
-                Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
+                try {
+                    removerTecnico();
+                } catch (TacticAllException ex) {
+                    Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
 
             // Adicionando elementos à HBox
             hBox.getChildren().addAll(vboxInterna, imageView);
@@ -485,5 +483,32 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
             vbox_tecnicoSelecionado.getChildren().clear();
             vbox_tecnicoSelecionado.getChildren().add(hBoxTecnicoSelecionado());
         });
+    }
+
+    public boolean validarCampos() {
+        if (txt_nome_t.getText().isEmpty() || txt_sigla_t.getText().isEmpty() || txt_pais_t.getText().isEmpty() || txt_liga_t.getText().isEmpty()) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR, "Por favor, preencha todos os campos.");
+            alerta.setTitle("Campos em branco");
+            alerta.setHeaderText("Campos obrigatórios não preenchidos.");
+            alerta.showAndWait();
+            return false;
+        }
+
+        if (tecnicoSelecionado == null) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR, "Por favor, selecione um técnico.");
+            alerta.setTitle("Selecione um técnico.");
+            alerta.setHeaderText("É necessário selecionar um técnico para criar seu time.");
+            alerta.showAndWait();
+            return false;
+        }
+
+        if (jogadores_escalados.size() != 11) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR, "Você deve escalar 11 jogadores para criar um time.");
+            alerta.setTitle("Selecione 11 jogadores.");
+            alerta.setHeaderText("É necessário escalar 11 jogadores para criar seu time.");
+            alerta.showAndWait();
+            return false;
+        }
+        return true;
     }
 }
