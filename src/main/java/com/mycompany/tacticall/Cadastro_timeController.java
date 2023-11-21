@@ -7,11 +7,13 @@ package com.mycompany.tacticall;
 import com.mycompany.dao.JogadorDAO;
 import com.mycompany.dao.RelacionamentoTimeProfissionalDAO;
 import com.mycompany.dao.TimeDAO;
+import com.mycompany.dao.TreinadorDAO;
 import com.mycompany.dao.UsuarioDAO;
 import com.mycompany.exception.TacticAllException;
 import com.mycompany.model.Jogador;
 import com.mycompany.model.RelacionamentoTimeProfissional;
 import com.mycompany.model.Time;
+import com.mycompany.model.Treinador;
 import com.mycompany.model.Usuario;
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -32,9 +35,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 /**
  * FXML Controller class
@@ -45,8 +51,17 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
 
     List<Jogador> jogadores = new ArrayList<>();
     List<Jogador> jogadores_escalados = new ArrayList<>();
+    List<Treinador> tecnicos = new ArrayList<>();
+    Treinador tecnicoSelecionado = null;
+
     @FXML
     VBox vbox_list_jogadores;
+    @FXML
+    VBox vbox_list_tecnicos;
+    @FXML
+    VBox vbox_tecnicoSelecionado;
+    @FXML
+    VBox vbox_jogadores_e;
     @FXML
     TextField txt_nome_t;
     @FXML
@@ -61,69 +76,189 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
     TextField txt_pesquisa_jogador;
     @FXML
     TextField txt_pesquisa_jogador_e;
+    @FXML
+    TextField txt_pesquisa_tecnico;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Espacamento_Botoes();
         try {
             VerificaLogin();
+            Pesquisar_Jogadores();
+            pesquisarTecnico();
         } catch (IOException ex) {
+            Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TacticAllException ex) {
             Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private HBox HBox_Jogador(Jogador jogador) {
         HBox hBox = new HBox();
+        hBox.setPrefHeight(200.0);
+        hBox.setPrefWidth(100.0);
+        hBox.setStyle("-fx-background-color: #e3e3e3;");
+
+        // Configuração para o HBox com id "h_time_01"
+        hBox.setId("h_time_01");
+        hBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        hBox.setStyle("-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;");
+        hBox.setPadding(new Insets(10.0, 0, 8.0, 0));
+
+        // Criar um círculo como moldura
+        Circle circle = new Circle(40.0, Color.web("#c6c6c6"));
+        circle.setStroke(Color.web("#ebebeb"));
+        circle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
+        circle.setStrokeWidth(3.0);
+
+        // Criar um ImageView para a imagem do jogador a partir de um URL
+        if (!jogador.getImagem().equals("null")) {
+            String imageUrl = jogador.getImagem(); // Substitua pelo URL real
+            Image image = new Image(imageUrl);
+            circle.setFill(new ImagePattern(image));
+        }
+
+        // Criar a VBox interna
+        VBox vBox = new VBox();
+        vBox.setAlignment(javafx.geometry.Pos.TOP_LEFT);
+        vBox.setPadding(new Insets(10.0, 0, 0, 20.0));
+
+        // Criar e configurar os Labels
+        Label lbNome = new Label(jogador.getNome());
+        lbNome.setId("lb_jogador_nome");
+        lbNome.getStyleClass().add("regular-text");
+        lbNome.setStyle("-fx-text-fill: #5b5b5b;");
+        lbNome.setFont(new Font(22.0));
+
+        Label lbDados = new Label("Posição: " + jogador.getPosicao()
+                + "   Nacionalidade: " + jogador.getNacionalidade()
+                + "   Nota: " + jogador.getNotaGeral());
+        lbDados.setId("lb_jogador_dados");
+        lbDados.getStyleClass().add("regular-text");
+        lbDados.setStyle("-fx-text-fill: #808080;");
+        lbDados.setWrapText(true);
+        lbDados.setFont(new Font(18.0));
+        lbDados.setPadding(new Insets(5.0, 0, 0, 0));
+
+        // Adicionar os Labels à VBox
+        vBox.getChildren().addAll(lbNome, lbDados);
+
+        // Criar e configurar a HBox vazia
+        HBox hboxVazia = new HBox();
+        hboxVazia.setPrefHeight(100.0);
+        hboxVazia.setPrefWidth(200.0);
+        HBox.setHgrow(hboxVazia, javafx.scene.layout.Priority.ALWAYS);
+
+        // Criar e configurar a HBox com a imagem
+        HBox hboxImagem = new HBox();
+        hboxImagem.setSpacing(5.0);
+        hboxImagem.setAlignment(javafx.geometry.Pos.CENTER);
+        HBox.setMargin(hboxImagem, new Insets(0, 5.0, 0, 0));
+        hboxImagem.setOnMouseClicked(event -> {
+            try {
+                Adicionar_Jogador(jogador);
+            } catch (TacticAllException ex) {
+                Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+        ImageView btnAddJogador = new ImageView(new Image(getClass().getResourceAsStream("/com/mycompany/tacticall/Imagens/plus_icon.png")));
+        btnAddJogador.setId("btn_add_jogador");
+        btnAddJogador.setFitHeight(32.0);
+        btnAddJogador.setFitWidth(32.0);
+
+        hboxImagem.getChildren().add(btnAddJogador);
+
+        // Adicionar todos os elementos ao HBox
+        hBox.getChildren().addAll(circle, vBox, hboxVazia, hboxImagem);
+        hBox.setSpacing(0); // Ajuste o espaçamento conforme necessário
+
+        return hBox;
+
+    }
+
+    private HBox hBoxTecnico(Treinador treinador) {
+        HBox hBox = new HBox();
         hBox.getStyleClass().add("h_time_01");
 
-        Circle avatarCircle = new Circle(48.0);
-        avatarCircle.setFill(Color.web("#c6c6c6"));
-        avatarCircle.setStroke(Color.web("#ebebeb"));
-        avatarCircle.setStrokeWidth(3.0);
+        VBox vBox = new VBox();
+        vBox.setAlignment(javafx.geometry.Pos.TOP_LEFT);
+        vBox.setPadding(new Insets(10.0, 0, 0, 20.0));
 
-        VBox playerDetailsVBox = new VBox();
-        playerDetailsVBox.setSpacing(5.0);
+        Label labelNome = new Label(treinador.getNome());
+        labelNome.getStyleClass().add("regular-text");
+        labelNome.setTextFill(Color.web("#5b5b5b"));
+        labelNome.setFont(new Font(22.0));
 
-        Label playerNameLabel = new Label(jogador.getNome());
-        playerNameLabel.getStyleClass().add("regular-text");
-        playerNameLabel.setTextFill(Color.web("#5b5b5b"));
-        playerNameLabel.setFont(new Font(22.0));
+        Label lbDados = new Label("Nacionalidade: " + treinador.getNacionalidade()
+                + "   Nota: " + treinador.getNotaGeral());
+        lbDados.setId("lb_treinador_dados");
+        lbDados.getStyleClass().add("regular-text");
+        lbDados.setStyle("-fx-text-fill: #808080;");
+        lbDados.setWrapText(true);
+        lbDados.setFont(new Font(18.0));
+        lbDados.setPadding(new Insets(5.0, 0, 0, 0));
 
-        Label playerDataLabel = new Label("Dados do jogador");
-        playerDataLabel.getStyleClass().add("regular-text");
-        playerDataLabel.setTextFill(Color.web("#808080"));
-        playerDataLabel.setFont(new Font(18.0));
-        playerDataLabel.setWrapText(true);
+        vBox.getChildren().addAll(labelNome, lbDados);
 
-        playerDetailsVBox.getChildren().addAll(playerNameLabel, playerDataLabel);
+        HBox hboxVazia = new HBox();
+        hboxVazia.setPrefHeight(100.0);
+        hboxVazia.setPrefWidth(200.0);
+        HBox.setHgrow(hboxVazia, javafx.scene.layout.Priority.ALWAYS);
 
-        ImageView btnAddJogador = new ImageView(new Image(getClass().getResource("/Imagens/plus_icon.png").toExternalForm()));
-        btnAddJogador.setFitHeight(32.0);
-        btnAddJogador.setFitWidth(184.0);
-        btnAddJogador.setOnMouseClicked(event -> Adicionar_Jogador(jogador));
+        HBox hboxImagem = new HBox();
+        hboxImagem.setSpacing(5.0);
+        hboxImagem.setAlignment(javafx.geometry.Pos.CENTER);
+        HBox.setMargin(hboxImagem, new Insets(0, 5.0, 0, 0));
+        hboxImagem.setOnMouseClicked(event -> {
+            try {
+                adicionarTecnico(treinador);
+            } catch (TacticAllException ex) {
+                Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
-        hBox.getChildren().addAll(avatarCircle, playerDetailsVBox, btnAddJogador);
+        ImageView btnAddTecnico = new ImageView(new Image(getClass().getResourceAsStream("/com/mycompany/tacticall/Imagens/plus_icon.png")));
+        btnAddTecnico.setFitHeight(32.0);
+        btnAddTecnico.setFitWidth(32.0);
+        hboxImagem.getChildren().add(btnAddTecnico);
+        
+        hBox.getChildren().addAll(vBox, hboxVazia, hboxImagem);
 
-        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         hBox.setStyle("-fx-border-width: 0 0 3 0; -fx-border-color: #a4a4a4;"); // Add the appropriate style
 
-        hBox.setPadding(new Insets(0, 0, 8.0, 0)); // Adjust padding as needed
+        hBox.setPadding(new Insets(10.0, 0, 8.0, 0)); // Adjust padding as needed
 
         return hBox;
     }
 
     private void criarHBoxes() {
-        vbox_list_jogadores.getChildren().clear();
+        Platform.runLater(() -> {
+            vbox_list_jogadores.getChildren().clear();
 
-        for (Jogador jogador : jogadores) {
-            if (!jogadorEscalado(jogador)) {
-                HBox playerBox = HBox_Jogador(jogador);
-                vbox_list_jogadores.getChildren().add(playerBox);
+            for (Jogador jogador : jogadores) {
+                if (!jogadorEscalado(jogador)) {
+                    HBox playerBox = HBox_Jogador(jogador);
+                    vbox_list_jogadores.getChildren().add(playerBox);
+                }
             }
-        }
+        });
+    }
+
+    private void criarHBoxesTecnicos() {
+        Platform.runLater(() -> {
+            vbox_list_tecnicos.getChildren().clear();
+
+            for (Treinador tecnico : tecnicos) {
+                if (tecnico != tecnicoSelecionado) {
+                    HBox tecnicoBox = hBoxTecnico(tecnico);
+                    vbox_list_tecnicos.getChildren().add(tecnicoBox);
+                }
+            }
+        });
     }
 
     private boolean jogadorEscalado(Jogador j) {
@@ -135,8 +270,102 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         return false;
     }
 
-    public void Adicionar_Jogador(Jogador jogador) {
+    private void criarHBoxEscalados(List<Jogador> j) {
+        Platform.runLater(() -> {
+            vbox_jogadores_e.getChildren().clear();
+            for (Jogador x : j) {
+                HBox playerBox = hBoxJogadorEscalado(x);
+                vbox_jogadores_e.getChildren().add(playerBox);
+            }
+        });
+    }
+
+    private HBox hBoxJogadorEscalado(Jogador jogador) {
+        HBox hBox = new HBox();
+
+        // Configuração da HBox
+        hBox.setPrefHeight(98.0);
+        hBox.setPrefWidth(212.0);
+        hBox.setStyle("-fx-border-width: 0 0 3 0; -fx-border-color: #404040;");
+        hBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        hBox.setPadding(new Insets(10.0, 0, 4.0, 0));
+
+        // Adicionando o círculo
+        Circle circle = new Circle(34.0);
+        circle.setFill(javafx.scene.paint.Color.web("#7c7c7c"));
+        circle.setStroke(javafx.scene.paint.Color.web("#575757"));
+        circle.setStrokeType(StrokeType.INSIDE);
+        circle.setStrokeWidth(2.0);
+        
+                if (!jogador.getImagem().equals("null")) {
+            String imageUrl = jogador.getImagem(); // Substitua pelo URL real
+            Image image = new Image(imageUrl);
+            circle.setFill(new ImagePattern(image));
+        }
+                
+        VBox vboxInterna = new VBox();
+        vboxInterna.setPadding(new Insets(10.0, 0, 0, 20.0));
+        vboxInterna.setAlignment(javafx.geometry.Pos.TOP_LEFT);
+
+        // Adicionando labels na VBox interna
+        Label labelNome = new Label(jogador.getNome());
+        labelNome.getStyleClass().add("regular-text");
+        labelNome.setStyle("-fx-text-fill: #d3d3d3;");
+        labelNome.setFont(new Font(16.0));
+
+        Label labelDados = new Label("Posição: " + jogador.getPosicao()
+                + "   Nacionalidade: " + jogador.getNacionalidade()
+                + "   Nota: " + jogador.getNotaGeral());
+        labelDados.getStyleClass().add("regular-text");
+        labelDados.setStyle("-fx-text-fill: #c7c7c7;");
+        labelDados.setWrapText(true);
+        labelNome.setFont(new Font(12.0));
+        labelDados.setPadding(new Insets(5.0, 0, 0, 0));
+        labelDados.setMaxWidth(Double.MAX_VALUE);
+        vboxInterna.getChildren().addAll(labelNome, labelDados);
+        
+                // Criar e configurar a HBox vazia
+        HBox hboxVazia = new HBox();
+        hboxVazia.setPrefHeight(100.0);
+        hboxVazia.setPrefWidth(5.0);
+        HBox.setHgrow(hboxVazia, javafx.scene.layout.Priority.ALWAYS);
+
+        // Criar e configurar a HBox com a imagem
+        HBox hboxImagem = new HBox();
+        hboxImagem.setSpacing(5.0);
+        hboxImagem.setAlignment(javafx.geometry.Pos.CENTER);
+        HBox.setMargin(hboxImagem, new Insets(0, 5.0, 0, 0));
+        hboxImagem.setOnMouseClicked(event -> {
+            try {
+                remover_Jogador(jogador);
+            } catch (TacticAllException ex) {
+                Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+        ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/com/mycompany/tacticall/Imagens/x_icon.png")));
+        imageView.setFitHeight(32.0);
+        imageView.setFitWidth(32.0);
+
+        hboxImagem.getChildren().add(imageView);
+        
+
+        // Adicionando elementos à HBox
+        hBox.getChildren().addAll(circle, vboxInterna, hboxVazia, hboxImagem);
+        hBox.setSpacing(0);
+        return hBox;
+    }
+
+    public void Adicionar_Jogador(Jogador jogador) throws TacticAllException {
         jogadores_escalados.add(jogador);
+        Pesquisar_Jogadores();
+        Pesquisar_Jogadores_E();
+    }
+
+    public void adicionarTecnico(Treinador tecnico) throws TacticAllException {
+        tecnicoSelecionado = tecnico;
+        pesquisarTecnico();
+        preencherTecnicoSelecionado();
     }
 
     public void SalvarTime() throws TacticAllException, IOException {
@@ -154,6 +383,9 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
             RelacionamentoTimeProfissional rel = new RelacionamentoTimeProfissional(j.getId(), id_time);
             rel_dao.inserir(rel);
         }
+        RelacionamentoTimeProfissional rel_tecnico = new RelacionamentoTimeProfissional(tecnicoSelecionado.getId(), id_time);
+        rel_dao.inserir(rel_tecnico);
+
         App.setRoot("times");
     }
 
@@ -167,8 +399,10 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         pesquisaEscalados(txt_pesquisa_jogador_e.getText());
     }
 
-    public void RemoverJogador(Jogador j) {
-
+    public void remover_Jogador(Jogador j) throws TacticAllException {
+        jogadores_escalados.remove(j);
+        Pesquisar_Jogadores();
+        Pesquisar_Jogadores_E();
     }
 
     private void pesquisaEscalados(String pesquisa) {
@@ -186,54 +420,70 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
 
     }
 
-    private void criarHBoxEscalados(List<Jogador> j) {
-
+    public void removerTecnico() throws TacticAllException {
+        tecnicoSelecionado = null;
+        preencherTecnicoSelecionado();
+        pesquisarTecnico();
     }
-    
-    private HBox HBoxJogadorEscalado(Jogador jogador) {
+
+    public void pesquisarTecnico() throws TacticAllException {
+        TreinadorDAO t = new TreinadorDAO();
+        tecnicos = t.listarPorNome(txt_pesquisa_tecnico.getText());
+        criarHBoxesTecnicos();
+    }
+
+    private HBox hBoxTecnicoSelecionado() {
         HBox hBox = new HBox();
+        if (tecnicoSelecionado != null) {
+            // Configuração da HBox
+            hBox.setPrefHeight(98.0);
+            hBox.setPrefWidth(212.0);
 
-        // Configuração da HBox
-        hBox.setPrefHeight(98.0);
-        hBox.setPrefWidth(212.0);
-        hBox.setStyle("-fx-border-width: 0 0 3 0; -fx-border-color: #404040;");
+            VBox vboxInterna = new VBox();
+            HBox.setHgrow(vboxInterna, javafx.scene.layout.Priority.ALWAYS);
+            vboxInterna.setSpacing(5);
 
-        // Adicionando o círculo
-        Circle circle = new Circle(34.0);
-        circle.setFill(javafx.scene.paint.Color.web("#7c7c7c"));
-        circle.setStroke(javafx.scene.paint.Color.web("#575757"));
-        circle.setStrokeType(StrokeType.INSIDE);
-        circle.setStrokeWidth(2.0);
+            // Adicionando labels na VBox interna
+            Label labelNome = new Label(tecnicoSelecionado.getNome());
+            labelNome.getStyleClass().add("regular-text");
+            labelNome.setTextFill(Color.LIGHTGRAY);
+            labelNome.setFont(Font.font("Arial", FontWeight.BOLD, 16.0));
 
-        VBox vboxInterna = new VBox();
-        VBox.setMargin(vboxInterna, new Insets(0, 0, 0, 20));
+            Label labelDados = new Label("Nacionalidade: " + tecnicoSelecionado.getNacionalidade()
+                    + "   Nota Geral: " + tecnicoSelecionado.getNotaGeral());
+            labelDados.getStyleClass().add("regular-text");
+            labelDados.setTextFill(Color.web("#c7c7c7"));
+            labelDados.setWrapText(true);
 
-        // Adicionando labels na VBox interna
-        Label labelNome = new Label(jogador.getNome());
-        labelNome.getStyleClass().add("regular-text");
-        labelNome.setStyle("-fx-text-fill: #d3d3d3;");
-        labelNome.setFont(new Font(16.0));
+            vboxInterna.getChildren().addAll(labelNome, labelDados);
 
-        Label labelDados = new Label("Dados do jogador");
-        labelDados.getStyleClass().add("regular-text");
-        labelDados.setStyle("-fx-text-fill: #c7c7c7;");
-        labelDados.setWrapText(true);
-        VBox.setMargin(labelDados, new Insets(5.0, 0, 0, 0));
+            // Adicionando a ImageView para remover o treinador
+            ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/com/mycompany/tacticall/Imagens/x_icon.png")));
+            imageView.setFitHeight(32.0);
+            imageView.setFitWidth(32.0);
+            imageView.setOnMouseClicked(event -> {
+            try {
+                removerTecnico();
+            } catch (TacticAllException ex) {
+                Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
-        vboxInterna.getChildren().addAll(labelNome, labelDados);
+            // Adicionando elementos à HBox
+            hBox.getChildren().addAll(vboxInterna, imageView);
 
-        // Adicionando a ImageView para remover o jogador
-        ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("@Imagens/x_icon.png")));
-        imageView.setFitHeight(32.0);
-        imageView.setFitWidth(184.0);
-        imageView.setOnMouseClicked(event -> RemoverJogador(jogador));
-
-        // Adicionando elementos à HBox
-        hBox.getChildren().addAll(circle, vboxInterna, imageView);
-
-        // Configuração do padding da HBox
-        HBox.setMargin(hBox, new Insets(0, 0, 4.0, 0));
-
+            // Configuração do padding e margens da HBox
+            HBox.setMargin(vboxInterna, new Insets(0, 0, 0, 20));
+            HBox.setMargin(imageView, new Insets(0, 0, 0, 20));
+            HBox.setMargin(hBox, new Insets(20.0, 0, 0, 0));
+        }
         return hBox;
+    }
+
+    private void preencherTecnicoSelecionado() {
+        Platform.runLater(() -> {
+            vbox_tecnicoSelecionado.getChildren().clear();
+            vbox_tecnicoSelecionado.getChildren().add(hBoxTecnicoSelecionado());
+        });
     }
 }

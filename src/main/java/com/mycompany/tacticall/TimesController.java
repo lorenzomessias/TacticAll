@@ -23,7 +23,6 @@ public class TimesController extends Sidebar implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Espacamento_Botoes();
         try {
             VerificaLogin();
         } catch (IOException ex) {

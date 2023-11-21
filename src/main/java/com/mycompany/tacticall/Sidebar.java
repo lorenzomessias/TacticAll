@@ -28,18 +28,7 @@ public abstract class Sidebar {
     @FXML
     private Button btn_editar_perfil;
 
-    private void setLetterSpacing(Button button) {
-        // Add a custom style to the button
-        button.setStyle("-fx-letter-spacing: 0.4em;"); // Adjust the letter spacing as needed
-    }
 
-    public void Espacamento_Botoes() {
-        setLetterSpacing(btn_ger_times);
-        setLetterSpacing(btn_ger_esquemas);
-        setLetterSpacing(btn_simulacao);
-        setLetterSpacing(btn_historico);
-        setLetterSpacing(btn_editar_perfil);
-    }
 
     public void EditarPerfil() throws IOException {
         if (Sessao.getInstancia() == null) {
