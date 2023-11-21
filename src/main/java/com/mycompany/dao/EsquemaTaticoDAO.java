@@ -102,12 +102,14 @@ public class EsquemaTaticoDAO implements GenericoDAO<EsquemaTatico> {
         }
         return esquema;
     }
-    public List<EsquemaTatico> listarEsquemasPorTime(int idTime) throws TacticAllException {
+    public List<EsquemaTatico> listarEsquemasPorTime(int idTime, String tipo) throws TacticAllException {
         List<EsquemaTatico> esquemas = new ArrayList<>();
-        String sql = "SELECT * FROM EsquemaTatico WHERE IdTime = ?";
+        String sql = "SELECT * FROM EsquemaTatico WHERE IdTime = ? AND Tipo = ?";
         try (Connection connection = Conexao.getInstance().getConnection();
              PreparedStatement pStatement = connection.prepareStatement(sql)) {
-            pStatement.setInt(1, idTime);
+             pStatement.setInt(1, idTime);
+             pStatement.setString(2, tipo);
+
             try (ResultSet result = pStatement.executeQuery()) {
                 while (result.next()) {
                     EsquemaTatico esquema = new EsquemaTatico(
