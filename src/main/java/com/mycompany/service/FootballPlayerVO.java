@@ -119,22 +119,23 @@ public class FootballPlayerVO {
                 ", roles=" + roles +
                 '}';
     }
+
     public double calcularNota() {
         int idade = this.age;
         List<String> ligasDoJogador = this.leagues;
         String[] principaisLigas = {"England", "Spain", "Germany", "Portugal"};
         long countPrincipaisLigas = Arrays.stream(principaisLigas)
-        .filter(ligasDoJogador::contains)
-        .count();
+                .filter(ligasDoJogador::contains)
+                .count();
         double fatorIdade = idade / 35.0;
-        double pesoLigasPrincipais = 2.0; 
+        double pesoLigasPrincipais = 2.0;
         double pesoOutrasLigas = 1.0;
         double pesoLigas = (countPrincipaisLigas <= 4) ? pesoLigasPrincipais : pesoOutrasLigas;
         Random random = new Random();
-        double notaAleatoria = random.nextDouble() * 5;
-        double notaFinal = ((notaAleatoria + fatorIdade) * pesoLigas);
-        notaFinal = notaFinal < 60 ? 60 : notaFinal;
-        return Math.min(notaFinal, 100.0);
+        double notaAleatoria = random.nextDouble() * 40;
+        double notaFinal = ((notaAleatoria + fatorIdade) * pesoLigas) + 60.0;        
+        notaFinal = Math.min(Math.max(notaFinal, 60.0), 100.0);
+        return notaFinal;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.mycompany.dao;
 
 import com.mycompany.exception.TacticAllException;
+import com.mycompany.model.Jogador;
 import com.mycompany.model.RelacionamentoTimeProfissional;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -146,5 +147,41 @@ public class RelacionamentoTimeProfissionalDAO implements GenericoDAO<Relacionam
             }
         }
         return relacionamento;
+
+    }
+
+    public List<Jogador> listarJogadoresDoTime(int idTime) throws TacticAllException {
+        List<Jogador> jogadores = new ArrayList<>();
+        String sql = "SELECT j.*, p.* "
+                + "FROM Jogador j "
+                + "INNER JOIN Profissional p ON j.IdProfissional = p.Id "
+                + "INNER JOIN RelacionamentoProfissionalTime r ON p.Id = r.IdProfissional "
+                + "WHERE r.IdTime = ?";
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setInt(1, idTime);
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                Jogador jogador = new Jogador(
+                        result.getInt("j.Id"), result.getString("p.Nome"), result.getDate("p.DataNascimento").toLocalDate(),
+                        result.getString("p.Nacionalidade"), result.getInt("p.NotaGeral"), result.getString("j.Posicao"),
+                        result.getInt("j.IdProfissional"), result.getString("p.Imagem"));
+
+                jogadores.add(jogador);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(RelacionamentoTimeProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RelacionamentoTimeProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return jogadores;
     }
 }

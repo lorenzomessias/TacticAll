@@ -22,6 +22,17 @@ public class Jogador extends Profissional implements Serializable{
         this.posicao = posicao;
         this.idProfissional = idProfissional;
     }
+   public Jogador(int id, String nome, LocalDate dataNascimento, String nacionalidade,
+                   int notaGeral, String posicao, int idProfissional, String imagem) {
+        this.id = id;
+        this.setNome(nome);
+        this.setDataDeNascimento(dataNascimento);
+        this.setNacionalidade(nacionalidade);
+        this.setNotaGeral(notaGeral); 
+        this.posicao = posicao;
+        this.idProfissional = idProfissional;
+        this.setImagem(imagem);
+    }
 
     public Jogador( String posicao, int idProfissional) {
         this.posicao = posicao;
