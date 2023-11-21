@@ -161,6 +161,38 @@ public class TimeDAO implements GenericoDAO<Time> {
         return time;
     }
 
+    public List<Time> listarPorUsuarioId( int userId) throws TacticAllException {
+        List<Time> times = new ArrayList<Time>();
+        Connection connection = null;
+        String sql = "SELECT * FROM Time WHERE idUsuario = ?";
+
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setInt(1, userId);
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                times.add( new Time(
+                        result.getInt("id"), result.getString("nome"), result.getString("sigla"),
+                        result.getString("pais"), result.getString("liga"), result.getInt("idUsuario"),
+                        result.getString("corUniforme")
+                ));
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TacticAllException("Erro ao acessar o banco de dados");
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return times;
+    }
+
     public int IdMaisRecente() throws TacticAllException {
         int id = -1;
         Connection connection = null;

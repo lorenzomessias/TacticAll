@@ -67,6 +67,7 @@ public abstract class Sidebar {
     public void Ir_Times() throws IOException {
         App.setRoot("times");
     }
+    
 
     public void Ir_Esquemas_Taticos() throws IOException {
         App.setRoot("esquemas_taticos");

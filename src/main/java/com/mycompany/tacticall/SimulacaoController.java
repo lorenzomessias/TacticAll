@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.tacticall;
-
+import com.mycompany.dao.*;
 import com.mycompany.dao.EsquemaTaticoDAO;
 import com.mycompany.dao.RelacionamentoJogadorEsquemaDAO;
 import com.mycompany.dao.RelacionamentoTimeProfissionalDAO;
@@ -13,12 +13,94 @@ import com.mycompany.model.EsquemaTatico;
 import com.mycompany.model.Jogador;
 import com.mycompany.model.Simulacao;
 import com.mycompany.model.Time;
+import com.mycompany.model.Usuario;
+import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 
-public class SimulacaoController {
+public class SimulacaoController extends Sidebar implements Initializable {
 
+    /**
+     * Initializes the controller class.
+     */
+    @FXML
+    ComboBox NomeTimeMandante;
+    @FXML
+    ComboBox NomeTimeVisitante;
+    @FXML
+    ComboBox EsquemaOfensivoVisitante;
+    @FXML
+    ComboBox EsquemaOfensivoMandante;
+    @FXML
+    ComboBox EsquemaDefensivoVisitante;
+    @FXML
+    ComboBox EsquemaDefensivoMandante;
+    List<Time> times;
+    List<EsquemaTatico> mandanteDefensivo;
+    List<EsquemaTatico> mandanteOfensivo;
+    List<EsquemaTatico> visitanteOfensivo;
+    List<EsquemaTatico> visitanteDefensivo;
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        try {
+            VerificaLogin();
+            PreencheComboBox();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(TimesController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TacticAllException ex) {
+            Logger.getLogger(SimulacaoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } 
+    private void PreencheComboBox() throws TacticAllException{
+        String email = Sessao.getInstancia().getEmail();
+        UsuarioDAO dao = new UsuarioDAO();
+        Usuario user = dao.listarPorEmail(email);
+        TimeDAO timeDAO = new TimeDAO();
+        times = timeDAO.listarPorUsuarioId(user.getId());
+        List<String> listaTime = new ArrayList<String>();
+        for(Time time : times){
+            listaTime.add(time.getNome());
+        }
+        NomeTimeMandante.getItems().addAll(listaTime);
+        NomeTimeVisitante.getItems().addAll(listaTime);
+        NomeTimeMandante.getSelectionModel().selectFirst();
+        NomeTimeVisitante.getSelectionModel().selectFirst();
+
+    }
+    private void mudarTimeMandante() throws TacticAllException{
+        Time time = getTimePorNome((String) NomeTimeMandante.getValue());
+        mandanteOfensivo = retornaEsquemasPorTime(time.getId(), "Ofensivo");
+        mandanteDefensivo = retornaEsquemasPorTime(time.getId(), "Defensivo");
+        List<String> listaMandanteOfensivo = new ArrayList<String>();
+        List<String> listaMandanteDefensivo = new ArrayList<String>();
+
+        for(EsquemaTatico esquema : mandanteOfensivo){
+            listaMandanteOfensivo.add(esquema.getFormacao());
+        }
+        for(EsquemaTatico esquema : mandanteDefensivo){
+            listaMandanteDefensivo.add(esquema.getFormacao());
+        }
+        EsquemaOfensivoMandante.getItems().addAll(listaMandanteOfensivo);
+        EsquemaDefensivoMandante.getItems().addAll(listaMandanteDefensivo);
+    }
+    public Time getTimePorNome(String nomeProcurado) {
+        for (Time time : times) {
+            if (time.getNome().equals(nomeProcurado)) {
+                return time;
+            }
+        }
+        return null;
+    }
     public Simulacao realizaSimulacao(Time timeA, Time timeB, EsquemaTatico ofensivoA, EsquemaTatico defensivoB, EsquemaTatico ofensivoB, EsquemaTatico defensivoA) throws TacticAllException {
         RelacionamentoTimeProfissionalDAO relDao = new RelacionamentoTimeProfissionalDAO();
         RelacionamentoJogadorEsquemaDAO relJEDao = new RelacionamentoJogadorEsquemaDAO();
@@ -98,9 +180,9 @@ public class SimulacaoController {
         return numeroAleatorio <= probabilidade;
     }
     
-    public List<EsquemaTatico> retornaEsquemasPorTime(int idTime) throws TacticAllException{
+    public List<EsquemaTatico> retornaEsquemasPorTime(int idTime, String tipo) throws TacticAllException{
         EsquemaTaticoDAO esquemaDao = new EsquemaTaticoDAO();
-        return esquemaDao.listarEsquemasPorTime(idTime);
+        return esquemaDao.listarEsquemasPorTime(idTime, tipo);
     }
 
     private boolean posicaoCoincide(Jogador jogador, List<Jogador> ofensivo, List<Jogador> defensivo) {
