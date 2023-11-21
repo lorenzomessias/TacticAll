@@ -4,11 +4,8 @@
  */
 package com.mycompany.tacticall;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.Initializable;
 
 /**
@@ -16,18 +13,14 @@ import javafx.fxml.Initializable;
  *
  * @author moond
  */
-public class Editar_esquema_taticoController extends Sidebar implements Initializable {
+public class HistoricoController extends Sidebar implements Initializable {
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            VerificaLogin();
-        } catch (IOException ex) {
-            Logger.getLogger(Editar_esquema_taticoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }     
+        // TODO
+    }    
     
 }

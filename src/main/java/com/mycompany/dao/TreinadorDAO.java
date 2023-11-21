@@ -147,4 +147,34 @@ public class TreinadorDAO implements GenericoDAO<Treinador> {
         }
         return treinador;
     }
+    
+        public List<Treinador> listarPorNome(String pesquisa) throws TacticAllException {
+        List<Treinador> treinadores = new ArrayList<>();
+        String sql = "SELECT * FROM Treinador INNER JOIN Profissional ON Treinador.IDPROFISSIONAL = Profissional.ID WHERE Nome LIKE ?";
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1, "%" + pesquisa + "%");
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+            Treinador treinador;
+                treinador = new Treinador(result.getInt("id"), result.getString("nome"), result.getDate("datadenascimento").toLocalDate(), 
+                        result.getString("nacionalidade"), result.getInt("notageral"),
+                        result.getInt("idprofissional"), result.getString("imagem"));
+                treinadores.add(treinador);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TreinadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TreinadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(TreinadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return treinadores;
+    }
 }
