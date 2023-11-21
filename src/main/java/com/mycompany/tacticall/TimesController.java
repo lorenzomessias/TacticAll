@@ -22,6 +22,8 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -138,7 +140,13 @@ public class TimesController extends Sidebar implements Initializable {
         removerHBox.setAlignment(javafx.geometry.Pos.CENTER);
         HBox.setMargin(removerHBox, new Insets(0, 5.0, 0, 0));
         removerHBox.setOnMouseClicked(event -> {
-            Remover_Time();
+            try {
+                Remover_Time(time);
+            } catch (TacticAllException ex) {
+                Logger.getLogger(TimesController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(TimesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
         ImageView btnRemoverTime = new ImageView(new Image(getClass().getResourceAsStream("/com/mycompany/tacticall/Imagens/trashcan_icon.png")));
@@ -158,23 +166,29 @@ public class TimesController extends Sidebar implements Initializable {
     }
 
     public void Editar_Time(Time t) throws IOException, TacticAllException {
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mycompany/tacticall/editar_time.fxml"));
-        
-        Parent root = loader.load();
-        Editar_timeController editarTimeController = loader.getController();
-
-        // Passe o objeto Time para o controlador Editar_timeController
-        editarTimeController.setTime(t);
-
-        // Mude a cena
-        Scene scene = new Scene(root);
-        App.getStage().setScene(scene);
-        App.getStage().setMaximized(true);
+        Sessao.getInstancia().setTimeEditando(t);
+        App.setRoot("editar_time");
     }
 
-    public void Remover_Time() {
+    public void Remover_Time(Time t) throws TacticAllException, IOException {
+        // Cria um alerta de confirmação
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmação de Exclusão");
+        alert.setHeaderText("Excluir Time");
+        alert.setContentText("Tem certeza que deseja excluir o time?\nEssa ação irá remover todos os esquemas táticos e simulações associadas.");
 
+        // Obtém a resposta do usuário
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+        // Se o usuário confirmar, então remova o time
+        if (result == ButtonType.OK) {
+            try {
+                TimeDAO tDAO = new TimeDAO();
+                tDAO.remover(t);
+                App.setRoot("times");
+            } catch (TacticAllException | IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
-
 }
