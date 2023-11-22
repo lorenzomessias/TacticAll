@@ -53,7 +53,18 @@ public class Jogador extends Profissional implements Serializable{
     }
 
     public void setPosicao(String posicao) {
-        this.posicao = posicao;
+        if(posicao.equals("D")){
+            this.posicao = "Defensor";
+        }else if(posicao.equals("M")){
+            this.posicao = "Meio-Campista";
+        }else if(posicao.equals("F")){
+            this.posicao = "Atacante";
+        }else if(posicao.equals("G")){
+            this.posicao = "Goleiro";
+        }
+        else{
+            this.posicao = posicao;
+        }
     }
 
     public int getIdProfissional() {

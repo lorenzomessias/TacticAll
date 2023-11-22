@@ -133,7 +133,7 @@ public class FootballPlayerVO {
         double pesoLigas = (countPrincipaisLigas <= 4) ? pesoLigasPrincipais : pesoOutrasLigas;
         Random random = new Random();
         double notaAleatoria = random.nextDouble() * 40;
-        double notaFinal = ((notaAleatoria + fatorIdade) * pesoLigas) + 60.0;        
+        double notaFinal = ((notaAleatoria + fatorIdade) * pesoLigas) + 50.0;        
         notaFinal = Math.min(Math.max(notaFinal, 60.0), 100.0);
         return notaFinal;
     }

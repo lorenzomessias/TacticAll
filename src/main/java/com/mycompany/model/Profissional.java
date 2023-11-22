@@ -9,6 +9,7 @@ package com.mycompany.model;
  * @author Everymind
  */
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.Date;
 
 public class Profissional {
@@ -68,11 +69,35 @@ public class Profissional {
     }
 
     public void setDataDeNascimento(LocalDate dataDeNascimento) {
-        this.dataDeNascimento = dataDeNascimento;
+        if(dataDeNascimento.getYear() > 2023){
+            dataDeNascimento = LocalDate.of(01, Month.JANUARY, 1920);
+        }else{
+            this.dataDeNascimento = dataDeNascimento;
+        }
     }
 
     public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
+         if(nacionalidade.equals("Poland")){
+            this.nacionalidade = "Polônia";
+        }else if(nacionalidade.equals("Germany")){
+            this.nacionalidade = "Alemanha";
+        }else if(nacionalidade.equals("Spain")){
+            this.nacionalidade = "Espanha";
+        }else if(nacionalidade.equals("Croatia")){
+            this.nacionalidade = "Croacia";
+        }else if(nacionalidade.equals("Belgium")){
+            this.nacionalidade = "Belgica";
+        }else if(nacionalidade.equals("France")){
+            this.nacionalidade = "França";
+        }else if(nacionalidade.equals("Brazil")){
+            this.nacionalidade = "Brasil";
+        }else if(nacionalidade.equals("Paraguay")){
+            this.nacionalidade = "Paraguai";
+        }else if(nacionalidade.equals("England")){
+            this.nacionalidade = "Inglaterra";
+        }else{
+            this.nacionalidade = nacionalidade;
+        }
     }
 
     public void setNotaGeral(double notaGeral) {
