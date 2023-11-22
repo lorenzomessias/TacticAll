@@ -32,6 +32,45 @@
     src: url('file:./fonts/OpenSans-SemiBoldItalic.ttf');
     font-style: italic;
 }
+.button,
+.button:focused,
+.button:hover,
+.button:pressed {
+    -fx-background-insets: 0;
+}
+
+.botao-sidebar {
+    -fx-font-family: 'Open Sans Bold';
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.botao-sidebar:pressed {
+    -fx-font-family: 'Open Sans Bold';
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.2), 1, 1, 1, 1);
+}
+
+.botao-sidebar:focused {
+    -fx-font-family: 'Open Sans Bold';
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.2), 1, 1, 1, 1);
+}
+
+.botao-sidebar:hover {
+    -fx-font-family: 'Open Sans Bold';
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.2), 1, 1, 1, 1);
+}
+
+.button:pressed,
+.button:hover {
+    -fx-font-size: -fx-base;
+    -fx-font-weight: -fx-base;
+}
 
 .regular-text {
     -fx-font-family: 'Open Sans Regular';
@@ -62,6 +101,45 @@
     -fx-background-color: #174a25;
 }
 
-.sidebar-button {
-    -fx-letter-spacing: 0.4em;
+
+.sidebar-box {
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #206532
+}
+
+.botao {
+    -fx-background-insets: 0;
+    -fx-background-radius: 30;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans Bold';
+    -fx-background-color: #174a25;
+}
+
+.botao:pressed {
+    -fx-background-insets: 0;
+    -fx-background-radius: 30;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans Bold';
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.4), 3, 3, 3, 3);
+}
+
+.botao:hover {
+    -fx-background-insets: 0;
+    -fx-background-radius: 30;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans Bold';
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.4), 3, 3, 3, 3);
+}
+
+
+.botao:focused {
+    -fx-background-insets: 0;
+    -fx-background-radius: 30;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Open Sans Bold';
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.4), 3, 3, 3, 3);
 }

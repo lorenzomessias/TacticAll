@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.dao;
+
 import com.mycompany.exception.TacticAllException;
 import com.mycompany.model.Simulacao;
 import java.sql.Connection;
@@ -14,12 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author CS
  */
 public class SimulacaoDAO implements GenericoDAO<Simulacao> {
-    public SimulacaoDAO(){}
+
+    public SimulacaoDAO() {
+    }
 
     @Override
     public List<Simulacao> listar() throws TacticAllException {
@@ -80,7 +84,7 @@ public class SimulacaoDAO implements GenericoDAO<Simulacao> {
 
     @Override
     public void alterar(Simulacao simulacao) throws TacticAllException {
-       String sql = "UPDATE Simulacao SET idEsquemaOfensivoMandante = ?,  idEsquemaOfensivoVisitante = ?, idEsquemaDefensivoMandante = ?, idEsquemaDefensivoVisitante = ?, idUsuario = ?, golsTimeVisitante = ?, golsTimeMandante = ?, dataSimulacao = ? WHERE id = ?";
+        String sql = "UPDATE Simulacao SET idEsquemaOfensivoMandante = ?,  idEsquemaOfensivoVisitante = ?, idEsquemaDefensivoMandante = ?, idEsquemaDefensivoVisitante = ?, idUsuario = ?, golsTimeVisitante = ?, golsTimeMandante = ?, dataSimulacao = ? WHERE id = ?";
         Connection connection = null;
         try {
             connection = Conexao.getInstance().getConnection();
@@ -164,5 +168,57 @@ public class SimulacaoDAO implements GenericoDAO<Simulacao> {
         }
         return simulacao;
     }
-    
+
+    public List<Simulacao> listarPorIdUsuario(int id) throws TacticAllException {
+        List<Simulacao> simulacoes = new ArrayList<Simulacao>();
+        String sql = "SELECT * FROM Simulacao WHERE IDUSUARIO = ?";
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setInt(1, id);
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                simulacoes.add(new Simulacao(result.getInt("id"), result.getInt("idEsquemaOfensivoMandante"), result.getInt("idEsquemaOfensivoVisitante"), result.getInt("idEsquemaDefensivoMandante"), result.getInt("idEsquemaDefensivoVisitante"), result.getInt("idUsuario"), result.getInt("golsTimeVisitante"), result.getInt("golsTimeMandante"), result.getDate("dataSimulacao").toLocalDate()));
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SimulacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SimulacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SimulacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return simulacoes;
+    }
+
+    public Simulacao listarMaisRecente(int ID) throws TacticAllException {
+        Simulacao simulacao = new Simulacao();
+        Connection connection = null;
+        String sql = "SELECT * FROM Simulacao WHERE IdUsuario = ? ORDER BY DataSimulacao DESC FETCH FIRST 1 ROW ONLY";
+
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setInt(1, ID);
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                simulacao = new Simulacao(result.getInt("id"), result.getInt("idEsquemaOfensivoMandante"), result.getInt("idEsquemaOfensivoVisitante"), result.getInt("idEsquemaDefensivoMandante"), result.getInt("idEsquemaDefensivoVisitante"), result.getInt("idUsuario"), result.getInt("golsTimeVisitante"), result.getInt("golsTimeMandante"), result.getDate("dataSimulacao").toLocalDate());
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SimulacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SimulacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SimulacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return simulacao;
+    }
 }

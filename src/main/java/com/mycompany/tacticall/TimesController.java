@@ -69,19 +69,41 @@ public class TimesController extends Sidebar implements Initializable {
 
     public void Pesquisar_Times() throws TacticAllException {
         TimeDAO tDao = new TimeDAO();
-        times = tDao.listarPorNome(txt_pesquisa_time.getText());
+        times = tDao.listarPorNome(txt_pesquisa_time.getText(), Sessao.getInstancia().getId());
         criarHBoxes();
     }
 
     private void criarHBoxes() {
         Platform.runLater(() -> {
             vbox_lista_times.getChildren().clear();
-
-            for (Time time : times) {
-                HBox hBox = hBoxTime(time);
-                vbox_lista_times.getChildren().add(hBox);
+            if (times.isEmpty()) {
+                vbox_lista_times.getChildren().add(hBoxVazia());
+            } else {
+                for (Time time : times) {
+                    HBox hBox = hBoxTime(time);
+                    vbox_lista_times.getChildren().add(hBox);
+                }
             }
         });
+    }
+
+    private HBox hBoxVazia() {
+        HBox hboxV = new HBox();
+        Label label = new Label("Não foram encontrados times com essas especificações.");
+        label.getStyleClass().add("regular-text");
+        label.getStylesheets().add("@../../../styles/styles.css");
+        label.setTextFill(javafx.scene.paint.Color.web("#808080"));
+        label.setWrapText(true);
+        label.setFont(new javafx.scene.text.Font(18.0));
+
+        // Adiciona o Label à HBox
+        hboxV.getChildren().add(label);
+
+        // Configuração de estilos e margens
+        hboxV.setAlignment(javafx.geometry.Pos.CENTER);
+        hboxV.setStyle("-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;");
+        hboxV.setPadding(new javafx.geometry.Insets(0, 0, 20, 0));
+        return hboxV;
     }
 
     private HBox hBoxTime(Time time) {

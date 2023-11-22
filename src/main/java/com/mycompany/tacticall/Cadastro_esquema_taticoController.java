@@ -176,11 +176,6 @@ public class Cadastro_esquema_taticoController extends Sidebar implements Initia
         VBox vboxPosicao = new VBox();
         vboxPosicao.setSpacing(5.0);
 
-        Label lbPosicao = new Label("Posição:");
-        lbPosicao.getStyleClass().add("bold-text");
-        lbPosicao.setStyle("-fx-text-fill: #5b5b5b;");
-        lbPosicao.setFont(new Font(22.0));
-
         ComboBox<String> cbPosicaoJogador = new ComboBox<>();
         cbPosicaoJogador.setId("cb_posicao_jogador");
         cbPosicaoJogador.getStyleClass().add("txt-box");
@@ -198,8 +193,9 @@ public class Cadastro_esquema_taticoController extends Sidebar implements Initia
             // Chama o método AlterarPosicao
             AlterarPosicao(jogadorAtual, novaPosicao);
         });
-
-        vboxPosicao.getChildren().addAll(lbPosicao, cbPosicaoJogador);
+        vboxPosicao.setPadding(new Insets(0, 6.0, 0, 0));
+        vboxPosicao.setAlignment(javafx.geometry.Pos.CENTER);
+        vboxPosicao.getChildren().addAll(cbPosicaoJogador);
 
         // Adicionar todos os elementos ao HBox
         hBox.getChildren().addAll(circle, vBox, hboxVazia, vboxPosicao);

@@ -160,7 +160,7 @@ public class SimulacaoController extends Sidebar implements Initializable {
         return null;
     }
 
-    public Simulacao realizaSimulacao() throws TacticAllException {
+    public void realizaSimulacao() throws TacticAllException, IOException {
         Time timeA = getTimePorNome((String) NomeTimeMandante.getValue());
         Time timeB = getTimePorNome((String) NomeTimeVisitante.getValue());
         EsquemaTatico ofensivoA = getEsquemaPorNome((String) EsquemaOfensivoMandante.getValue(), mandanteOfensivo);
@@ -227,7 +227,8 @@ public class SimulacaoController extends Sidebar implements Initializable {
         simulacao.setIdUsuario(timeA.getIdUsuario());
         SimulacaoDAO simuDao = new SimulacaoDAO();
         simuDao.inserir(simulacao);
-        return simulacao;
+        Sessao.getInstancia().setSimulacao(simulacao);
+        App.setRoot("exibir_simulacao");
     }
 
     public int golsConvertidos(int numChances) {
