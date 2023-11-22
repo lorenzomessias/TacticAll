@@ -197,5 +197,27 @@ public class RelacionamentoJogadorEsquemaDAO implements GenericoDAO<Relacionamen
         }
         return jogadores;
     }
-
+    
+        public void removerDoTime(int id) throws TacticAllException {
+        String sql = "DELETE FROM RelacionamentoJogadorEsquema WHERE IdTime = ?";
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setInt(1, id);
+            pStatement.execute();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(RelacionamentoJogadorEsquemaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TacticAllException("Erro ao remover dados na base de dados");
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RelacionamentoJogadorEsquemaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+        
 }

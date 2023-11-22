@@ -35,10 +35,9 @@
                   <Insets top="40.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="TOP_CENTER" />
-            <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+            <VBox alignment="TOP_CENTER" VBox.vgrow="ALWAYS">
                <children>
-                  <VBox fx:id="vbox_criar_esquema" onMouseClicked="#Ir_Criar_Esquema" style="-fx-background-color: #3c3c3c; -fx-background-radius: 20;">
+                  <VBox fx:id="vbox_criar_esquema" onMouseClicked="#Ir_Criar_EsquemaTatico" style="-fx-background-color: #3c3c3c; -fx-background-radius: 20;">
                      <children>
                         <HBox>
                            <children>
@@ -94,7 +93,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="cb_time" prefWidth="150.0" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
+                                    <ComboBox fx:id="cb_time" onAction="#Pesquisar_EsquemasTaticos" prefWidth="150.0" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
@@ -108,7 +107,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox prefWidth="150.0" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
+                                    <ComboBox fx:id="cb_categoria" onAction="#Pesquisar_EsquemasTaticos" prefWidth="150.0" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
@@ -122,7 +121,7 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                            <children>
-                              <TextField HBox.hgrow="ALWAYS">
+                              <TextField fx:id="txt_pesquisa_esquema" HBox.hgrow="ALWAYS">
                                  <stylesheets>
                                     <URL value="@../../../styles/cadastro.css" />
                                     <URL value="@../../../styles/primary.css" />
@@ -133,7 +132,7 @@
                                     <String fx:value="regular-text" />
                                  </styleClass>
                               </TextField>
-                              <ImageView fx:id="btn_pesquisa" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Pesquisar_Esquemas_Taticos" pickOnBounds="true" preserveRatio="true" smooth="true">
+                              <ImageView fx:id="btn_pesquisa" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Pesquisar_EsquemasTaticos" pickOnBounds="true" preserveRatio="true" smooth="true">
                                  <image>
                                     <Image url="@Imagens/search_icon.png" />
                                  </image>
@@ -145,7 +144,7 @@
                         </HBox>
                         <ScrollPane fitToWidth="true" style="-fx-border-width: 0; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
                            <content>
-                              <VBox style="-fx-background-color: #e3e3e3; -fx-border-width: 0;">
+                              <VBox fx:id="vbox_lista_esquemas" style="-fx-background-color: #e3e3e3; -fx-border-width: 0;">
                                  <children>
                                     <HBox fx:id="h_time_01" alignment="CENTER_LEFT" style="-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;">
                                        <children>
@@ -156,63 +155,6 @@
                                              </HBox.margin>
                                              <children>
                                                 <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Esquema Tático" textFill="#5b5b5b">
-                                                   <font>
-                                                      <Font size="22.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Você ainda não criou nenhum time." textFill="#808080" wrapText="true">
-                                                   <font>
-                                                      <Font size="18.0" />
-                                                   </font>
-                                                   <VBox.margin>
-                                                      <Insets top="5.0" />
-                                                   </VBox.margin>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                          <HBox>
-                                             <children>
-                                                <HBox alignment="CENTER">
-                                                   <children>
-                                                      <ImageView fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                                         <image>
-                                                            <Image url="@Imagens/gear_icon.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </HBox>
-                                                <HBox alignment="CENTER">
-                                                   <children>
-                                                      <ImageView fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                                         <image>
-                                                            <Image url="@Imagens/trashcan_icon.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                   <HBox.margin>
-                                                      <Insets left="5.0" />
-                                                   </HBox.margin>
-                                                </HBox>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="8.0" />
-                                       </padding>
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" style="-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;">
-                                       <children>
-                                          <Circle fill="#c6c6c6" radius="48.0" stroke="#ebebeb" strokeType="INSIDE" strokeWidth="3.0" />
-                                          <VBox>
-                                             <HBox.margin>
-                                                <Insets left="20.0" top="10.0" />
-                                             </HBox.margin>
-                                             <children>
-                                                <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Time" textFill="#5b5b5b">
                                                    <font>
                                                       <Font size="22.0" />
                                                    </font>
@@ -278,7 +220,7 @@
                   </VBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="30.0" left="10.0" right="10.0" />
+                  <Insets bottom="30.0" left="10.0" right="10.0" top="30.0" />
                </VBox.margin>
             </VBox>
             <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Teste cor" textFill="#a4a4a4" wrapText="true">
@@ -319,7 +261,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_ger_times" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" styleClass="bold-text" text="Times" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_ger_times1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Times" style="-fx-background-color: transparent;" styleClass="bold-text" text="Times" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas" size="14.0" />
                            </font>
@@ -331,79 +273,51 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_ger_esquemas" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Esquemas Táticos" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_ger_esquemas1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Esquemas_Taticos" style="-fx-background-color: transparent;" styleClass="bold-text" text="Esquemas Táticos" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_simulacao" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Simulação de Partida" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_simulacao1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Simulacao" style="-fx-background-color: transparent;" styleClass="bold-text" text="Simulação de Partida" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_historico" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Histórico e Analytics" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_historico1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Historico" style="-fx-background-color: transparent;" styleClass="bold-text" text="Histórico e Analytics" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_editar_perfil" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#EditarPerfil" style="-fx-background-color: transparent;" text="Perfil" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_editar_perfil1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#EditarPerfil" style="-fx-background-color: transparent;" styleClass="bold-text" text="Perfil" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                </children>
                <padding>

@@ -1,4 +1,5 @@
 package com.mycompany.dao;
+
 import com.mycompany.exception.TacticAllException;
 import com.mycompany.model.Jogador;
 import java.sql.Connection;
@@ -23,7 +24,7 @@ public class JogadorDAO implements GenericoDAO<Jogador> {
             PreparedStatement pStatement = connection.prepareStatement(sql);
             ResultSet result = pStatement.executeQuery();
             while (result.next()) {
-                Jogador jogador = new Jogador(result.getInt("Id"), 
+                Jogador jogador = new Jogador(result.getInt("Id"),
                         result.getString("Posicao"),
                         result.getInt("IdProfissional"));
                 jogadores.add(jogador);
@@ -149,7 +150,8 @@ public class JogadorDAO implements GenericoDAO<Jogador> {
         }
         return jogador;
     }
-        public List<Jogador> listarPorNome(String pesquisa) throws TacticAllException {
+
+    public List<Jogador> listarPorNome(String pesquisa) throws TacticAllException {
         List<Jogador> jogadores = new ArrayList<>();
         String sql = "SELECT * FROM Jogador INNER JOIN Profissional ON Jogador.IDPROFISSIONAL = Profissional.ID WHERE Nome LIKE ?";
         Connection connection = null;
@@ -159,8 +161,39 @@ public class JogadorDAO implements GenericoDAO<Jogador> {
             pStatement.setString(1, "%" + pesquisa + "%");
             ResultSet result = pStatement.executeQuery();
             while (result.next()) {
-            Jogador jogador;
-                jogador = new Jogador(result.getInt("id"), result.getString("nome"), result.getDate("datadenascimento").toLocalDate(), 
+                Jogador jogador;
+                jogador = new Jogador(result.getInt("id"), result.getString("nome"), result.getDate("datadenascimento").toLocalDate(),
+                        result.getString("nacionalidade"), result.getInt("notageral"), result.getString("posicao"),
+                        result.getInt("idprofissional"), result.getString("imagem"));
+                jogadores.add(jogador);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JogadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JogadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(JogadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return jogadores;
+    }
+
+    public List<Jogador> listarPorTime(int id) throws TacticAllException {
+        List<Jogador> jogadores = new ArrayList<>();
+        String sql = "SELECT * FROM Jogador INNER JOIN Profissional ON Jogador.IDPROFISSIONAL = Profissional.ID INNER JOIN "
+                + "RelacionamentoTimeProfissional ON Profissional.ID = RelacionamentoTimeProfissional.IDPROFISSIONAL  WHERE IDTIME = ?";
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setInt(1, id);
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                Jogador jogador;
+                jogador = new Jogador(result.getInt("id"), result.getString("nome"), result.getDate("datadenascimento").toLocalDate(),
                         result.getString("nacionalidade"), result.getInt("notageral"), result.getString("posicao"),
                         result.getInt("idprofissional"), result.getString("imagem"));
                 jogadores.add(jogador);
@@ -179,4 +212,3 @@ public class JogadorDAO implements GenericoDAO<Jogador> {
         return jogadores;
     }
 }
-

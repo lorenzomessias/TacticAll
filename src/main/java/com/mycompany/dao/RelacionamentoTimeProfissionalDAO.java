@@ -155,7 +155,7 @@ public class RelacionamentoTimeProfissionalDAO implements GenericoDAO<Relacionam
         String sql = "SELECT j.*, p.* "
                 + "FROM Jogador j "
                 + "INNER JOIN Profissional p ON j.IdProfissional = p.Id "
-                + "INNER JOIN RelacionamentoProfissionalTime r ON p.Id = r.IdProfissional "
+                + "INNER JOIN RelacionamentoTimeProfissional r ON p.Id = r.IdProfissional "
                 + "WHERE r.IdTime = ?";
         Connection connection = null;
         try {
@@ -183,5 +183,87 @@ public class RelacionamentoTimeProfissionalDAO implements GenericoDAO<Relacionam
             }
         }
         return jogadores;
+    }
+    
+        public List<Jogador> listarJogadorPorTime(int id) throws TacticAllException {
+        List<Jogador> jogadores = new ArrayList<>();
+        String sql = "SELECT * FROM Jogador INNER JOIN Profissional ON Jogador.IDPROFISSIONAL = Profissional.ID INNER JOIN "
+                + "RelacionamentoTimeProfissional ON Profissional.ID = RelacionamentoTimeProfissional.IDPROFISSIONAL  WHERE IDTIME = ?";
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setInt(1, id);
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                Jogador jogador;
+                jogador = new Jogador(result.getInt("id"), result.getString("nome"), result.getDate("datadenascimento").toLocalDate(),
+                        result.getString("nacionalidade"), result.getInt("notageral"), result.getString("posicao"),
+                        result.getInt("idprofissional"), result.getString("imagem"));
+                jogadores.add(jogador);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JogadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JogadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(JogadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return jogadores;
+    }
+
+    public void removerDoTime(int id) throws TacticAllException {
+        String sql = "DELETE FROM RelacionamentoTimeProfissional WHERE IdTime = ?";
+
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setInt(1, id);
+            pStatement.execute();
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RelacionamentoTimeProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TacticAllException("Não foi possível conectar à base de dados!");
+        } catch (SQLException ex) {
+            Logger.getLogger(RelacionamentoTimeProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TacticAllException("Não foi possível enviar o comando para a base de dados!");
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(RelacionamentoTimeProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void removerProfissionalDoTime(int idtime, int idprofissional) throws TacticAllException {
+        String sql = "DELETE FROM RelacionamentoTimeProfissional WHERE IdTime = ? AND IdProfissional = ?";
+
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setInt(1, idtime);
+            pStatement.setInt(2, idprofissional);
+            pStatement.execute();
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RelacionamentoTimeProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TacticAllException("Não foi possível conectar à base de dados!");
+        } catch (SQLException ex) {
+            Logger.getLogger(RelacionamentoTimeProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TacticAllException("Não foi possível enviar o comando para a base de dados!");
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(RelacionamentoTimeProfissionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

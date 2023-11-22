@@ -38,7 +38,6 @@ public class Jogador extends Profissional implements Serializable{
         this.posicao = posicao;
         this.idProfissional = idProfissional;
     }
-    
     public Jogador() {
     }
 
