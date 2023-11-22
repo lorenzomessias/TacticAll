@@ -96,7 +96,28 @@ public class EsquemaTaticoDAO implements GenericoDAO<EsquemaTatico> {
         }
         return esquema;
     }
-
+    
+        public List<EsquemaTatico> listarEsquemasPorTime(int idTime) throws TacticAllException {
+        List<EsquemaTatico> esquemas = new ArrayList<>();
+        String sql = "SELECT * FROM EsquemaTatico WHERE IdTime = ?";
+        try (Connection connection = Conexao.getInstance().getConnection(); PreparedStatement pStatement = connection.prepareStatement(sql)) {
+            pStatement.setInt(1, idTime);
+            try (ResultSet result = pStatement.executeQuery()) {
+                while (result.next()) {
+                    EsquemaTatico esquema = new EsquemaTatico(
+                            result.getInt("Id"), result.getInt("IdTime"),
+                            result.getString("Tipo"), result.getString("Nome"),
+                            result.getString("Formacao"), result.getString("TaticaEspecifica"));
+                    esquemas.add(esquema);
+                }
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(EsquemaTaticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TacticAllException("Erro ao acessar o banco de dados");
+        }
+        return esquemas;
+    }
+        
     public List<EsquemaTatico> listarEsquemasPorTime(int idTime, String tipo) throws TacticAllException {
         List<EsquemaTatico> esquemas = new ArrayList<>();
         String sql = "SELECT * FROM EsquemaTatico WHERE IdTime = ? AND Tipo = ?";

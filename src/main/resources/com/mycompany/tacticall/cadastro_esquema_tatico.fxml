@@ -118,7 +118,7 @@
                            <children>
                               <HBox>
                                  <children>
-                                    <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Selecionar Jogadores" textFill="#5b5b5b" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Definir Posição dos Jogadores" textFill="#5b5b5b" HBox.hgrow="ALWAYS">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
@@ -132,27 +132,6 @@
                                  </padding>
                               </HBox>
                               <HBox>
-                                 <children>
-                                    <TextField fx:id="txt_pesquisa_jogadores" HBox.hgrow="ALWAYS">
-                                       <stylesheets>
-                                          <URL value="@../../../styles/cadastro.css" />
-                                          <URL value="@../../../styles/primary.css" />
-                                          <URL value="@../../../styles/styles.css" />
-                                       </stylesheets>
-                                       <styleClass>
-                                          <String fx:value="txt-box" />
-                                          <String fx:value="regular-text" />
-                                       </styleClass>
-                                    </TextField>
-                                    <ImageView fx:id="btn_pesquisa" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Pesquisar_Jogadores_Time" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                       <image>
-                                          <Image url="@Imagens/search_icon.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="15.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                 </children>
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>

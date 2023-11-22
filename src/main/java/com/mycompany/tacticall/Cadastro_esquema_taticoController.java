@@ -4,10 +4,13 @@
  */
 package com.mycompany.tacticall;
 
+import com.mycompany.dao.EsquemaTaticoDAO;
 import com.mycompany.dao.JogadorDAO;
+import com.mycompany.dao.RelacionamentoJogadorEsquemaDAO;
 import com.mycompany.dao.TimeDAO;
 import com.mycompany.dao.UsuarioDAO;
 import com.mycompany.exception.TacticAllException;
+import com.mycompany.model.EsquemaTatico;
 import com.mycompany.model.Jogador;
 import com.mycompany.model.RelacionamentoJogadorEsquema;
 import com.mycompany.model.Time;
@@ -25,6 +28,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -89,9 +93,11 @@ public class Cadastro_esquema_taticoController extends Sidebar implements Initia
 
     }
 
-    private void alterarTime() throws TacticAllException {
+    public void alterarTime() throws TacticAllException {
+        posicoes.clear();
         TimeDAO timeDAO = new TimeDAO();
         timeAtual = timeDAO.listarPorNome((String) cb_time_es.getSelectionModel().getSelectedItem()).get(0);
+        pesquisarJogadores();
     }
 
     public void pesquisarJogadores() throws TacticAllException {
@@ -130,7 +136,7 @@ public class Cadastro_esquema_taticoController extends Sidebar implements Initia
         circle.setStrokeWidth(3.0);
 
         // Criar um ImageView para a imagem do jogador a partir de um URL
-        if (!jogador.getImagem().equals("null")) {
+        if (!"null".equals(jogador.getImagem())) {
             String imageUrl = jogador.getImagem(); // Substitua pelo URL real
             Image image = new Image(imageUrl);
             circle.setFill(new ImagePattern(image));
@@ -181,10 +187,22 @@ public class Cadastro_esquema_taticoController extends Sidebar implements Initia
         // Adicione itens ao ComboBox conforme necessário
         cbPosicaoJogador.getItems().addAll("Atacante", "Meio-Campista", "Defensor", "Goleiro");
 
+        // Adicione um ouvinte de eventos à combobox
+        cbPosicaoJogador.setOnAction(event -> {
+            // Obtém o jogador associado ao HBox
+            Jogador jogadorAtual = jogadores.get(vbox_list_jogadores.getChildren().indexOf(hBox));
+
+            // Obtém a nova posição selecionada na combobox
+            String novaPosicao = cbPosicaoJogador.getSelectionModel().getSelectedItem();
+
+            // Chama o método AlterarPosicao
+            AlterarPosicao(jogadorAtual, novaPosicao);
+        });
+
         vboxPosicao.getChildren().addAll(lbPosicao, cbPosicaoJogador);
 
         // Adicionar todos os elementos ao HBox
-        hBox.getChildren().addAll(circle, vBox, hboxVazia);
+        hBox.getChildren().addAll(circle, vBox, hboxVazia, vboxPosicao);
         hBox.setSpacing(0); // Ajuste o espaçamento conforme necessário
 
         return hBox;
@@ -211,5 +229,99 @@ public class Cadastro_esquema_taticoController extends Sidebar implements Initia
             r.setPosicao(entry.getValue());
             posicoes.add(r);
         }
+    }
+
+    public void Salvar_Esquema_Tatico() throws TacticAllException, IOException {
+        if (validarCampos()) {
+            EsquemaTaticoDAO eDAO = new EsquemaTaticoDAO();
+            String tipo = (String) cb_categ_es.getSelectionModel().getSelectedItem();
+            EsquemaTatico esquema = new EsquemaTatico();
+            esquema.setIdTime(timeAtual.getId());
+            esquema.setNome(txt_nome_es.getText());
+            esquema.setTipo(tipo);
+
+            int countDefesa = 0;
+            int countAtaque = 0;
+            int countMeio = 0;
+
+            for (RelacionamentoJogadorEsquema rel : posicoes) {
+                if ("Defensor".equals(rel.getPosicao()))
+                countDefesa++;
+                if ("Atacante".equals(rel.getPosicao()))
+                countAtaque++;
+                if ("Meio-Campista".equals(rel.getPosicao()))
+                countMeio++;
+            }
+            String formacao = countDefesa + "-" + countMeio + "-" + countAtaque;
+            esquema.setFormacao(formacao);
+            esquema.setTaticaEspecifica("");
+            eDAO.inserir(esquema);
+            int idesquema = eDAO.listarPorNome(esquema.getNome(), esquema.getIdTime()).get(0).getId();
+            RelacionamentoJogadorEsquemaDAO relDAO = new RelacionamentoJogadorEsquemaDAO();
+            for(RelacionamentoJogadorEsquema rel : posicoes)
+            {
+                rel.setIdEsquema(idesquema);
+                relDAO.inserir(rel);
+            }
+            App.setRoot("esquemas_taticos");
+        }
+    }
+
+    public boolean validarCampos() throws TacticAllException {
+        if (txt_nome_es.getText().isEmpty() || cb_categ_es.getSelectionModel().getSelectedItem() == null) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR, "Por favor, preencha todos os campos.");
+            alerta.setTitle("Campos em branco");
+            alerta.setHeaderText("Campos obrigatórios não preenchidos.");
+            alerta.showAndWait();
+            return false;
+        }
+
+        if (posicoes.size() != 11) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR, "Escolha uma posição para todos os jogadores.");
+            alerta.setTitle("Defina as posições");
+            alerta.setHeaderText("É necessário escolher uma posição para todos os jogadores.");
+            alerta.showAndWait();
+            return false;
+        }
+
+        int goleiroCount = 0;
+        for (RelacionamentoJogadorEsquema rel : posicoes) {
+            if ("Goleiro".equals(rel.getPosicao()))
+            goleiroCount++;
+        }
+
+        if (goleiroCount == 0) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR, "Por favor, escolha um goleiro.");
+            alerta.setTitle("Goleiro não selecionado");
+            alerta.setHeaderText("É obrigatório escolher um goleiro para o esquema tático.");
+            alerta.showAndWait();
+            return false;
+        } else if (goleiroCount > 1) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR, "Apenas um goleiro é permitido.");
+            alerta.setTitle("Número incorreto de goleiros");
+            alerta.setHeaderText("Só é permitido escolher um goleiro para o esquema tático.");
+            alerta.showAndWait();
+            return false;
+        }
+
+        EsquemaTaticoDAO esDAO = new EsquemaTaticoDAO();
+        List<EsquemaTatico> esquemas = esDAO.listarEsquemasPorTime(timeAtual.getId());
+        boolean existe = false;
+        for (EsquemaTatico e : esquemas) {
+            if (e.getNome().equals(txt_nome_es.getText())) {
+                existe = true;
+                break;
+            }
+        }
+
+        if (existe) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR, "Problemas com o campo: Nome");
+            alerta.setTitle("Nome existente");
+            alerta.setHeaderText("O nome deste esquema tático já foi cadastrado.");
+            alerta.showAndWait();
+            return false;
+        }
+
+        return true;
     }
 }

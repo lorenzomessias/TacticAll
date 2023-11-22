@@ -39,7 +39,7 @@ public void FazerLogin() throws IOException {
 
             if (usu.getEmail() != null && usu.getSenha().equals(txt_senha.getText())) {
                 if (usu.getAtivo() == 1) {
-                    Sessao.setInstancia(txt_email.getText(), "login", usu.getNome());
+                    Sessao.setInstancia(txt_email.getText(), "login", usu.getNome(), usu.getId());
                     App.setRoot("home");
                 } else {
                     Alert alerta = new Alert(AlertType.WARNING);
@@ -55,7 +55,7 @@ public void FazerLogin() throws IOException {
                     Optional<ButtonType> resultado = alerta.showAndWait();
                     if (resultado.isPresent() && resultado.get() == reativarButton) {
                         dao.ativar(usu);
-                        Sessao.setInstancia(txt_email.getText(), "login", usu.getNome());
+                        Sessao.setInstancia(txt_email.getText(), "login", usu.getNome(), usu.getId());
                         App.setRoot("home");
                     } else {
                         App.setRoot("primary");

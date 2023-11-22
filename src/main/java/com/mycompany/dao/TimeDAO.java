@@ -161,7 +161,7 @@ public class TimeDAO implements GenericoDAO<Time> {
         return time;
     }
 
-    public List<Time> listarPorUsuarioId( int userId) throws TacticAllException {
+    public List<Time> listarPorUsuarioId(int userId) throws TacticAllException {
         List<Time> times = new ArrayList<Time>();
         Connection connection = null;
         String sql = "SELECT * FROM Time WHERE idUsuario = ?";
@@ -172,7 +172,7 @@ public class TimeDAO implements GenericoDAO<Time> {
             pStatement.setInt(1, userId);
             ResultSet result = pStatement.executeQuery();
             while (result.next()) {
-                times.add( new Time(
+                times.add(new Time(
                         result.getInt("id"), result.getString("nome"), result.getString("sigla"),
                         result.getString("pais"), result.getString("liga"), result.getInt("idUsuario"),
                         result.getString("corUniforme")
@@ -218,8 +218,8 @@ public class TimeDAO implements GenericoDAO<Time> {
         }
         return id;
     }
-    
-        public List<Time> listarPorNome(String pesquisa) throws TacticAllException {
+
+    public List<Time> listarPorNome(String pesquisa) throws TacticAllException {
         List<Time> times = new ArrayList<Time>();
         String sql = "SELECT * FROM Time WHERE Nome LIKE ?";
         Connection connection = null;
@@ -244,6 +244,59 @@ public class TimeDAO implements GenericoDAO<Time> {
         }
         return times;
     }
-        
-    
+
+    public List<Time> listarPorNome(String pesquisa, int idUsuario) throws TacticAllException {
+        List<Time> times = new ArrayList<Time>();
+        String sql = "SELECT * FROM Time WHERE Nome LIKE ? AND IDUSUARIO = ?";
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1, "%" + pesquisa + "%");
+            pStatement.setInt(2, idUsuario);
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                times.add(new Time(result.getInt("id"), result.getString("nome"), result.getString("sigla"), result.getString("pais"), result.getString("liga"), result.getInt("idUsuario"), result.getString("corUniforme")));
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return times;
+    }
+
+    public Time listarPorNomeExato(String pesquisa, int idUsuario) throws TacticAllException {
+        Time time = new Time();
+        String sql = "SELECT * FROM Time WHERE Nome = ? AND IDUSUARIO = ? FETCH FIRST 1 ROW ONLY";
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1, "%" + pesquisa + "%");
+            pStatement.setInt(2, idUsuario);
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                time = (new Time(result.getInt("id"), result.getString("nome"), result.getString("sigla"), result.getString("pais"), result.getString("liga"), result.getInt("idUsuario"), result.getString("corUniforme")));
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(TimeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return time;
+    }
+
 }

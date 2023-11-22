@@ -85,7 +85,7 @@ public class Esquemas_taticosController extends Sidebar implements Initializable
         cb_categoria.getItems().add("Todos");
         cb_categoria.getItems().add("Ofensivo");
         cb_categoria.getItems().add("Defensivo");
-
+        cb_categoria.setValue("Todos");
     }
 
     public void Ir_Criar_EsquemaTatico() throws IOException {
@@ -93,17 +93,20 @@ public class Esquemas_taticosController extends Sidebar implements Initializable
     }
 
     public void Pesquisar_EsquemasTaticos() throws TacticAllException {
-        String nometime = (String) cb_time.getSelectionModel().getSelectedItem();
-        TimeDAO timeDAO = new TimeDAO();
-        Time time = timeDAO.listarPorNome(nometime).get(0);
-        EsquemaTaticoDAO etDao = new EsquemaTaticoDAO();
-        String categoria = (String) cb_categoria.getSelectionModel().getSelectedItem();
-        if (categoria.equals("Todos")) {
-            esquemasTaticos = etDao.listarPorNome(txt_pesquisa_esquema.getText(), time.getId());
-        } else {
-            esquemasTaticos = etDao.listarPorNome(txt_pesquisa_esquema.getText(), time.getId(), categoria);
+        if (cb_time.getSelectionModel().getSelectedItem() != null) {
+            String nometime = (String) cb_time.getSelectionModel().getSelectedItem();
+            TimeDAO timeDAO = new TimeDAO();
+            Time time = timeDAO.listarPorNome(nometime, Sessao.getInstancia().getId()).get(0);
+            EsquemaTaticoDAO etDao = new EsquemaTaticoDAO();
+            String categoria = (String) cb_categoria.getSelectionModel().getSelectedItem();
+            if (categoria.equals("Todos")) {
+                esquemasTaticos = etDao.listarPorNome(txt_pesquisa_esquema.getText(), time.getId());
+            } else {
+                esquemasTaticos = etDao.listarPorNome(txt_pesquisa_esquema.getText(), time.getId(), categoria);
+            }
+            criarHBoxes();
         }
-        criarHBoxes();
+
     }
 
     private void criarHBoxes() {
@@ -119,9 +122,9 @@ public class Esquemas_taticosController extends Sidebar implements Initializable
 
     private HBox hBoxEsquemaTatico(EsquemaTatico esquemaTatico) {
         HBox hbox = new HBox();
-        Circle circle = new Circle(48.0, Color.web("#c6c6c6"));
-        circle.setStroke(Color.web("#ebebeb"));
-        circle.setStrokeWidth(3.0);
+        Label formacao = new Label(esquemaTatico.getFormacao());
+        formacao.setFont(new Font(28.0));
+        formacao.getStyleClass().add("bold-text");
 
         // Criando a VBox interna
         VBox vbox = new VBox();
@@ -189,7 +192,7 @@ public class Esquemas_taticosController extends Sidebar implements Initializable
         removerHBox.getChildren().add(btnRemoverEsquemaTatico);
 
         // Adicionando os elementos à HBox principal
-        hbox.getChildren().addAll(circle, vbox, emptyHBox, editarHBox, removerHBox);
+        hbox.getChildren().addAll(formacao, vbox, emptyHBox, editarHBox, removerHBox);
         hbox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         hbox.setStyle("-fx-border-width: 0 0 3 0; -fx-border-color: #a4a4a4;");
         hbox.setPadding(new Insets(0, 0, 8.0, 0));
