@@ -92,7 +92,7 @@ public class HomeController extends Sidebar implements Initializable {
         private void criarHBoxes() {
         Platform.runLater(() -> {
             vbox_maisrecente.getChildren().clear();
-            if (simulacaoRecente == null) {
+            if (simulacaoRecente == null || simulacaoRecente.getId() < 1) {
                 vbox_maisrecente.getChildren().add(hBoxVazia());
             } else {
                 HBox hBox = hBoxSimulacao(simulacaoRecente);

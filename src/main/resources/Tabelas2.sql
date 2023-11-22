@@ -16,16 +16,6 @@ VALUES ('Maria da Silva', 'maria.silva@email.com', '1985-12-10', 'senha456', 1);
 
 SELECT * FROM Usuario;
 
--- Tabela RelacionmentoJogadorEsquema
-CREATE TABLE RelacionamentoJogadorEsquema(
-    Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-    Posicao VARCHAR(50),
-    IdJogador INT,
-    FOREIGN KEY (IdJogador) REFERENCES Jogador(Id) ON DELETE CASCADE,
-    IdEsquema INT,
-    FOREIGN KEY (IdEsquema) REFERENCES EsquemaTatico(Id) ON DELETE CASCADE
-);
-
 -- Tabela Profissional
 CREATE TABLE Profissional (
     Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
@@ -111,6 +101,17 @@ SELECT * FROM TIME
 SELECT * FROM RELACIONAMENTOTIMEPROFISSIONAL
 
 
+-- Tabela RelacionmentoJogadorEsquema
+CREATE TABLE RelacionamentoJogadorEsquema(
+    Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    Posicao VARCHAR(50),
+    IdJogador INT,
+    FOREIGN KEY (IdJogador) REFERENCES Jogador(Id) ON DELETE CASCADE,
+    IdEsquema INT,
+    FOREIGN KEY (IdEsquema) REFERENCES EsquemaTatico(Id) ON DELETE CASCADE
+);
+
+
 SELECT j.*, p.*
 FROM Jogador j
 INNER JOIN Profissional p ON j.IdProfissional = p.Id
@@ -121,7 +122,7 @@ SELECT * FROM ESQUEMATATICO
 
 
 SELECT * FROM RelacionamentoJogadorEsquema
-
+SELECT * FROM RelacionamentoJogadorEsquema
 SELECT * FROM EsquemaTatico
 
 SELECT * FROM TIME

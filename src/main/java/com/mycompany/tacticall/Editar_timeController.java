@@ -94,6 +94,7 @@ public class Editar_timeController extends Sidebar implements Initializable {
             Pesquisar_Jogadores_E();
             pesquisarTecnico();
             preencherTecnicoSelecionado();
+            atualizarCampos();
         } catch (IOException | TacticAllException ex) {
             Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
         }
