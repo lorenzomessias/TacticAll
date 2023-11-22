@@ -122,7 +122,7 @@ public class EsquemaTaticoDAO implements GenericoDAO<EsquemaTatico> {
 
     public List<EsquemaTatico> listarPorNome(String pesquisa, int id) throws TacticAllException {
         List<EsquemaTatico> esquemas = new ArrayList<>();
-        String sql = "SELECT * FROM EsquemaTatico WHERE Nome LIKE ? AND IDTIME = ?";
+        String sql = "SELECT * FROM EsquemaTatico WHERE LOWER(Nome) LIKE LOWER(?) AND IDTIME = ?";
         try {
             Connection connection = Conexao.getInstance().getConnection();
             PreparedStatement pStatement = connection.prepareStatement(sql);

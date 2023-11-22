@@ -221,7 +221,7 @@ public class TimeDAO implements GenericoDAO<Time> {
     
         public List<Time> listarPorNome(String pesquisa) throws TacticAllException {
         List<Time> times = new ArrayList<Time>();
-        String sql = "SELECT * FROM Time WHERE Nome LIKE ?";
+        String sql = "SELECT * FROM Time WHERE LOWER(Nome) LIKE LOWER(?)";
         Connection connection = null;
         try {
             connection = Conexao.getInstance().getConnection();
