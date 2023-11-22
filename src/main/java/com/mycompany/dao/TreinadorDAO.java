@@ -150,7 +150,7 @@ public class TreinadorDAO implements GenericoDAO<Treinador> {
 
     public List<Treinador> listarPorNome(String pesquisa) throws TacticAllException {
         List<Treinador> treinadores = new ArrayList<>();
-        String sql = "SELECT * FROM Treinador INNER JOIN Profissional ON Treinador.IDPROFISSIONAL = Profissional.ID WHERE Nome LIKE ?";
+        String sql = "SELECT * FROM Treinador INNER JOIN Profissional ON Treinador.IDPROFISSIONAL = Profissional.ID WHERE LOWER(Nome) LIKE LOWER(?)";
         Connection connection = null;
         try {
             connection = Conexao.getInstance().getConnection();

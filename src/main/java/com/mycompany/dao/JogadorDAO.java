@@ -153,12 +153,12 @@ public class JogadorDAO implements GenericoDAO<Jogador> {
 
     public List<Jogador> listarPorNome(String pesquisa) throws TacticAllException {
         List<Jogador> jogadores = new ArrayList<>();
-        String sql = "SELECT * FROM Jogador INNER JOIN Profissional ON Jogador.IDPROFISSIONAL = Profissional.ID WHERE Nome LIKE ?";
+        String sql = "SELECT * FROM Jogador INNER JOIN Profissional ON Jogador.IDPROFISSIONAL = Profissional.ID WHERE LOWER(Nome) LIKE LOWER(?)";
         Connection connection = null;
         try {
             connection = Conexao.getInstance().getConnection();
             PreparedStatement pStatement = connection.prepareStatement(sql);
-            pStatement.setString(1, "%" + pesquisa + "%");
+            pStatement.setString(1, "%" + pesquisa.toLowerCase() + "%");
             ResultSet result = pStatement.executeQuery();
             while (result.next()) {
                 Jogador jogador;
@@ -173,7 +173,9 @@ public class JogadorDAO implements GenericoDAO<Jogador> {
             Logger.getLogger(JogadorDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
-                connection.close();
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(JogadorDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
