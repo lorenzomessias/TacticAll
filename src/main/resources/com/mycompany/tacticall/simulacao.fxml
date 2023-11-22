@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -31,125 +32,100 @@
                   <Insets top="40.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="TOP_CENTER" />
             <HBox VBox.vgrow="ALWAYS">
                <VBox.margin>
-                  <Insets bottom="30.0" left="10.0" right="10.0" top="40.0" />
+                  <Insets bottom="50.0" left="10.0" right="10.0" top="40.0" />
                </VBox.margin>
                <children>
-                  <VBox alignment="TOP_CENTER" style="-fx-background-color: #222222; -fx-background-radius: 20;" HBox.hgrow="ALWAYS">
+                  <VBox alignment="TOP_CENTER" style="-fx-background-color: #e3e3e3; -fx-background-radius: 20;" styleClass="bold-text" HBox.hgrow="ALWAYS">
                      <children>
-                        <VBox style="-fx-background-color: #222222; -fx-background-radius: 20;">
+                        <VBox alignment="CENTER" style="-fx-background-radius: 20;">
                            <children>
-                              <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Time mandante" textFill="WHITE">
-                                 <font>
-                                    <Font name="Berlin Sans FB" size="30.0" />
-                                 </font>
-                              </Label>
-                              <HBox>
+                              <HBox alignment="CENTER">
+                                 <VBox.margin>
+                                    <Insets bottom="50.0" top="10.0" />
+                                 </VBox.margin>
                                  <children>
-                                    <VBox HBox.hgrow="ALWAYS">
+                                    <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Time Mandante" textFill="#464646">
+                                       <font>
+                                          <Font name="Berlin Sans FB" size="30.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <VBox alignment="CENTER">
+                                 <children>
+                                    <VBox>
                                        <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Nome do Time" textFill="LIGHTGRAY">
+                                          <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Time" textFill="#5b5b5b">
                                              <font>
                                                 <Font size="22.0" />
                                              </font>
+                                             <VBox.margin>
+                                                <Insets bottom="15.0" />
+                                             </VBox.margin>
                                           </Label>
-                                          <ComboBox id="NomeTimeMandante" fx:id="NomeTimeMandante" onAction="#mudarTimeMandante" prefHeight="26.0" prefWidth="330.0" />
+                                          <ComboBox id="NomeTimeMandante" fx:id="NomeTimeMandante" maxWidth="1.7976931348623157E308" onAction="#mudarTimeMandante" prefHeight="26.0" prefWidth="330.0" styleClass="txt-box">
+                                             <stylesheets>
+                                                <URL value="@../../../styles/styles.css" />
+                                                <URL value="@../../../styles/primary.css" />
+                                                <URL value="@../../../styles/home.css" />
+                                             </stylesheets>
+                                          </ComboBox>
                                        </children>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" />
+                                       </VBox.margin>
                                     </VBox>
-                                 </children>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <VBox HBox.hgrow="ALWAYS" />
                                     <VBox>
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </VBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </HBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                           </padding>
-                        </VBox>
-                        <VBox style="-fx-background-color: #222222; -fx-background-radius: 5;">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <VBox HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Esquema tático ofensivo" textFill="LIGHTGRAY">
+                                          <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Esquema tático ofensivo" textFill="#5b5b5b">
                                              <font>
                                                 <Font size="22.0" />
                                              </font>
+                                             <VBox.margin>
+                                                <Insets bottom="15.0" />
+                                             </VBox.margin>
                                           </Label>
-                                          <ComboBox id="EsquemaOfensivoMandante" fx:id="EsquemaOfensivoMandante" prefHeight="26.0" prefWidth="322.0" />
+                                          <ComboBox id="NomeTimeMandante" fx:id="EsquemaOfensivoMandante" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="330.0" styleClass="txt-box">
+                                             <stylesheets>
+                                                <URL value="@../../../styles/styles.css" />
+                                                <URL value="@../../../styles/primary.css" />
+                                                <URL value="@../../../styles/home.css" />
+                                             </stylesheets>
+                                          </ComboBox>
                                        </children>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" />
+                                       </VBox.margin>
                                     </VBox>
-                                 </children>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <VBox HBox.hgrow="ALWAYS" />
                                     <VBox>
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </VBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </HBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                           </padding>
-                        </VBox>
-                        <VBox style="-fx-background-color: #222222; -fx-background-radius: 5;">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <VBox HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Esquema tático defensivo" textFill="LIGHTGRAY">
+                                          <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Esquema tático defensivo" textFill="#5b5b5b">
                                              <font>
                                                 <Font size="22.0" />
                                              </font>
+                                             <VBox.margin>
+                                                <Insets bottom="15.0" />
+                                             </VBox.margin>
                                           </Label>
-                                          <ComboBox id="EsquemaDefensivoMandante" fx:id="EsquemaDefensivoMandante" prefHeight="26.0" prefWidth="330.0" />
+                                          <ComboBox id="NomeTimeMandante" fx:id="EsquemaDefensivoMandante" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="330.0" styleClass="txt-box">
+                                             <stylesheets>
+                                                <URL value="@../../../styles/styles.css" />
+                                                <URL value="@../../../styles/primary.css" />
+                                                <URL value="@../../../styles/home.css" />
+                                             </stylesheets>
+                                          </ComboBox>
                                        </children>
-                                    </VBox>
-                                 </children>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <VBox HBox.hgrow="ALWAYS" />
-                                    <VBox>
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" />
+                                       </VBox.margin>
                                     </VBox>
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="20.0" />
+                                    <Insets left="20.0" right="20.0" />
                                  </VBox.margin>
-                              </HBox>
+                              </VBox>
                            </children>
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
@@ -182,116 +158,92 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                      </padding>
                   </VBox>
-                  <VBox style="-fx-background-color: #222222; -fx-background-radius: 20;">
+                  <VBox style="-fx-background-color: #222222; -fx-background-radius: 20;" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Time visitante" textFill="WHITE">
-                           <font>
-                              <Font name="Berlin Sans FB" size="30.0" />
-                           </font>
-                        </Label>
-                        <HBox>
+                        <HBox alignment="CENTER">
+                           <VBox.margin>
+                              <Insets bottom="50.0" top="10.0" />
+                           </VBox.margin>
                            <children>
-                              <VBox HBox.hgrow="ALWAYS">
+                              <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Time Visitante" textFill="WHITE">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="30.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <VBox>
+                           <children>
+                              <VBox>
                                  <children>
-                                    <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Nome do Time" textFill="LIGHTGRAY">
+                                    <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Time" textFill="LIGHTGRAY">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets bottom="15.0" />
+                                       </VBox.margin>
                                     </Label>
-                                    <ComboBox id="NomeTimeVisitante" fx:id="NomeTimeVisitante" onAction="#mudarTimeVisitante" prefHeight="26.0" prefWidth="330.0" />
+                                    <ComboBox id="NomeTimeMandante" fx:id="NomeTimeVisitante" maxWidth="1.7976931348623157E308" onAction="#mudarTimeVisitante" prefHeight="26.0" prefWidth="330.0" styleClass="txt-box">
+                                       <stylesheets>
+                                          <URL value="@../../../styles/styles.css" />
+                                          <URL value="@../../../styles/primary.css" />
+                                          <URL value="@../../../styles/home.css" />
+                                       </stylesheets>
+                                    </ComboBox>
                                  </children>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" />
+                                 </VBox.margin>
                               </VBox>
-                           </children>
-                           <padding>
-                              <Insets top="10.0" />
-                           </padding>
-                        </HBox>
-                        <HBox>
-                           <children>
-                              <VBox HBox.hgrow="ALWAYS" />
                               <VBox>
-                                 <HBox.margin>
-                                    <Insets left="40.0" />
-                                 </HBox.margin>
+                                 <children>
+                                    <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Esquema tático ofensivo" textFill="LIGHTGRAY">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ComboBox id="NomeTimeMandante" fx:id="EsquemaOfensivoVisitante" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="330.0" styleClass="txt-box">
+                                       <stylesheets>
+                                          <URL value="@../../../styles/styles.css" />
+                                          <URL value="@../../../styles/primary.css" />
+                                          <URL value="@../../../styles/home.css" />
+                                       </stylesheets>
+                                    </ComboBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" />
+                                 </VBox.margin>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Esquema tático defensivo" textFill="LIGHTGRAY">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ComboBox id="NomeTimeMandante" fx:id="EsquemaDefensivoVisitante" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="330.0" styleClass="txt-box">
+                                       <stylesheets>
+                                          <URL value="@../../../styles/styles.css" />
+                                          <URL value="@../../../styles/primary.css" />
+                                          <URL value="@../../../styles/home.css" />
+                                       </stylesheets>
+                                    </ComboBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" />
+                                 </VBox.margin>
                               </VBox>
                            </children>
                            <VBox.margin>
-                              <Insets top="20.0" />
+                              <Insets left="20.0" right="20.0" />
                            </VBox.margin>
-                        </HBox>
-                        <VBox style="-fx-background-color: #222222; -fx-background-radius: 5;">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <VBox HBox.hgrow="ALWAYS">
-                                       <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Esquema tático ofensivo" textFill="LIGHTGRAY">
-                                             <font>
-                                                <Font size="22.0" />
-                                             </font>
-                                          </Label>
-                                          <ComboBox id="EsquemaOfensivoVisitante" fx:id="EsquemaOfensivoVisitante" prefHeight="26.0" prefWidth="322.0" />
-                                       </children>
-                                    </VBox>
-                                 </children>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <VBox HBox.hgrow="ALWAYS" />
-                                    <VBox>
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </VBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </HBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                           </padding>
-                        </VBox>
-                        <VBox style="-fx-background-color: #222222; -fx-background-radius: 5;">
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <VBox HBox.hgrow="ALWAYS">
-                                       <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Esquema tático defensivo" textFill="LIGHTGRAY">
-                                             <font>
-                                                <Font size="22.0" />
-                                             </font>
-                                          </Label>
-                                          <ComboBox fx:id="EsquemaDefensivoVisitante" prefHeight="26.0" prefWidth="330.0" />
-                                       </children>
-                                    </VBox>
-                                 </children>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <VBox HBox.hgrow="ALWAYS" />
-                                    <VBox>
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </VBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </HBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                           </padding>
                         </VBox>
                      </children>
                      <padding>
@@ -306,7 +258,7 @@
                </font>
                <styleClass>
                   <String fx:value="sidebar" />
-                  <String fx:value="bold-text" />
+                  <String fx:value="semibold-text" />
                </styleClass>
                <VBox.margin>
                   <Insets />
@@ -345,7 +297,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_ger_times" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" styleClass="bold-text" text="Times" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_ger_times1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Times" style="-fx-background-color: transparent;" styleClass="bold-text" text="Times" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas" size="14.0" />
                            </font>
@@ -357,89 +309,61 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_ger_esquemas" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Esquemas Táticos" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_ger_esquemas1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Esquemas_Taticos" style="-fx-background-color: transparent;" styleClass="bold-text" text="Esquemas Táticos" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_simulacao" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Simulação de Partida" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_simulacao1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Simulacao" style="-fx-background-color: transparent;" styleClass="bold-text" text="Simulação de Partida" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_historico" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Histórico e Analytics" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_historico1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Historico" style="-fx-background-color: transparent;" styleClass="bold-text" text="Histórico e Analytics" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_editar_perfil" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#EditarPerfil" style="-fx-background-color: transparent;" text="Perfil" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_editar_perfil1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#EditarPerfil" style="-fx-background-color: transparent;" styleClass="bold-text" text="Perfil" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                </children>
                <padding>
                   <Insets top="25.0" />
                </padding>
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" top="10.0" />
-               </HBox.margin>
             </VBox>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+         </BorderPane.margin>
       </HBox>
    </left>
    <right>
@@ -463,4 +387,9 @@
          </children>
       </VBox>
    </right>
+   <stylesheets>
+      <URL value="@../../../styles/primary.css" />
+      <URL value="@../../../styles/styles.css" />
+      <URL value="@../../../styles/home.css" />
+   </stylesheets>
 </BorderPane>

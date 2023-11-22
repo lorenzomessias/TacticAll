@@ -72,7 +72,7 @@ public class PerfilController extends Sidebar implements Initializable {
             usu.setDataDeNascimento(dt_nasc.getValue());
             dao.alterar(usu);
             Sessao.LimparSessao();
-            Sessao.setInstancia(usu.getEmail(), "login", usu.getNome());
+            Sessao.setInstancia(usu.getEmail(), "login", usu.getNome(), usu.getId());
             App.setRoot("home");
         } catch (TacticAllException ex) {
             Alert alerta = new Alert(AlertType.ERROR, "Erro ao editar o perfil: " + ex.getMessage());

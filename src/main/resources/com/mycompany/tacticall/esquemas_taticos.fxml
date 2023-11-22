@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tacticall.Esquemas_taticosController">
@@ -146,58 +145,16 @@
                            <content>
                               <VBox fx:id="vbox_lista_esquemas" style="-fx-background-color: #e3e3e3; -fx-border-width: 0;">
                                  <children>
-                                    <HBox fx:id="h_time_01" alignment="CENTER_LEFT" style="-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;">
+                                    <HBox fx:id="h_time_01" alignment="CENTER" style="-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;">
                                        <children>
-                                          <Circle fill="#c6c6c6" radius="48.0" stroke="#ebebeb" strokeType="INSIDE" strokeWidth="3.0" />
-                                          <VBox>
-                                             <HBox.margin>
-                                                <Insets left="20.0" top="10.0" />
-                                             </HBox.margin>
-                                             <children>
-                                                <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Esquema Tático" textFill="#5b5b5b">
-                                                   <font>
-                                                      <Font size="22.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Você ainda não criou nenhum time." textFill="#808080" wrapText="true">
-                                                   <font>
-                                                      <Font size="18.0" />
-                                                   </font>
-                                                   <VBox.margin>
-                                                      <Insets top="5.0" />
-                                                   </VBox.margin>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                          <HBox>
-                                             <children>
-                                                <HBox alignment="CENTER">
-                                                   <children>
-                                                      <ImageView fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                                         <image>
-                                                            <Image url="@Imagens/gear_icon.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </HBox>
-                                                <HBox alignment="CENTER">
-                                                   <children>
-                                                      <ImageView fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                                         <image>
-                                                            <Image url="@Imagens/trashcan_icon.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                   <HBox.margin>
-                                                      <Insets left="5.0" />
-                                                   </HBox.margin>
-                                                </HBox>
-                                             </children>
-                                          </HBox>
+                                          <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Você não possui esquemas táticos nessa categoria." textFill="#808080" wrapText="true">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
                                        </children>
                                        <padding>
-                                          <Insets bottom="8.0" />
+                                          <Insets bottom="20.0" />
                                        </padding>
                                        <VBox.margin>
                                           <Insets top="10.0" />
@@ -223,14 +180,6 @@
                   <Insets bottom="30.0" left="10.0" right="10.0" top="30.0" />
                </VBox.margin>
             </VBox>
-            <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Teste cor" textFill="#a4a4a4" wrapText="true">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </Label>
          </children>
          <BorderPane.margin>
             <Insets bottom="40.0" left="40.0" right="40.0" top="10.0" />

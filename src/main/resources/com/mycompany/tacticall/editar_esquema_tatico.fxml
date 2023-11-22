@@ -22,7 +22,7 @@
          <children>
             <HBox alignment="TOP_CENTER">
                <children>
-                  <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Criar Esquema Tático">
+                  <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Editar Esquema Tático">
                      <font>
                         <Font size="30.0" />
                      </font>
