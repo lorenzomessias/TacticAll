@@ -165,10 +165,10 @@ public class RelacionamentoJogadorEsquemaDAO implements GenericoDAO<Relacionamen
 
     public List<Jogador> listarJogadoresPorEsquema(int idEsquema) throws TacticAllException {
         List<Jogador> jogadores = new ArrayList<>();
-        String sql = "SELECT j.*, p.*  FROM Jogador j "
-                + "INNER JOIN RelacionamentoJogadorEsquema r ON j.Id = r.IdJogador "
-                + "INNER JOIN Profissional p ON j.IdProfissional = p.Id "
-                + "WHERE r.IdEsquema = ?";
+        String sql = "SELECT *  FROM Jogador "
+                + "INNER JOIN RelacionamentoJogadorEsquema  ON Jogador.Id = RelacionamentoJogadorEsquema.IdJogador "
+                + "INNER JOIN Profissional ON Jogador.IdProfissional = Profissional.Id "
+                + "WHERE RelacionamentoJogadorEsquema.IdEsquema = ?";
         Connection connection = null;
 
         try {
@@ -179,9 +179,9 @@ public class RelacionamentoJogadorEsquemaDAO implements GenericoDAO<Relacionamen
 
             while (result.next()) {
                 Jogador jogador = new Jogador(
-                        result.getInt("j.Id"), result.getString("p.Nome"), result.getDate("p.DataNascimento").toLocalDate(),
-                        result.getString("p.Nacionalidade"), result.getInt("p.NotaGeral"), result.getString("j.Posicao"),
-                        result.getInt("j.IdProfissional"), result.getString("p.Imagem"));
+                        result.getInt("Id"), result.getString("Nome"), result.getDate("DataDeNascimento").toLocalDate(),
+                        result.getString("Nacionalidade"), result.getInt("NotaGeral"), result.getString("Posicao"),
+                        result.getInt("IdProfissional"), result.getString("Imagem"));
 
                 jogadores.add(jogador);
             }
