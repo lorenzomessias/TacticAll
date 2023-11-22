@@ -13,9 +13,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
@@ -25,7 +22,7 @@
          <children>
             <HBox alignment="TOP_CENTER">
                <children>
-                  <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Editar Esquema Tático">
+                  <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Criar Esquema Tático">
                      <font>
                         <Font size="30.0" />
                      </font>
@@ -80,7 +77,24 @@
                                                 <Font size="22.0" />
                                              </font>
                                           </Label>
-                                          <ComboBox fx:id="cb_time_es" maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
+                                          <ComboBox fx:id="cb_time_es" maxWidth="1.7976931348623157E308" onAction="#alterarTime" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
+                                             <VBox.margin>
+                                                <Insets top="10.0" />
+                                             </VBox.margin>
+                                          </ComboBox>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox>
+                                       <children>
+                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Categoria" textFill="LIGHTGRAY">
+                                             <font>
+                                                <Font size="22.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox fx:id="cb_categ_es" maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
                                              <VBox.margin>
                                                 <Insets top="10.0" />
                                              </VBox.margin>
@@ -95,44 +109,6 @@
                                     <Insets top="10.0" />
                                  </padding>
                               </HBox>
-                              <HBox>
-                                 <children>
-                                    <VBox HBox.hgrow="ALWAYS">
-                                       <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Categoria" textFill="LIGHTGRAY">
-                                             <font>
-                                                <Font size="22.0" />
-                                             </font>
-                                          </Label>
-                                          <ComboBox fx:id="cb_categ_es" maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
-                                             <VBox.margin>
-                                                <Insets top="10.0" />
-                                             </VBox.margin>
-                                          </ComboBox>
-                                       </children>
-                                    </VBox>
-                                    <VBox HBox.hgrow="ALWAYS">
-                                       <children>
-                                          <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Tática" textFill="LIGHTGRAY">
-                                             <font>
-                                                <Font size="22.0" />
-                                             </font>
-                                          </Label>
-                                          <ComboBox fx:id="cb_tatica_es" maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css">
-                                             <VBox.margin>
-                                                <Insets top="10.0" />
-                                             </VBox.margin>
-                                          </ComboBox>
-                                       </children>
-                                       <HBox.margin>
-                                          <Insets left="15.0" />
-                                       </HBox.margin>
-                                    </VBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </HBox>
                            </children>
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
@@ -142,7 +118,7 @@
                            <children>
                               <HBox>
                                  <children>
-                                    <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Selecionar Jogadores" textFill="#5b5b5b" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Definir Posição dos Jogadores" textFill="#5b5b5b" HBox.hgrow="ALWAYS">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
@@ -156,34 +132,13 @@
                                  </padding>
                               </HBox>
                               <HBox>
-                                 <children>
-                                    <TextField fx:id="txt_pesquisa_jogadores" HBox.hgrow="ALWAYS">
-                                       <stylesheets>
-                                          <URL value="@../../../styles/cadastro.css" />
-                                          <URL value="@../../../styles/primary.css" />
-                                          <URL value="@../../../styles/styles.css" />
-                                       </stylesheets>
-                                       <styleClass>
-                                          <String fx:value="txt-box" />
-                                          <String fx:value="regular-text" />
-                                       </styleClass>
-                                    </TextField>
-                                    <ImageView fx:id="btn_pesquisa" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Pesquisar_Jogadores_Time" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                       <image>
-                                          <Image url="@Imagens/search_icon.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="15.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                 </children>
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </HBox>
                               <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
                                  <content>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #e3e3e3;">
+                                    <VBox fx:id="vbox_list_jogadores" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #e3e3e3;">
                                        <children>
                                           <HBox fx:id="h_time_01" alignment="CENTER_LEFT" style="-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;">
                                              <children>
@@ -225,18 +180,6 @@
                                                             </ComboBox>
                                                          </children>
                                                       </VBox>
-                                                      <HBox alignment="CENTER">
-                                                         <children>
-                                                            <ImageView fx:id="btn_add_jogador_es" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Escalar_Jogador" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                                               <image>
-                                                                  <Image url="@Imagens/plus_icon.png" />
-                                                               </image>
-                                                            </ImageView>
-                                                         </children>
-                                                         <HBox.margin>
-                                                            <Insets left="15.0" />
-                                                         </HBox.margin>
-                                                      </HBox>
                                                    </children>
                                                 </HBox>
                                              </children>
@@ -259,390 +202,6 @@
                            </VBox.margin>
                         </VBox>
                      </children>
-                  </VBox>
-                  <VBox prefHeight="568.0" prefWidth="342.0" style="-fx-background-color: #222222; -fx-background-radius: 20;">
-                     <children>
-                        <HBox alignment="BOTTOM_LEFT">
-                           <children>
-                              <VBox HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Jogadores Escalados" textFill="#d3d3d3">
-                                       <font>
-                                          <Font size="22.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="txt_pesquisa_jogdores_escaldos">
-                                       <stylesheets>
-                                          <URL value="@../../../styles/cadastro.css" />
-                                          <URL value="@../../../styles/primary.css" />
-                                          <URL value="@../../../styles/styles.css" />
-                                       </stylesheets>
-                                       <styleClass>
-                                          <String fx:value="txt-box" />
-                                          <String fx:value="regular-text" />
-                                       </styleClass>
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
-                                    </TextField>
-                                 </children>
-                              </VBox>
-                              <VBox HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Posição" textFill="LIGHTGRAY">
-                                       <font>
-                                          <Font size="22.0" />
-                                       </font>
-                                    </Label>
-                                    <HBox>
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
-                                       <children>
-                                          <ComboBox fx:id="cb_posicao_jogadores_escalados" maxWidth="1.7976931348623157E308" styleClass="txt-box" stylesheets="@../../../styles/primary.css" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="15.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <ImageView fx:id="btn_pesquisa_jogadores_escalados" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Pesquisar_Jogadores_Escalados" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                 <image>
-                                    <Image url="@Imagens/search_icon.png" />
-                                 </image>
-                                 <HBox.margin>
-                                    <Insets top="40.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                           </children>
-                           <padding>
-                              <Insets top="10.0" />
-                           </padding>
-                        </HBox>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
-                           <content>
-                              <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #222222;">
-                                 <children>
-                                    <VBox>
-                                       <children>
-                                          <HBox style="-fx-border-width: 0 0 2 0; -fx-border-color: #126b37;">
-                                             <children>
-                                                <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Goleiro">
-                                                   <font>
-                                                      <Font size="22.0" />
-                                                   </font>
-                                                   <textFill>
-                                                      <LinearGradient endX="1.0" endY="0.4834123222748815">
-                                                         <stops>
-                                                            <Stop>
-                                                               <color>
-                                                                  <Color red="0.07058823853731155" green="0.41960784792900085" blue="0.21568627655506134" />
-                                                               </color>
-                                                            </Stop>
-                                                            <Stop offset="1.0">
-                                                               <color>
-                                                                  <Color green="0.529411792755127" blue="0.16470588743686676" />
-                                                               </color>
-                                                            </Stop>
-                                                         </stops>
-                                                      </LinearGradient>
-                                                   </textFill>
-                                                </Label>
-                                             </children>
-                                             <padding>
-                                                <Insets bottom="5.0" />
-                                             </padding>
-                                          </HBox>
-                                          <HBox fx:id="h_time_011" alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="212.0" style="-fx-border-width: 0 0 3 0; -fx-border-color: #404040;">
-                                             <children>
-                                                <Circle fill="#7c7c7c" radius="34.0" stroke="#575757" strokeType="INSIDE" strokeWidth="2.0" />
-                                                <VBox HBox.hgrow="ALWAYS">
-                                                   <HBox.margin>
-                                                      <Insets left="20.0" top="10.0" />
-                                                   </HBox.margin>
-                                                   <children>
-                                                      <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Jogador" textFill="#d3d3d3">
-                                                         <font>
-                                                            <Font size="16.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Dados do jogador" textFill="#c7c7c7" wrapText="true">
-                                                         <VBox.margin>
-                                                            <Insets top="5.0" />
-                                                         </VBox.margin>
-                                                      </Label>
-                                                   </children>
-                                                </VBox>
-                                                <HBox>
-                                                   <children>
-                                                      <HBox alignment="CENTER">
-                                                         <children>
-                                                            <ImageView fx:id="btn_remover_jogador_escalado" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Remover_Jogador_Escalado" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                                               <image>
-                                                                  <Image url="@Imagens/x_icon.png" />
-                                                               </image>
-                                                            </ImageView>
-                                                         </children>
-                                                         <HBox.margin>
-                                                            <Insets left="5.0" />
-                                                         </HBox.margin>
-                                                      </HBox>
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                             <padding>
-                                                <Insets bottom="4.0" />
-                                             </padding>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
-                                    <VBox>
-                                       <children>
-                                          <HBox style="-fx-border-width: 0 0 2 0; -fx-border-color: #2350ab;">
-                                             <children>
-                                                <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Defesa">
-                                                   <font>
-                                                      <Font size="22.0" />
-                                                   </font>
-                                                   <textFill>
-                                                      <LinearGradient endX="1.0" endY="0.4834123222748815">
-                                                         <stops>
-                                                            <Stop>
-                                                               <color>
-                                                                  <Color red="0.10964912176132202" green="0.3830409348011017" blue="0.5921052694320679" />
-                                                               </color>
-                                                            </Stop>
-                                                            <Stop offset="0.9932885906040269">
-                                                               <color>
-                                                                  <Color red="0.13669590651988983" green="0.31481480598449707" blue="0.6710526347160339" />
-                                                               </color>
-                                                            </Stop>
-                                                            <Stop offset="1.0">
-                                                               <color>
-                                                                  <Color red="0.13725490868091583" green="0.3137255012989044" blue="0.6705882549285889" />
-                                                               </color>
-                                                            </Stop>
-                                                         </stops>
-                                                      </LinearGradient>
-                                                   </textFill>
-                                                </Label>
-                                             </children>
-                                             <padding>
-                                                <Insets bottom="5.0" />
-                                             </padding>
-                                          </HBox>
-                                          <HBox fx:id="h_time_0111" alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="212.0" style="-fx-border-width: 0 0 3 0; -fx-border-color: #404040;">
-                                             <children>
-                                                <Circle fill="#7c7c7c" radius="34.0" stroke="#575757" strokeType="INSIDE" strokeWidth="2.0" />
-                                                <VBox HBox.hgrow="ALWAYS">
-                                                   <HBox.margin>
-                                                      <Insets left="20.0" top="10.0" />
-                                                   </HBox.margin>
-                                                   <children>
-                                                      <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Jogador" textFill="#d3d3d3">
-                                                         <font>
-                                                            <Font size="16.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Dados do jogador" textFill="#c7c7c7" wrapText="true">
-                                                         <VBox.margin>
-                                                            <Insets top="5.0" />
-                                                         </VBox.margin>
-                                                      </Label>
-                                                   </children>
-                                                </VBox>
-                                                <HBox>
-                                                   <children>
-                                                      <HBox alignment="CENTER">
-                                                         <children>
-                                                            <ImageView fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                                               <image>
-                                                                  <Image url="@Imagens/x_icon.png" />
-                                                               </image>
-                                                            </ImageView>
-                                                         </children>
-                                                         <HBox.margin>
-                                                            <Insets left="5.0" />
-                                                         </HBox.margin>
-                                                      </HBox>
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                             <padding>
-                                                <Insets bottom="4.0" />
-                                             </padding>
-                                          </HBox>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="20.0" />
-                                       </VBox.margin>
-                                    </VBox>
-                                    <VBox>
-                                       <children>
-                                          <HBox style="-fx-border-width: 0 0 2 0; -fx-border-color: b29656;">
-                                             <children>
-                                                <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Meio de Campo">
-                                                   <font>
-                                                      <Font size="22.0" />
-                                                   </font>
-                                                   <textFill>
-                                                      <LinearGradient endX="0.7156398104265403" endY="0.5781990521327014" startX="0.24644549763033174" startY="0.33649289099526064">
-                                                         <stops>
-                                                            <Stop>
-                                                               <color>
-                                                                  <Color red="0.843137264251709" green="0.6980392336845398" blue="0.42352941632270813" />
-                                                               </color>
-                                                            </Stop>
-                                                            <Stop offset="1.0">
-                                                               <color>
-                                                                  <Color red="0.6980392336845398" green="0.5882353186607361" blue="0.33725491166114807" />
-                                                               </color>
-                                                            </Stop>
-                                                         </stops>
-                                                      </LinearGradient>
-                                                   </textFill>
-                                                </Label>
-                                             </children>
-                                             <padding>
-                                                <Insets bottom="5.0" />
-                                             </padding>
-                                          </HBox>
-                                          <HBox fx:id="h_time_01111" alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="212.0" style="-fx-border-width: 0 0 3 0; -fx-border-color: #404040;">
-                                             <children>
-                                                <Circle fill="#7c7c7c" radius="34.0" stroke="#575757" strokeType="INSIDE" strokeWidth="2.0" />
-                                                <VBox HBox.hgrow="ALWAYS">
-                                                   <HBox.margin>
-                                                      <Insets left="20.0" top="10.0" />
-                                                   </HBox.margin>
-                                                   <children>
-                                                      <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Jogador" textFill="#d3d3d3">
-                                                         <font>
-                                                            <Font size="16.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Dados do jogador" textFill="#c7c7c7" wrapText="true">
-                                                         <VBox.margin>
-                                                            <Insets top="5.0" />
-                                                         </VBox.margin>
-                                                      </Label>
-                                                   </children>
-                                                </VBox>
-                                                <HBox>
-                                                   <children>
-                                                      <HBox alignment="CENTER">
-                                                         <children>
-                                                            <ImageView fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                                               <image>
-                                                                  <Image url="@Imagens/x_icon.png" />
-                                                               </image>
-                                                            </ImageView>
-                                                         </children>
-                                                         <HBox.margin>
-                                                            <Insets left="5.0" />
-                                                         </HBox.margin>
-                                                      </HBox>
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                             <padding>
-                                                <Insets bottom="4.0" />
-                                             </padding>
-                                          </HBox>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="20.0" />
-                                       </VBox.margin>
-                                    </VBox>
-                                    <VBox>
-                                       <children>
-                                          <HBox style="-fx-border-width: 0 0 2 0; -fx-border-color: #a43728;">
-                                             <children>
-                                                <Label styleClass="bold-text" stylesheets="@../../../styles/styles.css" text="Ataque">
-                                                   <font>
-                                                      <Font size="22.0" />
-                                                   </font>
-                                                   <textFill>
-                                                      <LinearGradient endX="0.7156398104265403" endY="0.5781990521327014" startX="0.24644549763033174" startY="0.33649289099526064">
-                                                         <stops>
-                                                            <Stop>
-                                                               <color>
-                                                                  <Color red="0.75" green="0.3222222328186035" blue="0.2916666567325592" />
-                                                               </color>
-                                                            </Stop>
-                                                            <Stop offset="1.0">
-                                                               <color>
-                                                                  <Color red="0.6431372761726379" green="0.21568627655506134" blue="0.1568627506494522" />
-                                                               </color>
-                                                            </Stop>
-                                                         </stops>
-                                                      </LinearGradient>
-                                                   </textFill>
-                                                </Label>
-                                             </children>
-                                             <padding>
-                                                <Insets bottom="5.0" />
-                                             </padding>
-                                          </HBox>
-                                          <HBox fx:id="h_time_011111" alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="212.0" style="-fx-border-width: 0 0 3 0; -fx-border-color: #404040;">
-                                             <children>
-                                                <Circle fill="#7c7c7c" radius="34.0" stroke="#575757" strokeType="INSIDE" strokeWidth="2.0" />
-                                                <VBox HBox.hgrow="ALWAYS">
-                                                   <HBox.margin>
-                                                      <Insets left="20.0" top="10.0" />
-                                                   </HBox.margin>
-                                                   <children>
-                                                      <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Jogador" textFill="#d3d3d3">
-                                                         <font>
-                                                            <Font size="16.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Dados do jogador" textFill="#c7c7c7" wrapText="true">
-                                                         <VBox.margin>
-                                                            <Insets top="5.0" />
-                                                         </VBox.margin>
-                                                      </Label>
-                                                   </children>
-                                                </VBox>
-                                                <HBox>
-                                                   <children>
-                                                      <HBox alignment="CENTER">
-                                                         <children>
-                                                            <ImageView fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                                               <image>
-                                                                  <Image url="@Imagens/x_icon.png" />
-                                                               </image>
-                                                            </ImageView>
-                                                         </children>
-                                                         <HBox.margin>
-                                                            <Insets left="5.0" />
-                                                         </HBox.margin>
-                                                      </HBox>
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                             <padding>
-                                                <Insets bottom="4.0" />
-                                             </padding>
-                                          </HBox>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="20.0" />
-                                       </VBox.margin>
-                                    </VBox>
-                                 </children></VBox>
-                           </content>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </ScrollPane>
-                     </children>
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets left="50.0" />
-                     </HBox.margin>
                   </VBox>
                </children>
             </HBox>
@@ -691,7 +250,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_ger_times" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" styleClass="bold-text" text="Times" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_ger_times1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Times" style="-fx-background-color: transparent;" styleClass="bold-text" text="Times" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas" size="14.0" />
                            </font>
@@ -703,79 +262,51 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_ger_esquemas" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Esquemas Táticos" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_ger_esquemas1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Esquemas_Taticos" style="-fx-background-color: transparent;" styleClass="bold-text" text="Esquemas Táticos" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_simulacao" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Simulação de Partida" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_simulacao1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Simulacao" style="-fx-background-color: transparent;" styleClass="bold-text" text="Simulação de Partida" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_historico" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Histórico e Analytics" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_historico1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Historico" style="-fx-background-color: transparent;" styleClass="bold-text" text="Histórico e Analytics" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_editar_perfil" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#EditarPerfil" style="-fx-background-color: transparent;" text="Perfil" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_editar_perfil1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#EditarPerfil" style="-fx-background-color: transparent;" styleClass="bold-text" text="Perfil" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                </children>
                <padding>

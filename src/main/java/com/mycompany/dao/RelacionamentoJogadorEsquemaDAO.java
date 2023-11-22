@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.mycompany.exception.TacticAllException;
+import com.mycompany.model.EsquemaTatico;
 import com.mycompany.model.Jogador;
 import java.util.List;
 
@@ -197,8 +198,8 @@ public class RelacionamentoJogadorEsquemaDAO implements GenericoDAO<Relacionamen
         }
         return jogadores;
     }
-    
-        public void removerDoTime(int id) throws TacticAllException {
+
+    public void removerDoTime(int id) throws TacticAllException {
         String sql = "DELETE FROM RelacionamentoJogadorEsquema WHERE IdTime = ?";
         Connection connection = null;
         try {
@@ -219,5 +220,60 @@ public class RelacionamentoJogadorEsquemaDAO implements GenericoDAO<Relacionamen
             }
         }
     }
-        
+    
+        public void removerDoEsquema(int id) throws TacticAllException {
+        String sql = "DELETE FROM RelacionamentoJogadorEsquema WHERE IdEsquema = ?";
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setInt(1, id);
+            pStatement.execute();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(RelacionamentoJogadorEsquemaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TacticAllException("Erro ao remover dados na base de dados");
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RelacionamentoJogadorEsquemaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public List<RelacionamentoJogadorEsquema> listarPorEsquema(EsquemaTatico e) throws TacticAllException {
+        List<RelacionamentoJogadorEsquema> relacionamentos = new ArrayList<>();
+        String sql = "SELECT * FROM RelacionamentoJogadorEsquema WHERE IDESQUEMA = ?";
+        Connection connection = null;
+        try {
+            connection = Conexao.getInstance().getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sql);
+            pStatement.setInt(1, e.getId());
+            ResultSet result = pStatement.executeQuery();
+            while (result.next()) {
+                RelacionamentoJogadorEsquema relacionamento = new RelacionamentoJogadorEsquema(
+                        result.getInt("Id"),
+                        result.getInt("IdJogador"),
+                        result.getInt("IdEsquema"),
+                        result.getString("Posicao")
+                );
+                relacionamentos.add(relacionamento);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(RelacionamentoJogadorEsquemaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TacticAllException("Erro ao buscar dados na base de dados");
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RelacionamentoJogadorEsquemaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return relacionamentos;
+    }
+
 }
