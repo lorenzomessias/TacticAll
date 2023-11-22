@@ -219,7 +219,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_ger_times" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" styleClass="bold-text" text="Times" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_ger_times1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Times" style="-fx-background-color: transparent;" styleClass="bold-text" text="Times" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas" size="14.0" />
                            </font>
@@ -231,89 +231,61 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_ger_esquemas" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Esquemas Táticos" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_ger_esquemas1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Esquemas_Taticos" style="-fx-background-color: transparent;" styleClass="bold-text" text="Esquemas Táticos" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_simulacao" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Simulação de Partida" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_simulacao1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Simulacao" style="-fx-background-color: transparent;" styleClass="bold-text" text="Simulação de Partida" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_historico" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Histórico e Analytics" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_historico1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Historico" style="-fx-background-color: transparent;" styleClass="bold-text" text="Histórico e Analytics" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefWidth="169.0">
                      <children>
-                        <Button fx:id="btn_editar_perfil" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#EditarPerfil" style="-fx-background-color: transparent;" text="Perfil" textFill="#ebebeb" wrapText="true">
+                        <Button fx:id="btn_editar_perfil1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#EditarPerfil" style="-fx-background-color: transparent;" styleClass="bold-text" text="Perfil" textFill="#ebebeb" wrapText="true">
                            <font>
                               <Font name="Consolas Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
                   </HBox>
                </children>
                <padding>
                   <Insets top="25.0" />
                </padding>
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" top="10.0" />
-               </HBox.margin>
             </VBox>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+         </BorderPane.margin>
       </HBox>
    </left>
    <right>

@@ -86,37 +86,28 @@ public class Editar_timeController extends Sidebar implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             VerificaLogin();
+            this.time = Sessao.getInstancia().getTimeEditando();
             preencherCampos(time);
             Pesquisar_Jogadores();
             Pesquisar_Jogadores_E();
             pesquisarTecnico();
+            preencherTecnicoSelecionado();
         } catch (IOException | TacticAllException ex) {
             Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void setTime(Time t) throws TacticAllException
-    {
-        this.time = t;
-        preencherCampos(time);
-        Pesquisar_Jogadores();
-        Pesquisar_Jogadores_E();
-        pesquisarTecnico();
-        preencherTecnicoSelecionado();
-    }
-    
+
     private void preencherCampos(Time t) throws TacticAllException {
-        if(time != null)
-        {
-        txt_nome_t.setText(t.getNome());
-        txt_sigla_t.setText(t.getSigla());
-        txt_liga_t.setText(t.getLiga());
-        txt_pais_t.setText(t.getPais());
-        cor_t.setValue(Color.valueOf(t.getCorUniforme()));
-        JogadorDAO jDAO = new JogadorDAO();
-        jogadores_escalados = jDAO.listarPorTime(t.getId());
-        TreinadorDAO tDAO = new TreinadorDAO();
-        tecnicoSelecionado = tDAO.listarPorTime(t.getId());
+        if (time != null) {
+            txt_nome_t.setText(t.getNome());
+            txt_sigla_t.setText(t.getSigla());
+            txt_liga_t.setText(t.getLiga());
+            txt_pais_t.setText(t.getPais());
+            cor_t.setValue(Color.valueOf(t.getCorUniforme()));
+            JogadorDAO jDAO = new JogadorDAO();
+            jogadores_escalados = jDAO.listarPorTime(t.getId());
+            TreinadorDAO tDAO = new TreinadorDAO();
+            tecnicoSelecionado = tDAO.listarPorTime(t.getId());
         }
     }
 
@@ -392,25 +383,59 @@ public class Editar_timeController extends Sidebar implements Initializable {
         preencherTecnicoSelecionado();
     }
 
-    public void SalvarTime() throws TacticAllException, IOException {
-        if (validarCampos()) {
-            UsuarioDAO user_dao = new UsuarioDAO();
-            Usuario user = user_dao.listarPorEmail(Sessao.getInstancia().getEmail());
-            Time novotime = new Time(txt_nome_t.getText(), txt_sigla_t.getText(), txt_pais_t.getText(), txt_liga_t.getText(),
-                    user.getId(), cor_t.getValue().toString());
-            TimeDAO time_dao = new TimeDAO();
-            time_dao.inserir(novotime);
+    public void AtualizarCampos() {
+        time.setLiga(txt_liga_t.getText());
+        time.setNome(txt_nome_t.getText());
+        time.setPais(txt_pais_t.getText());
+        time.setSigla(txt_sigla_t.getText());
+        time.setCorUniforme(cor_t.getValue().toString());
+    }
 
-            int id_time = time_dao.IdMaisRecente();
+    public void SalvarTimeEditado() throws TacticAllException, IOException {
+        if (validarCampos()) {
+            AtualizarCampos();
+            TimeDAO time_dao = new TimeDAO();
+            time_dao.alterar(time);
 
             RelacionamentoTimeProfissionalDAO rel_dao = new RelacionamentoTimeProfissionalDAO();
-            for (Jogador j : jogadores_escalados) {
-                RelacionamentoTimeProfissional rel = new RelacionamentoTimeProfissional(j.getId(), id_time);
-                rel_dao.inserir(rel);
-            }
-            RelacionamentoTimeProfissional rel_tecnico = new RelacionamentoTimeProfissional(tecnicoSelecionado.getId(), id_time);
-            rel_dao.inserir(rel_tecnico);
+            List<Jogador> jogadoresNoTime = new ArrayList<Jogador>();
 
+            jogadoresNoTime = rel_dao.listarJogadorPorTime(time.getId());
+            for (Jogador jogadorNoTime : jogadoresNoTime) {
+                boolean existe = false;
+                for (Jogador j : jogadores_escalados) {
+                    if (jogadorNoTime.getIdProfissional() == j.getIdProfissional()) {
+                        existe = true;
+                        break;
+                    }
+                }
+                if (!existe) {
+                    rel_dao.removerProfissionalDoTime(time.getId(), jogadorNoTime.getIdProfissional());
+                }
+            }
+
+            for (Jogador j : jogadores_escalados) {
+                boolean existe = false;
+                for (Jogador jogadorNoTime : jogadoresNoTime) {
+                    if (jogadorNoTime.getIdProfissional() == j.getIdProfissional()) {
+                        existe = true;
+                        break;
+                    }
+                }
+                if (!existe) {
+                    RelacionamentoTimeProfissional rel = new RelacionamentoTimeProfissional(j.getIdProfissional(), time.getId());
+                    rel_dao.inserir(rel);
+                }
+            }
+
+            TreinadorDAO tDAO = new TreinadorDAO();
+            Treinador tecnicoDoTime = tDAO.listarPorTime(time.getId());
+            if (tecnicoSelecionado.getIdProfissional() != tecnicoDoTime.getIdProfissional()) {
+                rel_dao.removerProfissionalDoTime(time.getId(), tecnicoDoTime.getIdProfissional());
+                RelacionamentoTimeProfissional rel_tecnico = new RelacionamentoTimeProfissional(tecnicoSelecionado.getIdProfissional(), time.getId());
+                rel_dao.inserir(rel_tecnico);
+            }
+            Sessao.getInstancia().setTimeEditando(null);
             App.setRoot("times");
         }
     }
@@ -513,11 +538,19 @@ public class Editar_timeController extends Sidebar implements Initializable {
         });
     }
 
-    public boolean validarCampos() {
+    public boolean validarCampos() throws TacticAllException {
         if (txt_nome_t.getText().isEmpty() || txt_sigla_t.getText().isEmpty() || txt_pais_t.getText().isEmpty() || txt_liga_t.getText().isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.ERROR, "Por favor, preencha todos os campos.");
             alerta.setTitle("Campos em branco");
             alerta.setHeaderText("Campos obrigatórios não preenchidos.");
+            alerta.showAndWait();
+            return false;
+        }
+
+        if (txt_sigla_t.getText().length() != 3) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR, "Problemas com o campo: Sigla");
+            alerta.setTitle("Corrija a Sigla");
+            alerta.setHeaderText("A sigla do time deve conter exatamente 3 letras.");
             alerta.showAndWait();
             return false;
         }
@@ -537,6 +570,25 @@ public class Editar_timeController extends Sidebar implements Initializable {
             alerta.showAndWait();
             return false;
         }
+
+        TimeDAO tDAO = new TimeDAO();
+        List<Time> times = tDAO.listar();
+        boolean existe = false;
+        for (Time t : times) {
+            if (t.getId() != time.getId() && t.getNome().equals(txt_nome_t.getText())) {
+                existe = true;
+                break;
+            }
+        }
+
+        if (existe) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR, "Problemas com o campo: Nome");
+            alerta.setTitle("Nome existente");
+            alerta.setHeaderText("O nome deste time já foi cadastrado.");
+            alerta.showAndWait();
+            return false;
+        }
+
         return true;
     }
 

@@ -485,11 +485,19 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
         });
     }
 
-    public boolean validarCampos() {
+    public boolean validarCampos() throws TacticAllException {
         if (txt_nome_t.getText().isEmpty() || txt_sigla_t.getText().isEmpty() || txt_pais_t.getText().isEmpty() || txt_liga_t.getText().isEmpty()) {
             Alert alerta = new Alert(Alert.AlertType.ERROR, "Por favor, preencha todos os campos.");
             alerta.setTitle("Campos em branco");
             alerta.setHeaderText("Campos obrigatórios não preenchidos.");
+            alerta.showAndWait();
+            return false;
+        }
+
+        if (txt_sigla_t.getText().length() != 3) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR, "Problemas com o campo: Sigla");
+            alerta.setTitle("Corrija a Sigla");
+            alerta.setHeaderText("A sigla do time deve conter exatamente 3 letras.");
             alerta.showAndWait();
             return false;
         }
@@ -509,6 +517,25 @@ public class Cadastro_timeController extends Sidebar implements Initializable {
             alerta.showAndWait();
             return false;
         }
+
+        TimeDAO tDAO = new TimeDAO();
+        List<Time> times = tDAO.listar();
+        boolean existe = false;
+        for (Time t : times) {
+            if (t.getNome().equals(txt_nome_t.getText())) {
+                existe = true;
+                break;
+            }
+        }
+
+        if (existe) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR, "Problemas com o campo: Nome");
+            alerta.setTitle("Nome existente");
+            alerta.setHeaderText("O nome deste time já foi cadastrado.");
+            alerta.showAndWait();
+            return false;
+        }
+
         return true;
     }
 }
