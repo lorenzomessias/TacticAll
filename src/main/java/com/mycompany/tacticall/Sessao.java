@@ -18,6 +18,22 @@ public final class Sessao {
     private String email;
     private String privilegios;
     private String nome;
+
+    public Sessao(String email, String privilegios, String nome, int id) {
+        this.email = email;
+        this.privilegios = privilegios;
+        this.nome = nome;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    private int id;
     private Time timeEditando;
     private EsquemaTatico esquemaTaticoEditando;
 
@@ -46,7 +62,10 @@ public final class Sessao {
     public static void setInstancia(String email, String privilegios, String nome) {
         instancia = new Sessao(email, privilegios, nome);
     }
-
+    
+        public static void setInstancia(String email, String privilegios, String nome, int id) {
+        instancia = new Sessao(email, privilegios, nome, id);
+    }
     public static Sessao getInstancia() {
         return instancia;
     }

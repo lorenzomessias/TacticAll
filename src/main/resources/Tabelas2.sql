@@ -17,7 +17,7 @@ VALUES ('Maria da Silva', 'maria.silva@email.com', '1985-12-10', 'senha456', 1);
 SELECT * FROM Usuario;
 
 -- Tabela RelacionmentoJogadorEsquema
-CREATE TABLE RelacionmentoJogadorEsquema(
+CREATE TABLE RelacionamentoJogadorEsquema(
     Id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     Posicao VARCHAR(50),
     IdJogador INT,
@@ -118,3 +118,10 @@ INNER JOIN RelacionamentoTimeProfissional r ON p.Id = r.IdProfissional
 WHERE r.IdTime = 2
 
 SELECT * FROM ESQUEMATATICO
+
+
+SELECT * FROM RelacionamentoJogadorEsquema
+
+SELECT * FROM EsquemaTatico
+
+SELECT * FROM TIME
