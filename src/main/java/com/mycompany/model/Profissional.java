@@ -69,11 +69,7 @@ public class Profissional {
     }
 
     public void setDataDeNascimento(LocalDate dataDeNascimento) {
-        if(dataDeNascimento.getYear() > 2023){
-            dataDeNascimento = LocalDate.of(01, Month.JANUARY, 1920);
-        }else{
-            this.dataDeNascimento = dataDeNascimento;
-        }
+            this.dataDeNascimento = LocalDate.of(1920, Month.JANUARY, 01);
     }
 
     public void setNacionalidade(String nacionalidade) {

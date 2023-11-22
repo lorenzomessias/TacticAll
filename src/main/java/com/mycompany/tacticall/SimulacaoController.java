@@ -73,11 +73,9 @@ public class SimulacaoController extends Sidebar implements Initializable {
         }
         NomeTimeMandante.getItems().addAll(listaTime);
         NomeTimeVisitante.getItems().addAll(listaTime);
-        NomeTimeMandante.getSelectionModel().selectFirst();
-        NomeTimeVisitante.getSelectionModel().selectFirst();
 
     }
-    private void mudarTimeMandante() throws TacticAllException{
+    public void mudarTimeMandante() throws TacticAllException{
         Time time = getTimePorNome((String) NomeTimeMandante.getValue());
         mandanteOfensivo = retornaEsquemasPorTime(time.getId(), "Ofensivo");
         mandanteDefensivo = retornaEsquemasPorTime(time.getId(), "Defensivo");
@@ -95,7 +93,7 @@ public class SimulacaoController extends Sidebar implements Initializable {
         EsquemaOfensivoMandante.getSelectionModel().selectFirst();
         EsquemaDefensivoMandante.getSelectionModel().selectFirst();
     }
-    private void mudarTimeVisitante() throws TacticAllException{
+    public void mudarTimeVisitante() throws TacticAllException{
         Time time = getTimePorNome((String) NomeTimeVisitante.getValue());
         visitanteOfensivo = retornaEsquemasPorTime(time.getId(), "Ofensivo");
         visitanteDefensivo = retornaEsquemasPorTime(time.getId(), "Defensivo");
@@ -135,7 +133,7 @@ public class SimulacaoController extends Sidebar implements Initializable {
         EsquemaTatico ofensivoA = getEsquemaPorNome((String) EsquemaOfensivoMandante.getValue(),mandanteOfensivo);
         EsquemaTatico defensivoA = getEsquemaPorNome((String) EsquemaDefensivoMandante.getValue(),mandanteDefensivo);
         EsquemaTatico ofensivoB = getEsquemaPorNome((String) EsquemaOfensivoVisitante.getValue(),visitanteOfensivo);
-        EsquemaTatico defensivoB = getEsquemaPorNome((String) EsquemaOfensivoVisitante.getValue(),visitanteDefensivo);
+        EsquemaTatico defensivoB = getEsquemaPorNome((String) EsquemaDefensivoVisitante.getValue(),visitanteDefensivo);
         RelacionamentoTimeProfissionalDAO relDao = new RelacionamentoTimeProfissionalDAO();
         RelacionamentoJogadorEsquemaDAO relJEDao = new RelacionamentoJogadorEsquemaDAO();
         List<Jogador> jogadoresTimeA = relDao.listarJogadoresDoTime(timeA.getId());

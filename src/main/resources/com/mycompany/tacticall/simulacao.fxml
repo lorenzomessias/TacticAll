@@ -55,7 +55,7 @@
                                                 <Font size="22.0" />
                                              </font>
                                           </Label>
-                                          <ComboBox id="NomeTimeMandante" fx:id="NomeTimeMandante" prefHeight="26.0" prefWidth="330.0" />
+                                          <ComboBox id="NomeTimeMandante" fx:id="NomeTimeMandante" onAction="#mudarTimeMandante" prefHeight="26.0" prefWidth="330.0" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -198,7 +198,7 @@
                                           <Font size="22.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox id="NomeTimeVisitante" fx:id="NomeTimeVisitante" prefHeight="26.0" prefWidth="330.0" />
+                                    <ComboBox id="NomeTimeVisitante" fx:id="NomeTimeVisitante" onAction="#mudarTimeVisitante" prefHeight="26.0" prefWidth="330.0" />
                                  </children>
                               </VBox>
                            </children>
@@ -300,7 +300,7 @@
                   </VBox>
                </children>
             </HBox>
-            <Button fx:id="btn_salvar_time" mnemonicParsing="false" style="-fx-background-radius: 30;" stylesheets="@../../../styles/styles.css" text="Iniciar Simulação" textFill="#d3d3d3">
+            <Button fx:id="btn_salvar_time" mnemonicParsing="false" onAction="#realizaSimulacao" style="-fx-background-radius: 30;" stylesheets="@../../../styles/styles.css" text="Iniciar Simulação" textFill="#d3d3d3">
                <font>
                   <Font size="18.0" />
                </font>
