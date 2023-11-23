@@ -96,8 +96,8 @@ public class EsquemaTaticoDAO implements GenericoDAO<EsquemaTatico> {
         }
         return esquema;
     }
-    
-        public List<EsquemaTatico> listarEsquemasPorTime(int idTime) throws TacticAllException {
+
+    public List<EsquemaTatico> listarEsquemasPorTime(int idTime) throws TacticAllException {
         List<EsquemaTatico> esquemas = new ArrayList<>();
         String sql = "SELECT * FROM EsquemaTatico WHERE IdTime = ?";
         try (Connection connection = Conexao.getInstance().getConnection(); PreparedStatement pStatement = connection.prepareStatement(sql)) {
@@ -117,7 +117,7 @@ public class EsquemaTaticoDAO implements GenericoDAO<EsquemaTatico> {
         }
         return esquemas;
     }
-        
+
     public List<EsquemaTatico> listarEsquemasPorTime(int idTime, String tipo) throws TacticAllException {
         List<EsquemaTatico> esquemas = new ArrayList<>();
         String sql = "SELECT * FROM EsquemaTatico WHERE IdTime = ? AND Tipo = ?";
@@ -164,8 +164,8 @@ public class EsquemaTaticoDAO implements GenericoDAO<EsquemaTatico> {
         }
         return esquemas;
     }
-    
-        public List<EsquemaTatico> listarPorNome(String pesquisa, int id, String categ) throws TacticAllException {
+
+    public List<EsquemaTatico> listarPorNome(String pesquisa, int id, String categ) throws TacticAllException {
         List<EsquemaTatico> esquemas = new ArrayList<>();
         String sql = "SELECT * FROM EsquemaTatico WHERE Nome LIKE ? AND IDTIME = ? AND Tipo = ?";
         try {
@@ -188,5 +188,22 @@ public class EsquemaTaticoDAO implements GenericoDAO<EsquemaTatico> {
             throw new TacticAllException("Erro ao acessar o banco de dados");
         }
         return esquemas;
+    }
+
+    public int IdTimePorIDdoEsquema(int ID) throws TacticAllException {
+        int id = 0;
+        String sql = "SELECT IDTIME FROM EsquemaTatico WHERE Id = ?";
+        try (Connection connection = Conexao.getInstance().getConnection(); PreparedStatement pStatement = connection.prepareStatement(sql)) {
+            pStatement.setInt(1, ID);
+            try (ResultSet result = pStatement.executeQuery()) {
+                while (result.next()) {
+                    id = result.getInt("IdTime");
+                }
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(EsquemaTaticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new TacticAllException("Erro ao acessar o banco de dados");
+        }
+        return id;
     }
 }

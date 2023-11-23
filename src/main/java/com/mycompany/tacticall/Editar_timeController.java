@@ -78,6 +78,8 @@ public class Editar_timeController extends Sidebar implements Initializable {
     TextField txt_pesquisa_jogador_e;
     @FXML
     TextField txt_pesquisa_tecnico;
+    @FXML
+    Label numJogadores;
 
     /**
      * Initializes the controller class.
@@ -92,11 +94,18 @@ public class Editar_timeController extends Sidebar implements Initializable {
             Pesquisar_Jogadores_E();
             pesquisarTecnico();
             preencherTecnicoSelecionado();
+            atualizarCampos();
         } catch (IOException | TacticAllException ex) {
             Logger.getLogger(Cadastro_timeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    public void atualizarCampos() {
+        Platform.runLater(() -> {
+            numJogadores.setText(String.format("%02d", jogadores_escalados.size()));
+        });
+    }
+    
     private void preencherCampos(Time t) throws TacticAllException {
         if (time != null) {
             txt_nome_t.setText(t.getNome());
@@ -373,6 +382,7 @@ public class Editar_timeController extends Sidebar implements Initializable {
 
     public void Adicionar_Jogador(Jogador jogador) throws TacticAllException {
         jogadores_escalados.add(jogador);
+        atualizarCampos();
         Pesquisar_Jogadores();
         Pesquisar_Jogadores_E();
     }
@@ -452,6 +462,7 @@ public class Editar_timeController extends Sidebar implements Initializable {
 
     public void remover_Jogador(Jogador j) throws TacticAllException {
         jogadores_escalados.remove(j);
+        atualizarCampos();
         Pesquisar_Jogadores();
         Pesquisar_Jogadores_E();
     }

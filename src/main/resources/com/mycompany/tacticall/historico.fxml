@@ -11,18 +11,16 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tacticall.TimesController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tacticall.HistoricoController">
    <center>
       <VBox alignment="TOP_CENTER">
          <children>
             <HBox alignment="TOP_CENTER">
                <children>
-                  <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Gerenciamento de Times">
+                  <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Histórico">
                      <font>
                         <Font size="30.0" />
                      </font>
@@ -37,43 +35,11 @@
             </HBox>
             <VBox alignment="TOP_CENTER" VBox.vgrow="ALWAYS">
                <children>
-                  <VBox onMouseClicked="#Ir_Criar_Time" style="-fx-background-color: #3c3c3c; -fx-background-radius: 20;">
-                     <children>
-                        <HBox>
-                           <children>
-                              <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Criar um Novo Time" textFill="#d3d3d3">
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
-                              <HBox HBox.hgrow="ALWAYS" />
-                              <HBox alignment="BOTTOM_CENTER">
-                                 <children>
-                                    <ImageView fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                       <image>
-                                          <Image url="@Imagens/play_icon.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets top="30.0" />
-                     </VBox.margin>
-                  </VBox>
                   <VBox style="-fx-background-color: #e3e3e3; -fx-background-radius: 20;">
                      <children>
                         <HBox>
                            <children>
-                              <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Seus Times" textFill="#5b5b5b">
+                              <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Suas Simulações" textFill="#5b5b5b">
                                  <font>
                                     <Font size="22.0" />
                                  </font>
@@ -99,7 +65,7 @@
                                     <String fx:value="regular-text" />
                                  </styleClass>
                               </TextField>
-                              <ImageView fx:id="btn_pesquisa" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Pesquisar_Times" pickOnBounds="true" preserveRatio="true" smooth="true">
+                              <ImageView fx:id="btn_pesquisa" fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true" smooth="true">
                                  <image>
                                     <Image url="@Imagens/search_icon.png" />
                                  </image>
@@ -111,73 +77,19 @@
                         </HBox>
                         <ScrollPane fitToWidth="true" style="-fx-border-width: 0; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
                            <content>
-                              <VBox style="-fx-background-color: #e3e3e3; -fx-border-width: 0;">
+                              <VBox fx:id="vbox_lista_simulacoes" style="-fx-background-color: #e3e3e3; -fx-border-width: 0;">
                                  <children>
-                                    <HBox fx:id="h_time_01" alignment="CENTER_LEFT" style="-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;">
+                                    <HBox fx:id="h_time_01" alignment="CENTER" style="-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;">
                                        <children>
-                                          <StackPane>
-                                             <children>
-                                                <Circle fill="#c6c6c6" radius="48.0" stroke="#ebebeb" strokeType="INSIDE" strokeWidth="3.0" />
-                                                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="https://cdn.soccersapi.com/images/soccer/players/50/19988.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </children>
-                                          </StackPane>
-                                          <VBox>
-                                             <HBox.margin>
-                                                <Insets left="20.0" top="10.0" />
-                                             </HBox.margin>
-                                             <children>
-                                                <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Nome do Time" textFill="#5b5b5b">
-                                                   <font>
-                                                      <Font size="22.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Você ainda não criou nenhum time." textFill="#808080" wrapText="true">
-                                                   <font>
-                                                      <Font size="18.0" />
-                                                   </font>
-                                                   <VBox.margin>
-                                                      <Insets top="5.0" />
-                                                   </VBox.margin>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                          <HBox>
-                                             <children>
-                                                <HBox alignment="CENTER">
-                                                   <children>
-                                                      <ImageView fx:id="btn_editar_time" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Editar_Time" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                                         <image>
-                                                            <Image url="@Imagens/gear_icon.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                </HBox>
-                                                <HBox alignment="CENTER">
-                                                   <children>
-                                                      <ImageView fx:id="btn_remover_time" fitHeight="32.0" fitWidth="184.0" onMouseClicked="#Remover_Time" pickOnBounds="true" preserveRatio="true" smooth="true">
-                                                         <image>
-                                                            <Image url="@Imagens/trashcan_icon.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                   <HBox.margin>
-                                                      <Insets left="5.0" />
-                                                   </HBox.margin>
-                                                </HBox>
-                                             </children>
-                                          </HBox>
+                                          <Label styleClass="regular-text" stylesheets="@../../../styles/styles.css" text="Não encontramos nenhuma simulação com essas especificações" textFill="#808080" wrapText="true">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
                                        </children>
                                        <padding>
-                                          <Insets bottom="8.0" />
+                                          <Insets bottom="20.0" />
                                        </padding>
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
                                     </HBox>
                                  </children>
                               </VBox>
@@ -206,123 +118,154 @@
       </VBox>
    </center>
    <left>
-      <HBox BorderPane.alignment="CENTER">
+      <HBox>
          <children>
-            <VBox prefHeight="780.0" prefWidth="230.0" styleClass="sidebar" stylesheets="@../../../styles/styles.css">
+            <HBox>
                <children>
-                  <HBox alignment="CENTER" fillHeight="false">
+                  <VBox prefHeight="780.0" prefWidth="230.0" styleClass="sidebar" stylesheets="@../../../styles/styles.css">
                      <children>
-                        <Label text="TacticAll" textFill="WHITE">
-                           <font>
-                              <Font name="Lucida Sans Demibold Italic" size="20.0" />
-                           </font>
+                        <HBox alignment="CENTER" fillHeight="false" onMouseClicked="#Ir_Home" styleClass="sidebar-box">
+                           <children>
+                              <ImageView fitHeight="44.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Imagens/TacticAll-80.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
                            <padding>
-                              <Insets right="10.0" />
+                              <Insets bottom="20.0" />
                            </padding>
-                        </Label>
-                        <ImageView fitHeight="36.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Imagens/icone.png" />
-                           </image>
-                        </ImageView>
+                        </HBox>
+                        <VBox>
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="169.0">
+                                 <children>
+                                    <Button fx:id="btn_ger_times11" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Times" style="-fx-background-color: transparent;" text="Gerenciar Times" textFill="#ebebeb" wrapText="true">
+                                       <font>
+                                          <Font name="Consolas" size="14.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="bold-text" />
+                                          <String fx:value="botao-sidebar" />
+                                       </styleClass>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefWidth="169.0">
+                                 <children>
+                                    <Button fx:id="btn_ger_esquemas11" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Esquemas_Taticos" style="-fx-background-color: transparent;" text="Esquemas Táticos" textFill="#ebebeb" wrapText="true">
+                                       <font>
+                                          <Font name="Consolas Bold" size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <styleClass>
+                                          <String fx:value="bold-text" />
+                                          <String fx:value="botao-sidebar" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefWidth="169.0">
+                                 <children>
+                                    <Button fx:id="btn_simulacao11" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Simulacao" style="-fx-background-color: transparent;" text="Simulação de Partida" textFill="#ebebeb" wrapText="true">
+                                       <font>
+                                          <Font name="Consolas Bold" size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <styleClass>
+                                          <String fx:value="bold-text" />
+                                          <String fx:value="botao-sidebar" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefWidth="169.0">
+                                 <children>
+                                    <Button fx:id="btn_historico11" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Ir_Historico" style="-fx-background-color: transparent;" text="Histórico e Analytics" textFill="#ebebeb" wrapText="true">
+                                       <font>
+                                          <Font name="Consolas Bold" size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <styleClass>
+                                          <String fx:value="bold-text" />
+                                          <String fx:value="botao-sidebar" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefWidth="169.0">
+                                 <children>
+                                    <Button fx:id="btn_editar_perfil11" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#EditarPerfil" style="-fx-background-color: transparent;" text="Perfil" textFill="#ebebeb" wrapText="true">
+                                       <font>
+                                          <Font name="Consolas Bold" size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <styleClass>
+                                          <String fx:value="bold-text" />
+                                          <String fx:value="botao-sidebar" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </VBox.margin>
+                        </VBox>
                      </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="169.0">
-                     <children>
-                        <Button fx:id="btn_ger_times" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" styleClass="bold-text" text="Times" textFill="#ebebeb" wrapText="true">
-                           <font>
-                              <Font name="Consolas" size="14.0" />
-                           </font>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" top="40.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefWidth="169.0">
-                     <children>
-                        <Button fx:id="btn_ger_esquemas" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Esquemas Táticos" textFill="#ebebeb" wrapText="true">
-                           <font>
-                              <Font name="Consolas Bold" size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefWidth="169.0">
-                     <children>
-                        <Button fx:id="btn_simulacao" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Simulação de Partida" textFill="#ebebeb" wrapText="true">
-                           <font>
-                              <Font name="Consolas Bold" size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefWidth="169.0">
-                     <children>
-                        <Button fx:id="btn_historico" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Histórico e Analytics" textFill="#ebebeb" wrapText="true">
-                           <font>
-                              <Font name="Consolas Bold" size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefWidth="169.0">
-                     <children>
-                        <Button fx:id="btn_editar_perfil" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#EditarPerfil" style="-fx-background-color: transparent;" text="Perfil" textFill="#ebebeb" wrapText="true">
-                           <font>
-                              <Font name="Consolas Bold" size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                           <styleClass>
-                              <String fx:value="bold-text" />
-                              <String fx:value="sidebar-button" />
-                           </styleClass>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </HBox>
+                     <padding>
+                        <Insets top="25.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </VBox>
                </children>
-               <padding>
-                  <Insets top="25.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" top="10.0" />
-               </HBox.margin>
-            </VBox>
+            </HBox>
          </children>
       </HBox>
    </left>

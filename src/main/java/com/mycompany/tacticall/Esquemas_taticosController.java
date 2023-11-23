@@ -86,6 +86,7 @@ public class Esquemas_taticosController extends Sidebar implements Initializable
         cb_categoria.getItems().add("Ofensivo");
         cb_categoria.getItems().add("Defensivo");
         cb_categoria.setValue("Todos");
+        cb_time.getSelectionModel().selectFirst();
     }
 
     public void Ir_Criar_EsquemaTatico() throws IOException {
@@ -112,12 +113,35 @@ public class Esquemas_taticosController extends Sidebar implements Initializable
     private void criarHBoxes() {
         Platform.runLater(() -> {
             vbox_lista_esquemas.getChildren().clear();
-
-            for (EsquemaTatico esquemaTatico : esquemasTaticos) {
-                HBox hBox = hBoxEsquemaTatico(esquemaTatico);
-                vbox_lista_esquemas.getChildren().add(hBox);
+            if (esquemasTaticos.isEmpty()) {
+                vbox_lista_esquemas.getChildren().add(hBoxVazia());
+            } else {
+                for (EsquemaTatico esquemaTatico : esquemasTaticos) {
+                    HBox hBox = hBoxEsquemaTatico(esquemaTatico);
+                    vbox_lista_esquemas.getChildren().add(hBox);
+                }
             }
+
         });
+    }
+
+    private HBox hBoxVazia() {
+        HBox hboxV = new HBox();
+        Label label = new Label("Não foram encontrados esquemas táticos com essas especificações.");
+        label.getStyleClass().add("regular-text");
+        label.getStylesheets().add("@../../../styles/styles.css");
+        label.setTextFill(javafx.scene.paint.Color.web("#808080"));
+        label.setWrapText(true);
+        label.setFont(new javafx.scene.text.Font(18.0));
+
+        // Adiciona o Label à HBox
+        hboxV.getChildren().add(label);
+
+        // Configuração de estilos e margens
+        hboxV.setAlignment(javafx.geometry.Pos.CENTER);
+        hboxV.setStyle("-fx-border-width: 0 0 3 0; -fx-border-color: a4a4a4;");
+        hboxV.setPadding(new javafx.geometry.Insets(0, 0, 20, 0));
+        return hboxV;
     }
 
     private HBox hBoxEsquemaTatico(EsquemaTatico esquemaTatico) {
@@ -137,7 +161,7 @@ public class Esquemas_taticosController extends Sidebar implements Initializable
         nomeLabel.setFont(new Font(22.0));
 
         // Criando o Label para os dados do esquema tático
-        Label dadosLabel = new Label("Descrição");
+        Label dadosLabel = new Label(esquemaTatico.getTipo());
         dadosLabel.getStyleClass().add("regular-text");
         dadosLabel.setStyle("-fx-text-fill: #808080;");
         dadosLabel.setFont(new Font(18.0));

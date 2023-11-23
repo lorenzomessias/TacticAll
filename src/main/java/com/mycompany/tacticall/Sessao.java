@@ -5,6 +5,7 @@
 package com.mycompany.tacticall;
 
 import com.mycompany.model.EsquemaTatico;
+import com.mycompany.model.Simulacao;
 import com.mycompany.model.Time;
 
 /**
@@ -18,6 +19,16 @@ public final class Sessao {
     private String email;
     private String privilegios;
     private String nome;
+
+    public Simulacao getSimulacao() {
+        return simulacao;
+    }
+
+    public void setSimulacao(Simulacao simulacao) {
+        this.simulacao = simulacao;
+    }
+    
+    private Simulacao simulacao;
 
     public Sessao(String email, String privilegios, String nome, int id) {
         this.email = email;

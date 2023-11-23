@@ -80,4 +80,8 @@ public abstract class Sidebar {
     public void Ir_Historico() throws IOException {
         App.setRoot("historico");
     }
+    
+    public void Ir_Home() throws IOException {
+        App.setRoot("home");
+    }
 }
